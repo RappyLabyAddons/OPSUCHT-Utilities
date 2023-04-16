@@ -1,0 +1,10 @@
+{
+    "opsucht": {
+        "settings": {
+            "name": "OPSUCHT Utilities",
+            "enabled": {
+                "name": "Aktiviert"
+            }
+        }
+    }
+}
