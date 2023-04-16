@@ -36,6 +36,6 @@ public class PayContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return config.friendRequestContext().get();
+        return config.payContext().get();
     }
 }

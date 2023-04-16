@@ -36,6 +36,6 @@ public class FriendRequestContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return config.clanInviteContext().get();
+        return config.friendRequestContext().get();
     }
 }
