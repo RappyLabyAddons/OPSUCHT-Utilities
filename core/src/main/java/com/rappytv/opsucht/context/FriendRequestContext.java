@@ -36,6 +36,6 @@ public class FriendRequestContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return config.friendRequestContext().get();
+        return Util.isConnectedToServer() && config.friendRequestContext().get();
     }
 }
