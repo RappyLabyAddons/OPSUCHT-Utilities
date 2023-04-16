@@ -9,6 +9,8 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
+    public static final String ip = "162.19.233.3";
+
     @Override
     protected void enable() {
         registerSettingCategory();
