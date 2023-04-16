@@ -2,9 +2,48 @@
     "opsucht": {
         "settings": {
             "name": "OPSUCHT Utilities",
+            "header": {
+                "general": {
+                    "name": "General"
+                },
+                "context": {
+                    "name": "Context Menü"
+                },
+                "chat": {
+                    "name": "Chat"
+                }
+            },
             "enabled": {
                 "name": "Aktiviert"
+            },
+            "clickableNickname": {
+                "name": "Klickbare Nicknamen"
+            },
+            "payContext": {
+                "name": "Geld überweisen",
+                "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler Geld zu überweisen."
+            },
+            "payDefault": {
+                "name": "Standartbetrag",
+                "description": "Gibt an, wieviel Geld standartmäßig angegeben wird. (Der Befehl muss immernoch abgesendet werden, bevor das Geld überwiesen wird)\nDu kannst dieses Feld leer lassen"
+            },
+            "clanInviteContext": {
+                "name": "Clan-Einladung senden",
+                "description": "Fügt dem Kontext-Menü die Option hinzu, einen Spieler in deinen aktuellen Clan einzuladen."
+            },
+            "friendRequestContext": {
+                "name": "Freundschaftsanfrage senden",
+                "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden."
             }
+        },
+        "context": {
+            "pay": "Geld überweisen",
+            "clanInvite": "In den Clan einladen",
+            "friendRequest": "Freundschaftsanfrage senden"
+        },
+        "toasts": {
+            "error": "Fehler",
+            "number": "Du musst eine gültige Zahl eingeben!"
         }
     }
 }
