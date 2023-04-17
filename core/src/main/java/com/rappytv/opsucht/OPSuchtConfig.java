@@ -6,10 +6,10 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
-import net.labymod.api.configuration.settings.annotation.SettingElement;
 import net.labymod.api.configuration.settings.annotation.SettingListener;
 import net.labymod.api.configuration.settings.annotation.SettingListener.EventType;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
+import net.labymod.api.configuration.settings.type.SettingElement;
 
 @ConfigName("settings")
 public class OPSuchtConfig extends AddonConfig {
@@ -30,7 +30,6 @@ public class OPSuchtConfig extends AddonConfig {
 
     @SettingListener(target = "paydefault", type = EventType.INITIALIZE)
     public void initialize(SettingElement ignored) {
-        System.out.println("uwu");
         payDefault.addChangeListener((type, oldValue, newValue) -> {
             if(newValue.isEmpty()) return;
             try {
