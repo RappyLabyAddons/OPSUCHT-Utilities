@@ -2,8 +2,10 @@ package com.rappytv.opsucht;
 
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.addon.AddonConfig;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingListener;
@@ -28,15 +30,26 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> friendRequestContext = new ConfigProperty<>(true);
 
-    @SettingListener(target = "paydefault", type = EventType.INITIALIZE)
+    @SettingListener(target = "payDefault", type = EventType.INITIALIZE)
     public void initialize(SettingElement ignored) {
         payDefault.addChangeListener((type, oldValue, newValue) -> {
             if(newValue.isEmpty()) return;
             try {
                 Integer.parseInt(newValue);
-            } catch (NumberFormatException e) {
-                payDefault.set(oldValue);
-                Util.notify(Util.getTranslation("opsucht.toasts.error"), Util.getTranslation("opsucht.toasts.number"), null);
+            } catch (NumberFormatException exception) {
+                try {
+                    Integer.parseInt(oldValue); // May throw exception
+                    payDefault.set(oldValue);
+                } catch (NumberFormatException e) {
+                    payDefault.set("");
+                    Util.notify(
+                        Util.getTranslation("opsucht.toasts.error"),
+                        Util.getTranslation("opsucht.toasts.number"),
+                        Icon.texture(
+                            ResourceLocation.create("opsucht", "textures/icon.png")
+                        )
+                    );
+                }
             }
         });
     }
