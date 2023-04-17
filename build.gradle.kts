@@ -21,7 +21,7 @@ labyMod {
         author = "RappyTV#6969"
         description = "Adds some ingame utilities for OPSUCHT.net"
         minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "0.0.9")
+        version = System.getenv().getOrDefault("VERSION", "1.0.0")
     }
 
     minecraft {
