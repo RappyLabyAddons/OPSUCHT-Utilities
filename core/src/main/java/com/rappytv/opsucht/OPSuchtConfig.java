@@ -42,7 +42,13 @@ public class OPSuchtConfig extends AddonConfig {
                     payDefault.set(oldValue);
                 } catch (NumberFormatException e) {
                     payDefault.set("");
-                    Util.notify(Util.getTranslation("opsucht.toasts.error"), Util.getTranslation("opsucht.toasts.number"), null);
+                    Util.notify(
+                        Util.getTranslation("opsucht.toasts.error"),
+                        Util.getTranslation("opsucht.toasts.number"),
+                        Icon.texture(
+                            ResourceLocation.create("opsucht", "textures/icon.png")
+                        )
+                    );
                 }
             }
         });
