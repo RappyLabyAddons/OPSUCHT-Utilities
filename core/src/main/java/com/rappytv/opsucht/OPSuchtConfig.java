@@ -28,7 +28,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> friendRequestContext = new ConfigProperty<>(true);
 
-    @SettingListener(target = "paydefault", type = EventType.INITIALIZE)
+    @SettingListener(target = "payDefault", type = EventType.INITIALIZE)
     public void initialize(SettingElement ignored) {
         payDefault.addChangeListener((type, oldValue, newValue) -> {
             if(newValue.isEmpty()) return;
