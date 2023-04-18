@@ -6,12 +6,14 @@ import com.rappytv.opsucht.util.Util;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
+import net.labymod.api.client.component.TranslatableComponent;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ChatReceiveListener {
 
@@ -22,9 +24,9 @@ public class ChatReceiveListener {
     }
 
     @Subscribe
-    public void onChatReceive(ChatReceiveEvent e) {
+    public void onChatReceive(ChatReceiveEvent event) {
         if(!config.clickableNicknames().get()) return;
-        ChatMessage message = e.chatMessage();
+        ChatMessage message = event.chatMessage();
         if(!message.getPlainText().contains("|") || !message.getPlainText().contains("~")) return;
 
         String text = message.getPlainText();
@@ -32,29 +34,65 @@ public class ChatReceiveListener {
 
         String nick = Arrays.stream(text.split(" ")).filter(s -> s.startsWith("~")).findFirst().orElse(null);
         if(nick == null || !nick.equalsIgnoreCase(text.split(" ")[2])) return;
-        System.out.println(nick);
 
-        e.setMessage(applyStyle(message, nick));
+        applyEvents(event.message(), nick);
     }
 
     /**
-     * TODO: Fix colors
+     * TODO: Apply style only to nickname and not the whole message
      */
 
-    private Component applyStyle(ChatMessage message, String nick) {
-        String[] words = message.getPlainText().split(" ");
-        TextComponent.Builder msg = TextComponent.builder();
-        for (int i = 0; i < words.length; i++) {
-            if (i == 2) {
-                TextComponent nickComponent = Component.text(words[i] + " ");
+    public void applyEvents(Component component, String playerName) {
+        Iterator<Component> children = component.getChildren().iterator();
 
-                Style style = message.component().style()
-                    .hoverEvent(HoverEvent.showText(Component.text("§a" + Util.getTranslation("opsucht.chat.clickableNickname"))))
-                    .clickEvent(ClickEvent.runCommand("/realname " + nick.substring(1)));
-                nickComponent.style(style);
-                msg.append(nickComponent);
-            } else msg.append(words[i]).append(" ");
+        Component argument;
+        while(children.hasNext()) {
+            argument = children.next();
+            this.applyEvents(argument, playerName);
         }
-        return msg.build();
+
+        if(component instanceof TranslatableComponent) {
+            children = ((TranslatableComponent) component).getArguments().iterator();
+
+            while(children.hasNext()) {
+                argument = children.next();
+                this.applyEvents(argument, playerName);
+            }
+        }
+
+        if (component instanceof TextComponent) {
+            TextComponent textComponent = (TextComponent) component;
+            String text = textComponent.getText();
+            Style style = textComponent.style()
+                .hoverEvent(HoverEvent.showText(Component.text("§a" + Util.getTranslation("opsucht.chat.clickableNickname"))))
+                .clickEvent(ClickEvent.runCommand("/realname " + playerName.substring(1)));
+            textComponent.style(style);
+            int next = text.indexOf(playerName);
+
+            if(next != -1) {
+                textComponent.text("");
+                if(next == 0 && text.length() == playerName.length()) {
+                    component.append(0, textComponent);
+                } else {
+                    int lastNameAt = 0;
+                    int childIndex = 0;
+
+                    for(int i = 0; i < text.length(); ++i) {
+                        if(i == next) {
+                            if(i > lastNameAt) {
+                                component.append(childIndex++, Component.text(text.substring(lastNameAt, i)));
+                            }
+
+                            component.append(childIndex++, textComponent);
+                            lastNameAt = i + playerName.length();
+                        }
+                    }
+
+                    if(lastNameAt < text.length()) {
+                        component.append(childIndex, Component.text(text.substring(lastNameAt)));
+                    }
+                }
+            }
+        }
     }
 }
