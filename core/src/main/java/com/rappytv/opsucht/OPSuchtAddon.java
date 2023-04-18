@@ -3,6 +3,7 @@ package com.rappytv.opsucht;
 import com.rappytv.opsucht.context.ClanInviteContext;
 import com.rappytv.opsucht.context.FriendRequestContext;
 import com.rappytv.opsucht.context.PayContext;
+import com.rappytv.opsucht.listeners.ChatReceiveListener;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
@@ -14,6 +15,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     @Override
     protected void enable() {
         registerSettingCategory();
+        registerListener(new ChatReceiveListener(this));
         labyAPI().interactionMenuRegistry().register(new ClanInviteContext(this));
         labyAPI().interactionMenuRegistry().register(new FriendRequestContext(this));
         labyAPI().interactionMenuRegistry().register(new PayContext(this));
