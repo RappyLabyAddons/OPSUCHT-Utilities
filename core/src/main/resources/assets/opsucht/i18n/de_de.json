@@ -16,7 +16,7 @@
             "enabled": {
                 "name": "Aktiviert"
             },
-            "clickableNickname": {
+            "clickableNicknames": {
                 "name": "Klickbare Nicknamen"
             },
             "payContext": {

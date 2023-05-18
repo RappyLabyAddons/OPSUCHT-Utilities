@@ -16,7 +16,7 @@
             "enabled": {
                 "name": "Enabled"
             },
-            "clickableNickname": {
+            "clickableNicknames": {
                 "name": "Clickable nicknames"
             },
             "payContext": {
