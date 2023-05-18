@@ -4,6 +4,7 @@ import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
+import net.labymod.api.thirdparty.discord.DiscordActivity.Asset;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
 import net.labymod.api.util.I18n;
 import javax.inject.Singleton;
@@ -34,6 +35,7 @@ public class DiscordRPCManager {
         if(currentActivity != null)
             builder.start(currentActivity.getStartTime());
 
+        builder.largeAsset(Asset.of("https://raw.githubusercontent.com/LabyMod/server-media/master/minecraft_servers/opsucht/icon.png", "OPSUCHT.net"));
         builder.details(I18n.translate("opsucht.rpc.on", rpcConfig.showSubServer().get() ? "<subserver>" : "OPSUCHT.net"));
         builder.state(rpcConfig.showPlayerCount().get() ? I18n.translate("opsucht.rpc.players", "69", "187") : "");
 
