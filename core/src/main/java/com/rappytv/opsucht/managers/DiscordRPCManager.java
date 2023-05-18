@@ -3,7 +3,6 @@ package com.rappytv.opsucht.managers;
 import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
 import com.rappytv.opsucht.util.Util;
-import net.labymod.api.Laby;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
 import net.labymod.api.util.I18n;
@@ -36,7 +35,7 @@ public class DiscordRPCManager {
             builder.start(currentActivity.getStartTime());
 
         builder.details(I18n.translate("opsucht.rpc.on", rpcConfig.showSubServer().get() ? "<subserver>" : "OPSUCHT.net"));
-        builder.state(I18n.translate("opsucht.rpc.players", "69", "187"));
+        builder.state(rpcConfig.showPlayerAmount().get() ? I18n.translate("opsucht.rpc.players", "69", "187") : "");
 
         this.addon.labyAPI().thirdPartyService().discord().displayActivity(builder.build());
         updating = false;
