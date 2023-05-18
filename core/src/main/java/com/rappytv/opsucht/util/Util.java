@@ -7,7 +7,6 @@ import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.Type;
-import net.labymod.api.util.I18n;
 
 public class Util {
 
