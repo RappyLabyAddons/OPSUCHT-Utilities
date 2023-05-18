@@ -12,7 +12,7 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
-    public static final String ip = "162.19.233.3";
+    public static final String[] ip = {"162.19.233.3", "141.95.85.60"};
     public DiscordRPCManager rpcManager;
     private static OPSuchtAddon instance;
 

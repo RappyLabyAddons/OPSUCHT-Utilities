@@ -12,7 +12,9 @@ public class Util {
 
     public static boolean isConnectedToServer() {
         ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
-        return serverData != null && serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip);
+        return serverData != null
+            && (serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[0])
+            || serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[1]));
     }
 
     public static void notify(String title, String text, Icon icon) {
