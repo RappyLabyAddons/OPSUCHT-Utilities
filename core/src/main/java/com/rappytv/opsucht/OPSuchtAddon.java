@@ -14,17 +14,24 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     public static final String ip = "162.19.233.3";
     public DiscordRPCManager rpcManager;
+    private static OPSuchtAddon instance;
 
     @Override
     protected void enable() {
 
         rpcManager = new DiscordRPCManager(this);
+        instance = this;
 
         registerSettingCategory();
         registerListener(new ChatReceiveListener(this));
         labyAPI().interactionMenuRegistry().register(new ClanInviteContext(this));
         labyAPI().interactionMenuRegistry().register(new FriendRequestContext(this));
         labyAPI().interactionMenuRegistry().register(new PayContext(this));
+    }
+
+    public static void updateRPC() {
+        if(instance != null)
+            instance.rpcManager.updateCustomRPC();
     }
 
     @Override

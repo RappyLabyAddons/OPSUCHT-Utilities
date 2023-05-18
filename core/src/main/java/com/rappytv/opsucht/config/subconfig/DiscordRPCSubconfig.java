@@ -1,11 +1,18 @@
 package com.rappytv.opsucht.config.subconfig;
 
+import com.rappytv.opsucht.OPSuchtAddon;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ParentSwitch;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
-public class DiscordRPCSubconfig {
+public class DiscordRPCSubconfig extends Config {
 
+    public DiscordRPCSubconfig() {
+        enabled.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
+        showSubServer.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
+        showPlayerAmount.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
+    }
 
     @ParentSwitch
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
