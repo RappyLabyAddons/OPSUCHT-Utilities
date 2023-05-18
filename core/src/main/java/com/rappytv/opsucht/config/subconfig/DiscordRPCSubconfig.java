@@ -11,7 +11,7 @@ public class DiscordRPCSubconfig extends Config {
     public DiscordRPCSubconfig() {
         enabled.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
         showSubServer.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
-        showPlayerAmount.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
+        showPlayerCount.addChangeListener((property, oldValue, newValue) -> OPSuchtAddon.updateRPC());
     }
 
     @ParentSwitch
@@ -20,7 +20,7 @@ public class DiscordRPCSubconfig extends Config {
     @SwitchSetting
     private final ConfigProperty<Boolean> showSubServer = new ConfigProperty<>(true);
     @SwitchSetting
-    private final ConfigProperty<Boolean> showPlayerAmount = new ConfigProperty<>(true);
+    private final ConfigProperty<Boolean> showPlayerCount = new ConfigProperty<>(true);
 
     public boolean enabled() {
         return enabled.get();
@@ -29,7 +29,7 @@ public class DiscordRPCSubconfig extends Config {
         return showSubServer;
     }
 
-    public ConfigProperty<Boolean> showPlayerAmount() {
-        return showPlayerAmount;
+    public ConfigProperty<Boolean> showPlayerCount() {
+        return showPlayerCount;
     }
 }

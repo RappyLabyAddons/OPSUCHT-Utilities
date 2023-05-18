@@ -35,7 +35,7 @@ public class DiscordRPCManager {
             builder.start(currentActivity.getStartTime());
 
         builder.details(I18n.translate("opsucht.rpc.on", rpcConfig.showSubServer().get() ? "<subserver>" : "OPSUCHT.net"));
-        builder.state(rpcConfig.showPlayerAmount().get() ? I18n.translate("opsucht.rpc.players", "69", "187") : "");
+        builder.state(rpcConfig.showPlayerCount().get() ? I18n.translate("opsucht.rpc.players", "69", "187") : "");
 
         this.addon.labyAPI().thirdPartyService().discord().displayActivity(builder.build());
         updating = false;
