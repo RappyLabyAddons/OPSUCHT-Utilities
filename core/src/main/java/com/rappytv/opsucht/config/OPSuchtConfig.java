@@ -13,6 +13,7 @@ import net.labymod.api.configuration.settings.annotation.SettingListener;
 import net.labymod.api.configuration.settings.annotation.SettingListener.EventType;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 import net.labymod.api.configuration.settings.type.SettingElement;
+import net.labymod.api.util.I18n;
 
 @ConfigName("settings")
 public class OPSuchtConfig extends AddonConfig {
@@ -49,8 +50,8 @@ public class OPSuchtConfig extends AddonConfig {
                 } catch (NumberFormatException e) {
                     payDefault.set("");
                     Util.notify(
-                        Util.getTranslation("opsucht.toasts.error"),
-                        Util.getTranslation("opsucht.toasts.number"),
+                        I18n.translate("opsucht.toasts.error"),
+                        I18n.translate("opsucht.toasts.number"),
                         Icon.texture(
                             ResourceLocation.create("opsucht", "textures/icon.png")
                         )

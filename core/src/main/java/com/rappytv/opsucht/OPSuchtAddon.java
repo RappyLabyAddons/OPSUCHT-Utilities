@@ -5,6 +5,7 @@ import com.rappytv.opsucht.context.ClanInviteContext;
 import com.rappytv.opsucht.context.FriendRequestContext;
 import com.rappytv.opsucht.context.PayContext;
 import com.rappytv.opsucht.listeners.ChatReceiveListener;
+import com.rappytv.opsucht.managers.DiscordRPCManager;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
@@ -12,9 +13,13 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     public static final String ip = "162.19.233.3";
+    public DiscordRPCManager rpcManager;
 
     @Override
     protected void enable() {
+
+        rpcManager = new DiscordRPCManager(this);
+
         registerSettingCategory();
         registerListener(new ChatReceiveListener(this));
         labyAPI().interactionMenuRegistry().register(new ClanInviteContext(this));

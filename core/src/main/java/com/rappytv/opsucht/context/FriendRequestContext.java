@@ -8,6 +8,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.interaction.BulletPoint;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.util.I18n;
 
 public class FriendRequestContext implements BulletPoint {
 
@@ -19,7 +20,7 @@ public class FriendRequestContext implements BulletPoint {
 
     @Override
     public Component getTitle() {
-        return Component.text(Util.getTranslation("opsucht.context.friendRequest"));
+        return Component.text(I18n.translate("opsucht.context.friendRequest"));
     }
 
     @Override

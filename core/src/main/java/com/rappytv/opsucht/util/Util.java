@@ -16,12 +16,6 @@ public class Util {
         return serverData != null && serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip);
     }
 
-    public static String getTranslation(String key, Object... args) {
-        if(!I18n.has(key))
-            return key;
-        return I18n.getTranslation(key, args);
-    }
-
     public static void notify(String title, String text, Icon icon) {
         Notification.Builder builder = Notification.builder()
             .title(Component.text(title))
