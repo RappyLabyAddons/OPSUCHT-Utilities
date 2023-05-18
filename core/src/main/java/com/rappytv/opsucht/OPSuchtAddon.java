@@ -1,5 +1,6 @@
 package com.rappytv.opsucht;
 
+import com.rappytv.opsucht.config.OPSuchtConfig;
 import com.rappytv.opsucht.context.ClanInviteContext;
 import com.rappytv.opsucht.context.FriendRequestContext;
 import com.rappytv.opsucht.context.PayContext;

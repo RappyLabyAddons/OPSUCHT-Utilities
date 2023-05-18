@@ -1,5 +1,6 @@
-package com.rappytv.opsucht;
+package com.rappytv.opsucht.config;
 
+import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.icon.Icon;
@@ -19,6 +20,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SettingSection("general")
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
+    private final DiscordRPCSubconfig discordRPCSubconfig = new DiscordRPCSubconfig();
 
     @SettingSection("chat")
     @SwitchSetting
@@ -61,6 +63,9 @@ public class OPSuchtConfig extends AddonConfig {
     @Override
     public ConfigProperty<Boolean> enabled() {
         return enabled;
+    }
+    public DiscordRPCSubconfig discordRPCSubconfig() {
+        return discordRPCSubconfig;
     }
 
     public ConfigProperty<Boolean> clickableNicknames() {

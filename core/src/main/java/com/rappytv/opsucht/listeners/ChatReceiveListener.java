@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.listeners;
 
 import com.rappytv.opsucht.OPSuchtAddon;
-import com.rappytv.opsucht.OPSuchtConfig;
+import com.rappytv.opsucht.config.OPSuchtConfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;

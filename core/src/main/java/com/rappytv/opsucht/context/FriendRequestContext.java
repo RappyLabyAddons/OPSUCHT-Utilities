@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.context;
 
 import com.rappytv.opsucht.OPSuchtAddon;
-import com.rappytv.opsucht.OPSuchtConfig;
+import com.rappytv.opsucht.config.OPSuchtConfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
