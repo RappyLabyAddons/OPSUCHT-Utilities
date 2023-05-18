@@ -16,6 +16,16 @@
             "enabled": {
                 "name": "Aktiviert"
             },
+            "discordRPCSubconfig": {
+                "name": "Discord Rich Presence",
+                "showSubServer": {
+                    "name": "Unterserver anzeigen",
+                    "description": "Beispielsweise §bcb1 §foder §blobby-10"
+                },
+                "showPlayerCount": {
+                    "name": "Spieleranzahl anzeigen"
+                }
+            },
             "clickableNicknames": {
                 "name": "Klickbare Nicknamen"
             },
@@ -47,6 +57,10 @@
         },
         "chat": {
             "clickableNickname": "Klicke, um den echten Namen anzusehen."
+        },
+        "rpc": {
+            "on": "Spielt auf %s",
+            "players": "%s Spieler"
         }
     }
 }
