@@ -25,7 +25,11 @@ public class DiscordRPCManager {
 
     public void updateCustomRPC() {
         DiscordRPCSubconfig rpcConfig = addon.configuration().discordRPCSubconfig();
-        if(!Util.isConnectedToServer() || !rpcConfig.enabled() || updating) return;
+        if(!rpcConfig.enabled()) {
+            removeCustomRPC();
+            return;
+        }
+        if(!Util.isConnectedToServer() || updating) return;
 
         updating = true;
 
