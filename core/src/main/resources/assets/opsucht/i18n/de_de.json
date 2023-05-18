@@ -44,6 +44,9 @@
         "toasts": {
             "error": "Fehler",
             "number": "Du musst eine gültige Zahl eingeben!"
+        },
+        "chat": {
+            "clickableNickname": "Klicke, um den echten Namen anzusehen."
         }
     }
 }

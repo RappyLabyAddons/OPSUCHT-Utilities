@@ -3,7 +3,7 @@
 
 ### ✨ Features
 - [x] New context menu bullets
-- [ ] Clickable nicknames
+- [x] Clickable nicknames
 - [ ] Automatic coloring of @pings in chat
 
 ### 📦 Installation

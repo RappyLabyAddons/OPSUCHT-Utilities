@@ -44,6 +44,9 @@
         "toasts": {
             "error": "Error",
             "number": "You have to enter a valid number!"
+        },
+        "chat": {
+            "clickableNickname": "Click, to see the real name."
         }
     }
 }

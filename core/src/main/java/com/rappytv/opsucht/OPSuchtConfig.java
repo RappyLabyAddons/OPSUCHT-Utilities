@@ -20,6 +20,10 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
+    @SettingSection("chat")
+    @SwitchSetting
+    private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
+
     @SettingSection("context")
     @SwitchSetting
     private final ConfigProperty<Boolean> payContext = new ConfigProperty<>(true);
@@ -57,6 +61,10 @@ public class OPSuchtConfig extends AddonConfig {
     @Override
     public ConfigProperty<Boolean> enabled() {
         return enabled;
+    }
+
+    public ConfigProperty<Boolean> clickableNicknames() {
+        return clickableNicknames;
     }
 
     public ConfigProperty<Boolean> payContext() {
