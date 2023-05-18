@@ -30,36 +30,10 @@ public class OPSuchtConfig extends AddonConfig {
     @SettingSection("context")
     @SwitchSetting
     private final ConfigProperty<Boolean> payContext = new ConfigProperty<>(true);
-    @TextFieldSetting
-    private final ConfigProperty<String> payDefault = new ConfigProperty<>("");
     @SwitchSetting
     private final ConfigProperty<Boolean> clanInviteContext = new ConfigProperty<>(true);
     @SwitchSetting
     private final ConfigProperty<Boolean> friendRequestContext = new ConfigProperty<>(true);
-
-    @SettingListener(target = "payDefault", type = EventType.INITIALIZE)
-    public void initialize(SettingElement ignored) {
-        payDefault.addChangeListener((type, oldValue, newValue) -> {
-            if(newValue.isEmpty()) return;
-            try {
-                Integer.parseInt(newValue);
-            } catch (NumberFormatException exception) {
-                try {
-                    Integer.parseInt(oldValue); // May throw exception
-                    payDefault.set(oldValue);
-                } catch (NumberFormatException e) {
-                    payDefault.set("");
-                    Util.notify(
-                        I18n.translate("opsucht.toasts.error"),
-                        I18n.translate("opsucht.toasts.number"),
-                        Icon.texture(
-                            ResourceLocation.create("opsucht", "textures/icon.png")
-                        )
-                    );
-                }
-            }
-        });
-    }
 
     @Override
     public ConfigProperty<Boolean> enabled() {
@@ -75,9 +49,6 @@ public class OPSuchtConfig extends AddonConfig {
 
     public ConfigProperty<Boolean> payContext() {
         return payContext;
-    }
-    public ConfigProperty<String> payDefault() {
-        return payDefault;
     }
     public ConfigProperty<Boolean> clanInviteContext() {
         return clanInviteContext;

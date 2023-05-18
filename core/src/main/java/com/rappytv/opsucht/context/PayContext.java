@@ -31,7 +31,7 @@ public class PayContext implements BulletPoint {
     @Override
     public void execute(Player player) {
         Laby.labyAPI().minecraft().executeNextTick(
-            () -> Laby.labyAPI().minecraft().openChat("/pay " + player.getName() + " " + config.payDefault().get())
+            () -> Laby.labyAPI().minecraft().openChat("/pay " + player.getName() + " ")
         );
     }
 
