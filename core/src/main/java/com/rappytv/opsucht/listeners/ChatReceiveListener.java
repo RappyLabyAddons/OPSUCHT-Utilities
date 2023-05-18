@@ -22,7 +22,7 @@ public class ChatReceiveListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent event) {
-        if(!config.clickableNicknames().get()) return;
+        if(!config.clickableNicknames().get() || !Util.isConnectedToServer()) return;
         ChatMessage message = event.chatMessage();
         if(!message.getPlainText().contains("|") || !message.getPlainText().contains("~")) return;
 
