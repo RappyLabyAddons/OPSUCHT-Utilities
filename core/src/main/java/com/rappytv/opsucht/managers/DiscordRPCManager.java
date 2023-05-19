@@ -4,20 +4,25 @@ import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
+import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
+import net.labymod.api.client.scoreboard.ScoreboardTeam;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Asset;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
 import net.labymod.api.util.I18n;
 import javax.inject.Singleton;
+import java.util.stream.Collectors;
 
 @Singleton
 public class DiscordRPCManager {
 
     private final OPSuchtAddon addon;
     private boolean updating;
+    private String subserver = "OPSUCHT.net";
+    private String players = "0/0";
 
     public DiscordRPCManager(OPSuchtAddon addon) {
         this.addon = addon;
@@ -52,32 +57,35 @@ public class DiscordRPCManager {
     }
 
     public String getSubServer() {
-        int line = isOnLobby() ? 5 : 8;
-        String value = getScoreboardScoreByValue(line);
-        return value != null ? value : "OPSUCHT.net";
+        String value = getScoreboardScoreByValue("server");
+        if(value == null || value.equals(subserver)) return subserver;
+        subserver = value.toLowerCase();
+        return subserver;
     }
 
     public String getPlayerCount() {
-        int line = isOnLobby() ? 2 : 5;
-        String value = getScoreboardScoreByValue(line);
-        return value != null ? value : "0/0";
+        String value = getScoreboardScoreByValue("players");
+        if(value == null || value.equals(players)) return players;
+        players = value;
+        return players;
     }
 
-    private String getScoreboardScoreByValue(int line) {
+    private String getScoreboardScoreByValue(String teamname) {
         Scoreboard scoreboard = Laby.labyAPI().minecraft().getScoreboard();
         if(scoreboard == null) return null;
 
-        ScoreboardScore scoreboardScore = scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR)).stream()
-            .filter(score -> score.getValue() == line)
+        ScoreboardTeam scoreboardTeam = scoreboard.getTeams().stream()
+            .filter(team -> team.getTeamName().equals(teamname))
             .findFirst().orElse(null);
-        if(scoreboardScore == null) return null;
-        return scoreboardScore.getName();
-    }
+        if(scoreboardTeam == null) return null;
 
-    private boolean isOnLobby() {
-        Scoreboard scoreboard = Laby.labyAPI().minecraft().getScoreboard();
-        if(scoreboard == null) return false;
-
-        return scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR)).size() == 7;
+        if(scoreboardTeam.getSuffix() instanceof TextComponent) {
+            TextComponent suffixComponent = (TextComponent) scoreboardTeam.getSuffix();
+            if(suffixComponent.getChildren().size() == 0)
+                return null;
+            TextComponent suffixChild = (TextComponent) suffixComponent.getChildren().get(0);
+            return suffixChild.getText();
+        }
+        return null;
     }
 }
