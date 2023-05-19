@@ -8,7 +8,6 @@ import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
-import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
 @SpriteTexture("settings.png")
