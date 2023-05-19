@@ -4,7 +4,7 @@
 ### ✨ Features
 - [x] New context menu bullets
 - [x] Clickable nicknames
-- [ ] Discord rich presence
+- [x] Discord rich presence
 - [ ] Automatic coloring of @pings in chat
 
 ### 📦 Installation
