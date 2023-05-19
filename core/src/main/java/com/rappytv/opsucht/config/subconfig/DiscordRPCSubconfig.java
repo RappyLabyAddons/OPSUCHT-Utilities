@@ -4,6 +4,7 @@ import com.rappytv.opsucht.OPSuchtAddon;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ParentSwitch;
+import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public class DiscordRPCSubconfig extends Config {
@@ -18,8 +19,10 @@ public class DiscordRPCSubconfig extends Config {
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
     @SwitchSetting
+    @SpriteSlot(size = 32, x = 2)
     private final ConfigProperty<Boolean> showSubServer = new ConfigProperty<>(true);
     @SwitchSetting
+    @SpriteSlot(size = 32, x = 3)
     private final ConfigProperty<Boolean> showPlayerCount = new ConfigProperty<>(true);
 
     public boolean enabled() {
