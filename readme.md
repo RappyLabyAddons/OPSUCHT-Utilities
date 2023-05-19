@@ -1,5 +1,5 @@
 # OPSucht Utilities
-<sub>Adds some ingame utilities for OPSUCHT.net</sub>
+<sub>Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH</sub>
 
 ### ✨ Features
 - [x] New context menu bullets
