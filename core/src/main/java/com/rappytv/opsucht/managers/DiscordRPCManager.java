@@ -5,16 +5,13 @@ import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.TextComponent;
-import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
-import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.client.scoreboard.ScoreboardTeam;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Asset;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
 import net.labymod.api.util.I18n;
 import javax.inject.Singleton;
-import java.util.stream.Collectors;
 
 @Singleton
 public class DiscordRPCManager {
