@@ -37,6 +37,6 @@ public class ClanInviteContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return Util.isConnectedToServer() && config.clanInviteContext().get();
+        return Util.isConnectedToServer() && config.contextSubconfig().clanInviteContext().get();
     }
 }

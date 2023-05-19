@@ -37,6 +37,6 @@ public class PayContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return Util.isConnectedToServer() && config.payContext().get();
+        return Util.isConnectedToServer() && config.contextSubconfig().payContext().get();
     }
 }
