@@ -7,19 +7,14 @@ import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.Type;
-import net.labymod.api.util.I18n;
 
 public class Util {
 
     public static boolean isConnectedToServer() {
         ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
-        return serverData != null && serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip);
-    }
-
-    public static String getTranslation(String key, Object... args) {
-        if(!I18n.has(key))
-            return key;
-        return I18n.getTranslation(key, args);
+        return serverData != null
+            && (serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[0])
+            || serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[1]));
     }
 
     public static void notify(String title, String text, Icon icon) {

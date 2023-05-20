@@ -2,38 +2,37 @@
     "opsucht": {
         "settings": {
             "name": "OPSUCHT Utilities",
-            "header": {
-                "general": {
-                    "name": "General"
-                },
-                "context": {
-                    "name": "Context Menü"
-                },
-                "chat": {
-                    "name": "Chat"
-                }
-            },
             "enabled": {
                 "name": "Aktiviert"
             },
-            "clickableNickname": {
+            "discordRPCSubconfig": {
+                "name": "Discord Rich Presence",
+                "showSubServer": {
+                    "name": "Unterserver anzeigen",
+                    "description": "Beispielsweise §bcb1 §foder §blobby-10"
+                },
+                "showPlayerCount": {
+                    "name": "Spieleranzahl anzeigen"
+                }
+            },
+            "contextSubconfig": {
+                "name": "Context Menü",
+                "description": "Weitere Optionen in dem Menü, welches erscheint, wenn du Mittelklick auf einem Spieler gedrückt hältst.",
+                "payContext": {
+                    "name": "Geld überweisen",
+                    "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler Geld zu überweisen."
+                },
+                "clanInviteContext": {
+                    "name": "Clan-Einladung senden",
+                    "description": "Fügt dem Kontext-Menü die Option hinzu, einen Spieler in deinen aktuellen Clan einzuladen."
+                },
+                "friendRequestContext": {
+                    "name": "Freundschaftsanfrage senden",
+                    "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden."
+                }
+            },
+            "clickableNicknames": {
                 "name": "Klickbare Nicknamen"
-            },
-            "payContext": {
-                "name": "Geld überweisen",
-                "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler Geld zu überweisen."
-            },
-            "payDefault": {
-                "name": "Standartbetrag",
-                "description": "Gibt an, wieviel Geld standartmäßig angegeben wird. (Der Befehl muss immernoch abgesendet werden, bevor das Geld überwiesen wird)\nDu kannst dieses Feld leer lassen"
-            },
-            "clanInviteContext": {
-                "name": "Clan-Einladung senden",
-                "description": "Fügt dem Kontext-Menü die Option hinzu, einen Spieler in deinen aktuellen Clan einzuladen."
-            },
-            "friendRequestContext": {
-                "name": "Freundschaftsanfrage senden",
-                "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden."
             }
         },
         "context": {
@@ -41,12 +40,12 @@
             "clanInvite": "In den Clan einladen",
             "friendRequest": "Freundschaftsanfrage senden"
         },
-        "toasts": {
-            "error": "Fehler",
-            "number": "Du musst eine gültige Zahl eingeben!"
-        },
         "chat": {
             "clickableNickname": "Klicke, um den echten Namen anzusehen."
+        },
+        "rpc": {
+            "on": "Spielt auf %s",
+            "players": "%s Spieler"
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.listeners;
 
 import com.rappytv.opsucht.OPSuchtAddon;
-import com.rappytv.opsucht.OPSuchtConfig;
+import com.rappytv.opsucht.config.OPSuchtConfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
@@ -10,6 +10,7 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.util.I18n;
 import java.util.Arrays;
 
 public class ChatReceiveListener {
@@ -33,7 +34,7 @@ public class ChatReceiveListener {
         if(nick == null || !nick.equalsIgnoreCase(text.split(" ")[2])) return;
 
         Style style = event.message().style()
-            .hoverEvent(HoverEvent.showText(Component.text("§a" + Util.getTranslation("opsucht.chat.clickableNickname"))))
+            .hoverEvent(HoverEvent.showText(Component.text("§a" + I18n.translate("opsucht.chat.clickableNickname"))))
             .clickEvent(ClickEvent.runCommand("/realname " + nick.substring(1)));
         event.message().style(style);
     }

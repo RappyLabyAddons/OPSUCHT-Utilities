@@ -1,13 +1,14 @@
 package com.rappytv.opsucht.context;
 
 import com.rappytv.opsucht.OPSuchtAddon;
-import com.rappytv.opsucht.OPSuchtConfig;
+import com.rappytv.opsucht.config.OPSuchtConfig;
 import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.interaction.BulletPoint;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.util.I18n;
 
 public class ClanInviteContext implements BulletPoint {
 
@@ -19,7 +20,7 @@ public class ClanInviteContext implements BulletPoint {
 
     @Override
     public Component getTitle() {
-        return Component.text(Util.getTranslation("opsucht.context.clanInvite"));
+        return Component.text(I18n.translate("opsucht.context.clanInvite"));
     }
 
     @Override
@@ -36,6 +37,6 @@ public class ClanInviteContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return Util.isConnectedToServer() && config.clanInviteContext().get();
+        return Util.isConnectedToServer() && config.contextSubconfig().clanInviteContext().get();
     }
 }

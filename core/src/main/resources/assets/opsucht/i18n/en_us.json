@@ -2,38 +2,37 @@
     "opsucht": {
         "settings": {
             "name": "OPSUCHT Utilities",
-            "header": {
-                "general": {
-                    "name": "General"
-                },
-                "context": {
-                    "name": "Context Menu"
-                },
-                "chat": {
-                    "name": "Chat"
-                }
-            },
             "enabled": {
                 "name": "Enabled"
             },
-            "clickableNickname": {
+            "discordRPCSubconfig": {
+                "name": "Discord Rich Presence",
+                "showSubServer": {
+                    "name": "Show sub servers",
+                    "description": "For example §bcb1 §for §blobby-10"
+                },
+                "showPlayerCount": {
+                    "name": "Show player count"
+                }
+            },
+            "contextSubconfig": {
+                "name": "Context Menu",
+                "description": "More options in the menu that appears when you hold down center click on a player.",
+                "payContext": {
+                    "name": "Pay money",
+                    "description": "Adds the option to pay a player money."
+                },
+                "clanInviteContext": {
+                    "name": "Send Clan Invite",
+                    "description": "Adds the option to send a clan invite to the player."
+                },
+                "friendRequestContext": {
+                    "name": "Send friend request",
+                    "description": "Adds the option to send a friend request to the player."
+                }
+            },
+            "clickableNicknames": {
                 "name": "Clickable nicknames"
-            },
-            "payContext": {
-                "name": "Pay money",
-                "description": "Adds the option to pay a player money."
-            },
-            "payDefault": {
-                "name": "Default pay amount",
-                "description": "Specifies how much money will be paid by default. (You still have to press enter to send the command)\nYou can leave this blank"
-            },
-            "clanInviteContext": {
-                "name": "Send Clan Invite",
-                "description": "Adds the option to send a clan invite to the player."
-            },
-            "friendRequestContext": {
-                "name": "Send friend request",
-                "description": "Adds the option to send a friend request to the player."
             }
         },
         "context": {
@@ -41,12 +40,12 @@
             "clanInvite": "Invite to clan",
             "friendRequest": "Send friend request"
         },
-        "toasts": {
-            "error": "Error",
-            "number": "You have to enter a valid number!"
-        },
         "chat": {
             "clickableNickname": "Click, to see the real name."
+        },
+        "rpc": {
+            "on": "Playing on %s",
+            "players": "%s Players"
         }
     }
 }

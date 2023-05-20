@@ -18,10 +18,10 @@ labyMod {
     addonInfo {
         namespace = "opsucht"
         displayName = "OPSUCHT Utilities"
-        author = "RappyTV#6969"
-        description = "Adds some ingame utilities for OPSUCHT.net"
-        minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "1.0.0")
+        author = "RappyTV"
+        description = "Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH"
+        minecraftVersion = "1.19<*"
+        version = System.getenv().getOrDefault("VERSION", "1.1.0")
     }
 
     minecraft {
