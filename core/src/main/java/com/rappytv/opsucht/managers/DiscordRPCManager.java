@@ -76,8 +76,7 @@ public class DiscordRPCManager {
             .findFirst().orElse(null);
         if(scoreboardTeam == null) return null;
 
-        if(scoreboardTeam.getSuffix() instanceof TextComponent) {
-            TextComponent suffixComponent = (TextComponent) scoreboardTeam.getSuffix();
+        if(scoreboardTeam.getSuffix() instanceof TextComponent suffixComponent) {
             if(suffixComponent.getChildren().size() == 0)
                 return null;
             TextComponent suffixChild = (TextComponent) suffixComponent.getChildren().get(0);
