@@ -2,7 +2,6 @@ package com.rappytv.opsucht.managers;
 
 import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
-import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.scoreboard.Scoreboard;
@@ -26,16 +25,16 @@ public class DiscordRPCManager {
     }
 
     public void removeCustomRPC() {
-        addon.labyAPI().thirdPartyService().discord().displayDefaultActivity(false);
+        addon.labyAPI().thirdPartyService().discord().displayDefaultActivity();
     }
 
     public void updateCustomRPC() {
+        if(!OPSuchtAddon.isConnected() || updating) return;
         DiscordRPCSubconfig rpcConfig = addon.configuration().discordRPCSubconfig();
         if(!rpcConfig.enabled()) {
             removeCustomRPC();
             return;
         }
-        if(!Util.isConnectedToServer() || updating) return;
 
         updating = true;
 

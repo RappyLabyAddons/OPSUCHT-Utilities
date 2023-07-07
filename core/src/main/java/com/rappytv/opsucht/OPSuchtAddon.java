@@ -17,6 +17,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     public static final String[] ip = {"162.19.233.3", "141.95.85.60"};
     public DiscordRPCManager rpcManager;
     private static OPSuchtAddon instance;
+    private static boolean connected = false;
 
     @Override
     protected void enable() {
@@ -36,6 +37,14 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     public static void updateRPC() {
         if(instance != null)
             instance.rpcManager.updateCustomRPC();
+    }
+
+    public static void setConnected(boolean value) {
+        connected = value;
+    }
+
+    public static boolean isConnected() {
+        return connected;
     }
 
     @Override

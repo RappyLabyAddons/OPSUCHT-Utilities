@@ -2,7 +2,6 @@ package com.rappytv.opsucht.listeners;
 
 import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.OPSuchtConfig;
-import com.rappytv.opsucht.util.Util;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
@@ -11,7 +10,6 @@ import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.I18n;
-import java.util.Arrays;
 
 public class ChatReceiveListener {
 

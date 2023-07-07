@@ -2,7 +2,6 @@ package com.rappytv.opsucht.context;
 
 import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.OPSuchtConfig;
-import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
@@ -37,6 +36,6 @@ public class FriendRequestContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return Util.isConnectedToServer() && config.contextSubconfig().friendRequestContext().get();
+        return OPSuchtAddon.isConnected() && config.contextSubconfig().friendRequestContext().get();
     }
 }

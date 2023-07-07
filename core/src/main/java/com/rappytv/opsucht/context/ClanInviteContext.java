@@ -2,7 +2,6 @@ package com.rappytv.opsucht.context;
 
 import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.OPSuchtConfig;
-import com.rappytv.opsucht.util.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
@@ -37,6 +36,6 @@ public class ClanInviteContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return Util.isConnectedToServer() && config.contextSubconfig().clanInviteContext().get();
+        return OPSuchtAddon.isConnected() && config.contextSubconfig().clanInviteContext().get();
     }
 }
