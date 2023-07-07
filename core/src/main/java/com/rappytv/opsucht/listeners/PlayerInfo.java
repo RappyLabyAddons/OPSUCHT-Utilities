@@ -4,6 +4,7 @@ import com.rappytv.opsucht.OPSuchtAddon;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.playerinfo.PlayerInfoAddEvent;
 import net.labymod.api.event.client.network.playerinfo.PlayerInfoRemoveEvent;
+import net.labymod.api.util.Debounce;
 
 public class PlayerInfo {
 
@@ -15,12 +16,12 @@ public class PlayerInfo {
 
     @Subscribe
     public void onPlayerInfoAdd(PlayerInfoAddEvent event) {
-        addon.rpcManager.updateCustomRPC();
+        Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC());
     }
 
     @Subscribe
     public void onPlayerInfoRemove(PlayerInfoRemoveEvent event) {
-        addon.rpcManager.updateCustomRPC();
+        Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC());
     }
 
 }
