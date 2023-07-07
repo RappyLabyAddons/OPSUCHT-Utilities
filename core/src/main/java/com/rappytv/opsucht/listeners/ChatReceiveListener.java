@@ -23,15 +23,15 @@ public class ChatReceiveListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent event) {
-        if(!config.clickableNicknames().get() || !Util.isConnectedToServer()) return;
+        if(!config.clickableNicknames().get() || !OPSuchtAddon.isConnected()) return;
         ChatMessage message = event.chatMessage();
         if(!message.getPlainText().contains("|") || !message.getPlainText().contains("~")) return;
 
         String text = message.getPlainText();
-        if(!text.contains("|") || !text.contains("~")) return;
+        if(!text.contains("|") || !text.contains("~") || text.length() < 3) return;
 
-        String nick = Arrays.stream(text.split(" ")).filter(s -> s.startsWith("~")).findFirst().orElse(null);
-        if(nick == null || !nick.equalsIgnoreCase(text.split(" ")[2])) return;
+        String nick = text.split(" ")[2];
+        if(!nick.startsWith("~")) return;
 
         Style style = event.message().style()
             .hoverEvent(HoverEvent.showText(Component.text("§a" + I18n.translate("opsucht.chat.clickableNickname"))))
