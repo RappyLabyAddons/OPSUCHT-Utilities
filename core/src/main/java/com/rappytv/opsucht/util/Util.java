@@ -8,6 +8,8 @@ import net.labymod.api.notification.Notification.Type;
 
 public class Util {
 
+    // ik this function is never used but it may be in the future
+
     public static void notify(String title, String text, Icon icon) {
         Notification.Builder builder = Notification.builder()
             .title(Component.text(title))
