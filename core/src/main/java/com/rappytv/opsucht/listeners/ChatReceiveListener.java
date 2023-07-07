@@ -2,7 +2,6 @@ package com.rappytv.opsucht.listeners;
 
 import com.rappytv.opsucht.OPSuchtAddon;
 import com.rappytv.opsucht.config.OPSuchtConfig;
-import com.rappytv.opsucht.util.Util;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
@@ -11,7 +10,6 @@ import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.I18n;
-import java.util.Arrays;
 
 public class ChatReceiveListener {
 
@@ -23,15 +21,15 @@ public class ChatReceiveListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent event) {
-        if(!config.clickableNicknames().get() || !Util.isConnectedToServer()) return;
+        if(!config.clickableNicknames().get() || !OPSuchtAddon.isConnected()) return;
         ChatMessage message = event.chatMessage();
         if(!message.getPlainText().contains("|") || !message.getPlainText().contains("~")) return;
 
         String text = message.getPlainText();
-        if(!text.contains("|") || !text.contains("~")) return;
+        if(!text.contains("|") || !text.contains("~") || text.length() < 3) return;
 
-        String nick = Arrays.stream(text.split(" ")).filter(s -> s.startsWith("~")).findFirst().orElse(null);
-        if(nick == null || !nick.equalsIgnoreCase(text.split(" ")[2])) return;
+        String nick = text.split(" ")[2];
+        if(!nick.startsWith("~")) return;
 
         Style style = event.message().style()
             .hoverEvent(HoverEvent.showText(Component.text("§a" + I18n.translate("opsucht.chat.clickableNickname"))))

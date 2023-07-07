@@ -21,7 +21,7 @@ labyMod {
         author = "RappyTV"
         description = "Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH"
         minecraftVersion = "1.19<*"
-        version = System.getenv().getOrDefault("VERSION", "1.1.0")
+        version = System.getenv().getOrDefault("VERSION", "1.1.1")
     }
 
     minecraft {
@@ -33,7 +33,8 @@ labyMod {
                 "1.18.2",
                 "1.19.2",
                 "1.19.3",
-                "1.19.4"
+                "1.19.4",
+                "1.20.1"
         ) { version, provider ->
             configureRun(provider, version)
         }
