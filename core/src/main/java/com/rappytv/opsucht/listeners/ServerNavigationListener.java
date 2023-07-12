@@ -32,15 +32,19 @@ public class ServerNavigationListener {
 
     @Subscribe
     public void onSubServerSwitch(SubServerSwitchEvent event) {
-        System.out.println("\nSwitch\n\n");
-        Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(false));
+        if(OPSuchtAddon.isConnected()) {
+            Laby.labyAPI().minecraft().executeNextTick(() -> {
+                addon.rpcManager.updateCustomRPC(false);
+                if(addon.configuration().autoFly().get())
+                    Laby.references().chatExecutor().chat("/fly", false);
+            });
+        }
     }
 
     @Subscribe
     public void onServerDisconnect(ServerDisconnectEvent event) {
         OPSuchtAddon.setConnected(false);
         addon.rpcManager.removeCustomRPC();
-        System.out.println("\n\nServer switch\n\n");
     }
 
     private boolean isOpSucht(ServerData data) {

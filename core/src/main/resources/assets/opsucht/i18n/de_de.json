@@ -33,6 +33,10 @@
             },
             "clickableNicknames": {
                 "name": "Klickbare Nicknamen"
+            },
+            "autoFly": {
+                "name": "AutoFly",
+                "description": "Führt automatisch §b/fly §faus, wenn du einem anderen Unterserver von §bOPSUCHT.net §fbeitrittst.\nFunktioniert erst ab §cPLATIN§f."
             }
         },
         "context": {
