@@ -45,7 +45,8 @@
         },
         "rpc": {
             "on": "Playing on %s",
-            "players": "%s Players"
+            "players": "%s Players",
+            "loading": "Loading player count..."
         }
     }
 }

@@ -16,12 +16,12 @@ public class PlayerInfo {
 
     @Subscribe
     public void onPlayerInfoAdd(PlayerInfoAddEvent event) {
-        Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC());
+        Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC(false));
     }
 
     @Subscribe
     public void onPlayerInfoRemove(PlayerInfoRemoveEvent event) {
-        Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC());
+        Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC(false));
     }
 
 }

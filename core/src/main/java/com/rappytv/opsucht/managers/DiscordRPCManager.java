@@ -28,7 +28,7 @@ public class DiscordRPCManager {
         addon.labyAPI().thirdPartyService().discord().displayDefaultActivity();
     }
 
-    public void updateCustomRPC() {
+    public void updateCustomRPC(boolean joining) {
         if(!OPSuchtAddon.isConnected() || updating) return;
         DiscordRPCSubconfig rpcConfig = addon.configuration().discordRPCSubconfig();
         if(!rpcConfig.enabled()) {
@@ -46,7 +46,11 @@ public class DiscordRPCManager {
 
         builder.largeAsset(Asset.of("https://raw.githubusercontent.com/LabyMod/server-media/master/minecraft_servers/opsucht/icon.png", "OPSUCHT.net"));
         builder.details(I18n.translate("opsucht.rpc.on", rpcConfig.showSubServer().get() ? getSubServer() : "OPSUCHT.net"));
-        builder.state(rpcConfig.showPlayerCount().get() ? I18n.translate("opsucht.rpc.players", getPlayerCount()) : "");
+        builder.state(
+            joining ?
+                I18n.translate("opsucht.rpc.loading") :
+                rpcConfig.showPlayerCount().get() ? I18n.translate("opsucht.rpc.players", getPlayerCount()) : ""
+        );
 
         this.addon.labyAPI().thirdPartyService().discord().displayActivity(builder.build());
         updating = false;
