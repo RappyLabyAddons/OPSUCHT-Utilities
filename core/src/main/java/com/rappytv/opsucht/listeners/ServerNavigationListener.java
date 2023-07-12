@@ -6,6 +6,7 @@ import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerJoinEvent;
+import net.labymod.api.event.client.network.server.ServerSwitchEvent;
 import net.labymod.api.event.client.network.server.SubServerSwitchEvent;
 
 public class ServerNavigationListener {
@@ -18,22 +19,36 @@ public class ServerNavigationListener {
 
     @Subscribe
     public void onServerJoin(ServerJoinEvent event) {
-        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
-        if (serverData != null) {
-            if(serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[0]) || serverData.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[1]))
-                OPSuchtAddon.setConnected(true);
-        }
-        addon.rpcManager.updateCustomRPC();
+        if(isOpSucht(event.serverData()))
+            OPSuchtAddon.setConnected(true);
+        Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(true));
     }
 
     @Subscribe
-    public void onServerSwitch(SubServerSwitchEvent event) {
-        addon.rpcManager.updateCustomRPC();
+    public void onServerSwitch(ServerSwitchEvent event) {
+        OPSuchtAddon.setConnected(isOpSucht(event.newServerData()));
+        Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(true));
+    }
+
+    @Subscribe
+    public void onSubServerSwitch(SubServerSwitchEvent event) {
+        if(OPSuchtAddon.isConnected()) {
+            Laby.labyAPI().minecraft().executeNextTick(() -> {
+                addon.rpcManager.updateCustomRPC(false);
+                if(addon.configuration().autoFly().get())
+                    Laby.references().chatExecutor().chat("/fly", false);
+            });
+        }
     }
 
     @Subscribe
     public void onServerDisconnect(ServerDisconnectEvent event) {
         OPSuchtAddon.setConnected(false);
         addon.rpcManager.removeCustomRPC();
+    }
+
+    private boolean isOpSucht(ServerData data) {
+        if(data == null) return false;
+        return data.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[0]) || data.actualAddress().getAddress().getAddress().getHostAddress().equals(OPSuchtAddon.ip[1]);
     }
 }

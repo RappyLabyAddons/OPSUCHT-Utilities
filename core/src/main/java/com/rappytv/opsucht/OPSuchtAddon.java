@@ -36,7 +36,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     public static void updateRPC() {
         if(instance != null)
-            instance.rpcManager.updateCustomRPC();
+            instance.rpcManager.updateCustomRPC(false);
     }
 
     public static void setConnected(boolean value) {

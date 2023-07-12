@@ -25,7 +25,9 @@ public class OPSuchtConfig extends AddonConfig {
     @SpriteSlot(size = 32, y = 2)
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
-
+    @SpriteSlot(size = 32, y = 2, x = 1)
+    @SwitchSetting
+    private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
 
     @Override
     public ConfigProperty<Boolean> enabled() {
@@ -40,5 +42,8 @@ public class OPSuchtConfig extends AddonConfig {
     }
     public ContextSubconfig contextSubconfig() {
         return contextSubconfig;
+    }
+    public ConfigProperty<Boolean> autoFly() {
+        return autoFly;
     }
 }
