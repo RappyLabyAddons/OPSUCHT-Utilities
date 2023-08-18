@@ -5,6 +5,7 @@ import com.rappytv.opsucht.config.OPSuchtConfig;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -30,7 +31,7 @@ public class ChatReceiveListener {
             if(!nick.startsWith("~")) return;
 
             Style style = event.message().style()
-                .hoverEvent(HoverEvent.showText(Component.text("§a" + I18n.translate("opsucht.chat.clickableNickname"))))
+                .hoverEvent(HoverEvent.showText(Component.translatable("opsucht.chat.clickableNickname", NamedTextColor.GREEN)))
                 .clickEvent(ClickEvent.runCommand("/realname " + nick.substring(1)));
             event.message().style(style);
         }
