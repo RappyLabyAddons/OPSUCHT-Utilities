@@ -29,7 +29,7 @@ public class DiscordRPCManager {
     }
 
     public void updateCustomRPC(boolean joining) {
-        if(!OPSuchtAddon.isConnected() || updating) return;
+        if(updating) return;
         DiscordRPCSubconfig rpcConfig = addon.configuration().discordRPCSubconfig();
         if(!rpcConfig.enabled()) {
             removeCustomRPC();

@@ -16,11 +16,13 @@ public class PlayerInfo {
 
     @Subscribe
     public void onPlayerInfoAdd(PlayerInfoAddEvent event) {
+        if(!OPSuchtAddon.isConnected()) return;
         Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC(false));
     }
 
     @Subscribe
     public void onPlayerInfoRemove(PlayerInfoRemoveEvent event) {
+        if(!OPSuchtAddon.isConnected()) return;
         Debounce.of("refresh-opsucht-discord-rpc", 2000, () -> addon.rpcManager.updateCustomRPC(false));
     }
 
