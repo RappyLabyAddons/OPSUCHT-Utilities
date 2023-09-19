@@ -36,7 +36,7 @@ public class ServerNavigationListener {
             Laby.labyAPI().minecraft().executeNextTick(() -> {
                 addon.rpcManager.updateCustomRPC(false);
                 if(addon.configuration().autoFly().get())
-                    Laby.references().chatExecutor().chat("/fly", false);
+                    Laby.labyAPI().minecraft().executeNextTick(() -> Laby.references().chatExecutor().chat("/fly", false));
             });
         }
     }
