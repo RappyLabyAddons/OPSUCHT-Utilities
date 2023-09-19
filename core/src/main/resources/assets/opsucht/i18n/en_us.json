@@ -36,7 +36,7 @@
             },
             "autoFly": {
                 "name": "AutoFly",
-                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks"
+                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks."
             }
         },
         "context": {
