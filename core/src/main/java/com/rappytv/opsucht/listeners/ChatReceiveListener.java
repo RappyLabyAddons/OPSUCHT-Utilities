@@ -9,7 +9,6 @@ import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
-import net.labymod.api.util.I18n;
 
 public class ChatReceiveListener {
 
