@@ -80,7 +80,7 @@ public class DiscordRPCManager {
         if(scoreboardTeam == null) return null;
 
         if(scoreboardTeam.getSuffix() instanceof TextComponent suffixComponent) {
-            if(suffixComponent.getChildren().size() == 0)
+            if(suffixComponent.getChildren().isEmpty())
                 return null;
             TextComponent suffixChild = (TextComponent) suffixComponent.getChildren().get(0);
             return suffixChild.getText();
