@@ -1,4 +1,5 @@
 # OPSucht Utilities
+![Downloads](https://labybadges-delta.vercel.app/api/downloads/opsucht/formatted)<br>
 <sub>Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH</sub>
 
 ### ✨ Features
