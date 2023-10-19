@@ -7,7 +7,6 @@
 - [x] Clickable nicknames
 - [x] Discord rich presence
 - [x] AutoFly
-- [ ] Automatic coloring of @pings in chat
 
 ### 📦 Installation
 1. Press `Win` + `R`
