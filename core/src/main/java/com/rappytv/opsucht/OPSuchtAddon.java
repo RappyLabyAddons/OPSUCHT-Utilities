@@ -8,8 +8,11 @@ import com.rappytv.opsucht.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.listeners.PlayerInfo;
 import com.rappytv.opsucht.listeners.ServerNavigationListener;
 import com.rappytv.opsucht.managers.DiscordRPCManager;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
+import net.labymod.api.revision.SimpleRevision;
+import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
@@ -32,6 +35,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         labyAPI().interactionMenuRegistry().register(new ClanInviteContext(this));
         labyAPI().interactionMenuRegistry().register(new FriendRequestContext(this));
         labyAPI().interactionMenuRegistry().register(new PayContext(this));
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.4.0"), "2023-10-19"));
     }
 
     public static void updateRPC() {
