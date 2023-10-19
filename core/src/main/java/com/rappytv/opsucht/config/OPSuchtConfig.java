@@ -4,6 +4,7 @@ import com.rappytv.opsucht.config.subconfig.ContextSubconfig;
 import com.rappytv.opsucht.config.subconfig.DiscordRPCSubconfig;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
@@ -21,15 +22,13 @@ public class OPSuchtConfig extends AddonConfig {
     @SpriteSlot(size = 32)
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
-    @IntroducedIn(namespace = "opsucht", value = "1.4.0")
-    @SwitchSetting
-    private final ConfigProperty<ServerRank> rank = new ConfigProperty<>(ServerRank.PLAYER);
     @SpriteSlot(size = 32, x = 1)
     private final DiscordRPCSubconfig discordRPCSubconfig = new DiscordRPCSubconfig();
-
+    @IntroducedIn(namespace = "opsucht", value = "1.4.0")
+    @DropdownSetting
+    private final ConfigProperty<ServerRank> rank = new ConfigProperty<>(ServerRank.PLAYER);
     @SpriteSlot(size = 32, y = 1)
     private final ContextSubconfig contextSubconfig = new ContextSubconfig();
-
     @SpriteSlot(size = 32, y = 2)
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
@@ -41,13 +40,12 @@ public class OPSuchtConfig extends AddonConfig {
     public ConfigProperty<Boolean> enabled() {
         return enabled;
     }
-    public ServerRank rank() {
-        return rank.get();
-    }
     public DiscordRPCSubconfig discordRPCSubconfig() {
         return discordRPCSubconfig;
     }
-
+    public ServerRank rank() {
+        return rank.get();
+    }
     public ConfigProperty<Boolean> clickableNicknames() {
         return clickableNicknames;
     }
