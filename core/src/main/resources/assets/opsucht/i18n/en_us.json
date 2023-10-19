@@ -5,6 +5,20 @@
             "enabled": {
                 "name": "Enabled"
             },
+            "rank": {
+                "name": "Rank",
+                "description": "This options helps you see which addon functions you're able to use. Selecting a higher rank does not affect your server permissions.",
+                "entries": {
+                    "player": "Player",
+                    "premium": "Premium",
+                    "diamond": "Diamond",
+                    "ultra": "Ultra",
+                    "legend": "Legend",
+                    "supreme": "Supreme",
+                    "platin": "PLATIN",
+                    "op": "OP"
+                }
+            },
             "discordRPCSubconfig": {
                 "name": "Discord Rich Presence",
                 "showSubServer": {
