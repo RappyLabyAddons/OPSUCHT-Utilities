@@ -10,6 +10,7 @@ import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
+import net.labymod.api.configuration.settings.annotation.SettingRequires;
 
 @ConfigName("settings")
 @SpriteTexture("settings.png")
@@ -33,6 +34,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
     @SpriteSlot(size = 32, y = 2, x = 1)
+    @SettingRequires("rank")
     @SwitchSetting
     private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
 
