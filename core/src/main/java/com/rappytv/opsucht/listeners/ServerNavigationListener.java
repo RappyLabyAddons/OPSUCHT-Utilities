@@ -1,6 +1,7 @@
 package com.rappytv.opsucht.listeners;
 
 import com.rappytv.opsucht.OPSuchtAddon;
+import com.rappytv.opsucht.config.ServerRank;
 import net.labymod.api.Laby;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.event.Subscribe;
@@ -38,7 +39,7 @@ public class ServerNavigationListener {
         if(OPSuchtAddon.isConnected()) {
             Laby.labyAPI().minecraft().executeNextTick(() -> {
                 addon.rpcManager.updateCustomRPC(false);
-                if(addon.configuration().autoFly().get())
+                if(addon.configuration().autoFly().get() && addon.configuration().rank().hasPermission(ServerRank.PLATIN))
                     Laby.labyAPI().minecraft().executeNextTick(() -> Laby.references().chatExecutor().chat("/fly", false));
             });
         }
