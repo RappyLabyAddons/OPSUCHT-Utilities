@@ -23,6 +23,11 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     private static boolean connected = false;
 
     @Override
+    protected void preConfigurationLoad() {
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.4.0"), "2023-10-19"));
+    }
+
+    @Override
     protected void enable() {
 
         rpcManager = new DiscordRPCManager(this);
@@ -35,7 +40,6 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         labyAPI().interactionMenuRegistry().register(new ClanInviteContext(this));
         labyAPI().interactionMenuRegistry().register(new FriendRequestContext(this));
         labyAPI().interactionMenuRegistry().register(new PayContext(this));
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.4.0"), "2023-10-19"));
     }
 
     public static void updateRPC() {
