@@ -13,9 +13,14 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 @SpriteTexture("settings.png")
 public class OPSuchtConfig extends AddonConfig {
 
+    public OPSuchtConfig() {
+        autoFly.customRequires((ignored) -> rank.get().hasPermission(ServerRank.PLATIN));
+    }
+
     @SpriteSlot(size = 32)
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
+    private final ConfigProperty<ServerRank> rank = new ConfigProperty<>(ServerRank.PLAYER);
     @SpriteSlot(size = 32, x = 1)
     private final DiscordRPCSubconfig discordRPCSubconfig = new DiscordRPCSubconfig();
 
@@ -32,6 +37,9 @@ public class OPSuchtConfig extends AddonConfig {
     @Override
     public ConfigProperty<Boolean> enabled() {
         return enabled;
+    }
+    public ServerRank rank() {
+        return rank.get();
     }
     public DiscordRPCSubconfig discordRPCSubconfig() {
         return discordRPCSubconfig;
