@@ -7,7 +7,7 @@
             },
             "rank": {
                 "name": "Rank",
-                "description": "This options helps you see which addon functions you're able to use. Selecting a higher rank does not affect your server permissions.",
+                "description": "This option deactivates all addon features you can't use because of your rank.",
                 "entries": {
                     "player": "Player",
                     "premium": "Premium",
