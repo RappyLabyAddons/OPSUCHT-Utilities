@@ -19,15 +19,18 @@ public class ServerNavigationListener {
 
     @Subscribe
     public void onServerJoin(ServerJoinEvent event) {
-        if(isOpSucht(event.serverData()))
+        if(isOpSucht(event.serverData())) {
             OPSuchtAddon.setConnected(true);
-        Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(true));
+            Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(true));
+        }
     }
 
     @Subscribe
     public void onServerSwitch(ServerSwitchEvent event) {
-        OPSuchtAddon.setConnected(isOpSucht(event.newServerData()));
-        Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(true));
+        if(isOpSucht(event.newServerData())) {
+            OPSuchtAddon.setConnected(true);
+            Laby.labyAPI().minecraft().executeNextTick(() -> addon.rpcManager.updateCustomRPC(true));
+        }
     }
 
     @Subscribe
