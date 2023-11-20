@@ -17,7 +17,7 @@ import net.labymod.api.configuration.settings.annotation.SettingRequires;
 public class OPSuchtConfig extends AddonConfig {
 
     public OPSuchtConfig() {
-        autoFly.customRequires((ignored) -> rank.get().hasPermission(ServerRank.PLATIN));
+        rank.customRequires((rank) -> rank.hasPermission(ServerRank.PLATIN));
     }
 
     @SpriteSlot(size = 32)
