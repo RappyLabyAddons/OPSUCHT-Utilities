@@ -2,6 +2,11 @@
     "opsucht": {
         "settings": {
             "name": "OPSUCHT Utilities",
+            "header": {
+                "chat": {
+                    "name": "Chat"
+                }
+            },
             "enabled": {
                 "name": "Enabled"
             },
@@ -31,12 +36,16 @@
                     "description": "Adds the option to send a friend request to the player."
                 }
             },
-            "clickableNicknames": {
-                "name": "Clickable nicknames"
-            },
             "autoFly": {
                 "name": "AutoFly",
                 "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks."
+            },
+            "clickableNicknames": {
+                "name": "Clickable nicknames"
+            },
+            "coloredMentions": {
+                "name": "Colored mentions",
+                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
             }
         },
         "context": {
