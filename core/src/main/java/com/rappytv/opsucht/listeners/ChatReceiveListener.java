@@ -29,7 +29,7 @@ public class ChatReceiveListener {
         Component message = event.message();
         String text = event.chatMessage().getPlainText();
 
-        if(text.contains("@")) {
+        if(config.coloredMentions().get() && text.contains("@")) {
             Pattern pattern = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
             for(MatchResult matcher : pattern.matcher(text).results().toList()) {
                 replaceComponent(message, matcher.group(), () -> Component.text(matcher.group(), NamedTextColor.AQUA).copy());
