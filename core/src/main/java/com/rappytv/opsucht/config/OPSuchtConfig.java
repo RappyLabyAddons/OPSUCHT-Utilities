@@ -8,6 +8,7 @@ import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
+import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
 @SpriteTexture("settings.png")
@@ -18,16 +19,19 @@ public class OPSuchtConfig extends AddonConfig {
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
     @SpriteSlot(size = 32, x = 1)
     private final DiscordRPCSubconfig discordRPCSubconfig = new DiscordRPCSubconfig();
-
     @SpriteSlot(size = 32, y = 1)
     private final ContextSubconfig contextSubconfig = new ContextSubconfig();
-
     @SpriteSlot(size = 32, y = 2)
     @SwitchSetting
-    private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
+    private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
+
+    @SettingSection("chat")
     @SpriteSlot(size = 32, y = 2, x = 1)
     @SwitchSetting
-    private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
+    private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
+    @SpriteSlot(size = 32, y = 2, x = 2)
+    @SwitchSetting
+    private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
     @Override
     public ConfigProperty<Boolean> enabled() {
@@ -36,14 +40,17 @@ public class OPSuchtConfig extends AddonConfig {
     public DiscordRPCSubconfig discordRPCSubconfig() {
         return discordRPCSubconfig;
     }
-
-    public ConfigProperty<Boolean> clickableNicknames() {
-        return clickableNicknames;
-    }
     public ContextSubconfig contextSubconfig() {
         return contextSubconfig;
     }
     public ConfigProperty<Boolean> autoFly() {
         return autoFly;
+    }
+
+    public ConfigProperty<Boolean> clickableNicknames() {
+        return clickableNicknames;
+    }
+    public ConfigProperty<Boolean> coloredMentions() {
+        return coloredMentions;
     }
 }

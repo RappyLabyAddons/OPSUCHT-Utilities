@@ -2,6 +2,11 @@
     "opsucht": {
         "settings": {
             "name": "OPSUCHT Utilities",
+            "header": {
+                "chat": {
+                    "name": "Chat"
+                }
+            },
             "enabled": {
                 "name": "Aktiviert"
             },
@@ -31,12 +36,16 @@
                     "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden."
                 }
             },
-            "clickableNicknames": {
-                "name": "Klickbare Nicknamen"
-            },
             "autoFly": {
                 "name": "AutoFly",
                 "description": "Führt automatisch §b/fly §faus, wenn du einem anderen Unterserver von §bOPSUCHT.net §fbeitrittst.\nFunktioniert erst ab §cPLATIN§f."
+            },
+            "clickableNicknames": {
+                "name": "Klickbare Nicknamen"
+            },
+            "coloredMentions": {
+                "name": "Gefärbte Erwähnungen",
+                "description": "Jede Erwähnung eines gültigen Minecraft Namen @<Name> wird im Chat in Hellblau eingefärbt §b@<Name>"
             }
         },
         "context": {
