@@ -8,8 +8,11 @@ import com.rappytv.opsucht.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.listeners.PlayerInfo;
 import com.rappytv.opsucht.listeners.ServerNavigationListener;
 import com.rappytv.opsucht.managers.DiscordRPCManager;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
+import net.labymod.api.revision.SimpleRevision;
+import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
@@ -18,6 +21,11 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     public DiscordRPCManager rpcManager;
     private static OPSuchtAddon instance;
     private static boolean connected = false;
+
+    @Override
+    protected void preConfigurationLoad() {
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.4.0"), "2023-11-21"));
+    }
 
     @Override
     protected void enable() {
