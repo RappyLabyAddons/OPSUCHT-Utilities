@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class ChatReceiveListener {
 
     private final OPSuchtConfig config;
+    private final Pattern pattern = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
 
     public ChatReceiveListener(OPSuchtAddon addon) {
         this.config = addon.configuration();
@@ -30,7 +31,6 @@ public class ChatReceiveListener {
         String text = event.chatMessage().getPlainText();
 
         if(config.coloredMentions().get() && text.contains("@")) {
-            Pattern pattern = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
             for(MatchResult matcher : pattern.matcher(text).results().toList()) {
                 replaceComponent(message, matcher.group(), () -> Component.text(matcher.group(), NamedTextColor.AQUA).copy());
             }
