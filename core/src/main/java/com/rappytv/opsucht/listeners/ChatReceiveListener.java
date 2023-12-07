@@ -32,6 +32,7 @@ public class ChatReceiveListener {
 
         if(config.coloredMentions().get() && text.contains("@")) {
             for(MatchResult matcher : pattern.matcher(text).results().toList()) {
+                if(matcher.group().equals("@TEAM") || matcher.group().equals("@CLAN")) continue;
                 replaceComponent(message, matcher.group(), () -> Component.text(matcher.group(), NamedTextColor.AQUA).copy());
             }
             event.setMessage(message);
