@@ -1,7 +1,6 @@
 package com.rappytv.opsucht.context;
 
 import com.rappytv.opsucht.OPSuchtAddon;
-import com.rappytv.opsucht.config.OPSuchtConfig;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
@@ -11,10 +10,10 @@ import net.labymod.api.util.I18n;
 
 public class FriendRequestContext implements BulletPoint {
 
-    private final OPSuchtConfig config;
+    private final OPSuchtAddon addon;
 
     public FriendRequestContext(OPSuchtAddon addon) {
-        this.config = addon.configuration();
+        this.addon = addon;
     }
 
     @Override
@@ -36,6 +35,6 @@ public class FriendRequestContext implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return OPSuchtAddon.isConnected() && config.contextSubconfig().friendRequestContext().get();
+        return addon.server().isConnected() && addon.configuration().contextSubconfig().friendRequestContext().get();
     }
 }
