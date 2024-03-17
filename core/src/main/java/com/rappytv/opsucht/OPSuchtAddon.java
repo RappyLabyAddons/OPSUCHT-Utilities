@@ -6,7 +6,6 @@ import com.rappytv.opsucht.context.FriendRequestContext;
 import com.rappytv.opsucht.context.PayContext;
 import com.rappytv.opsucht.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.listeners.PlayerInfo;
-import com.rappytv.opsucht.listeners.ServerNavigationListener;
 import com.rappytv.opsucht.managers.DiscordRPCManager;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
@@ -17,10 +16,9 @@ import net.labymod.api.util.version.SemanticVersion;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
-    public static final String[] ip = {"162.19.233.3", "141.95.85.60"};
     public DiscordRPCManager rpcManager;
     private static OPSuchtAddon instance;
-    private static boolean connected = false;
+    private OPSuchtServer server;
 
     @Override
     protected void preConfigurationLoad() {
@@ -36,10 +34,10 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         registerSettingCategory();
         registerListener(new ChatReceiveListener(this));
         registerListener(new PlayerInfo(this));
-        registerListener(new ServerNavigationListener(this));
         labyAPI().interactionMenuRegistry().register(new ClanInviteContext(this));
         labyAPI().interactionMenuRegistry().register(new FriendRequestContext(this));
         labyAPI().interactionMenuRegistry().register(new PayContext(this));
+        labyAPI().serverController().registerServer(server = new OPSuchtServer(this));
     }
 
     public static void updateRPC() {
@@ -47,12 +45,8 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
             instance.rpcManager.updateCustomRPC(false);
     }
 
-    public static void setConnected(boolean value) {
-        connected = value;
-    }
-
-    public static boolean isConnected() {
-        return connected;
+    public OPSuchtServer server() {
+        return server;
     }
 
     @Override
