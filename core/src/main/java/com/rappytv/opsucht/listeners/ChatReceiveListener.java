@@ -1,7 +1,6 @@
 package com.rappytv.opsucht.listeners;
 
 import com.rappytv.opsucht.OPSuchtAddon;
-import com.rappytv.opsucht.config.OPSuchtConfig;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.TranslatableComponent;
@@ -17,27 +16,27 @@ import java.util.regex.Pattern;
 
 public class ChatReceiveListener {
 
-    private final OPSuchtConfig config;
+    private final OPSuchtAddon addon;
     private final Pattern pattern = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
 
     public ChatReceiveListener(OPSuchtAddon addon) {
-        this.config = addon.configuration();
+        this.addon = addon;
     }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent event) {
-        if(!OPSuchtAddon.isConnected()) return;
+        if(!addon.server().isConnected()) return;
         Component message = event.message();
         String text = event.chatMessage().getPlainText();
 
-        if(config.coloredMentions().get() && text.contains("@")) {
+        if(addon.configuration().coloredMentions().get() && text.contains("@")) {
             for(MatchResult matcher : pattern.matcher(text).results().toList()) {
                 if(matcher.group().equals("@TEAM") || matcher.group().equals("@CLAN")) continue;
                 replaceComponent(message, matcher.group(), () -> Component.text(matcher.group(), NamedTextColor.AQUA).copy());
             }
             event.setMessage(message);
         }
-        if(config.clickableNicknames().get()) {
+        if(addon.configuration().clickableNicknames().get()) {
             if(!text.contains("|") || !text.contains("~") || text.length() < 3) return;
 
             String nick = text.split(" ")[2];
