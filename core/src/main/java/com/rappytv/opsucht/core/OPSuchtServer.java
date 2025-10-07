@@ -1,4 +1,4 @@
-package com.rappytv.opsucht;
+package com.rappytv.opsucht.core;
 
 import net.labymod.api.Laby;
 import net.labymod.api.client.network.server.AbstractServer;
@@ -12,30 +12,33 @@ public class OPSuchtServer extends AbstractServer {
     public OPSuchtServer(OPSuchtAddon addon) {
         super("opsucht");
         this.addon = addon;
-        connected = false;
+        this.connected = false;
     }
 
     @Override
     public void loginOrSwitch(LoginPhase phase) {
-        if(phase == LoginPhase.LOGIN) connected = true;
-        else if(phase == LoginPhase.SWITCH && addon.configuration().autoFly().get()) {
+        if(phase == LoginPhase.LOGIN) this.connected = true;
+        else if(phase == LoginPhase.SWITCH && this.addon.configuration().autoFly().get()) {
             Laby.labyAPI().minecraft().executeNextTick(() ->
                 Laby.references().chatExecutor().chat("/fly", false)
             );
         }
 
         Laby.labyAPI().minecraft().executeNextTick(() ->
-            addon.rpcManager.updateCustomRPC(phase == LoginPhase.LOGIN)
+            OPSuchtAddon.richPresenceManager().updateCustomRPC(
+                this.addon.configuration().richPresenceConfig(),
+                phase == LoginPhase.LOGIN
+            )
         );
     }
 
     @Override
     public void disconnect(Phase phase) {
-        if(phase == Phase.POST) connected = false;
-        addon.rpcManager.removeCustomRPC();
+        if(phase == Phase.POST) this.connected = false;
+        OPSuchtAddon.richPresenceManager().removeCustomRPC();
     }
 
     public boolean isConnected() {
-        return connected;
+        return this.connected;
     }
 }

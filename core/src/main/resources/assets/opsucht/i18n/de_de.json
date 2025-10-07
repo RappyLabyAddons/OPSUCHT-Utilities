@@ -1,7 +1,6 @@
 {
     "opsucht": {
         "settings": {
-            "name": "OPSUCHT Utilities",
             "header": {
                 "chat": {
                     "name": "Chat"
@@ -10,7 +9,7 @@
             "enabled": {
                 "name": "Aktiviert"
             },
-            "discordRPCSubconfig": {
+            "richPresenceConfig": {
                 "name": "Discord Rich Presence",
                 "showSubServer": {
                     "name": "Unterserver anzeigen",
@@ -20,18 +19,17 @@
                     "name": "Spieleranzahl anzeigen"
                 }
             },
-            "contextSubconfig": {
+            "interactionBulletConfig": {
                 "name": "Context Menü",
-                "description": "Weitere Optionen in dem Menü, welches erscheint, wenn du Mittelklick auf einem Spieler gedrückt hältst.",
-                "payContext": {
+                "payBullet": {
                     "name": "Geld überweisen",
                     "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler Geld zu überweisen."
                 },
-                "clanInviteContext": {
+                "clanInviteBullet": {
                     "name": "Clan-Einladung senden",
                     "description": "Fügt dem Kontext-Menü die Option hinzu, einen Spieler in deinen aktuellen Clan einzuladen."
                 },
-                "friendRequestContext": {
+                "friendRequestBullet": {
                     "name": "Freundschaftsanfrage senden",
                     "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden."
                 }
@@ -48,7 +46,7 @@
                 "description": "Jede Erwähnung eines gültigen Minecraft Namen @<Name> wird im Chat in Hellblau eingefärbt §b@<Name>"
             }
         },
-        "context": {
+        "interaction": {
             "pay": "Geld überweisen",
             "clanInvite": "In den Clan einladen",
             "friendRequest": "Freundschaftsanfrage senden"
@@ -57,7 +55,7 @@
             "clickableNickname": "Klicke, um den echten Namen anzusehen."
         },
         "rpc": {
-            "on": "Spielt auf %s",
+            "subserver": "Spielt auf %s",
             "players": "%s Spieler",
             "loading": "Lädt Spieleranzahl..."
         }

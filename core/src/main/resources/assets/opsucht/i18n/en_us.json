@@ -1,7 +1,6 @@
 {
     "opsucht": {
         "settings": {
-            "name": "OPSUCHT Utilities",
             "header": {
                 "chat": {
                     "name": "Chat"
@@ -10,7 +9,7 @@
             "enabled": {
                 "name": "Enabled"
             },
-            "discordRPCSubconfig": {
+            "richPresenceConfig": {
                 "name": "Discord Rich Presence",
                 "showSubServer": {
                     "name": "Show sub servers",
@@ -20,18 +19,17 @@
                     "name": "Show player count"
                 }
             },
-            "contextSubconfig": {
-                "name": "Context Menu",
-                "description": "More options in the menu that appears when you hold down center click on a player.",
-                "payContext": {
+            "interactionBulletConfig": {
+                "name": "Interaction Menu",
+                "payBullet": {
                     "name": "Pay money",
                     "description": "Adds the option to pay a player money."
                 },
-                "clanInviteContext": {
+                "clanInviteBullet": {
                     "name": "Send Clan Invite",
                     "description": "Adds the option to send a clan invite to the player."
                 },
-                "friendRequestContext": {
+                "friendRequestBullet": {
                     "name": "Send friend request",
                     "description": "Adds the option to send a friend request to the player."
                 }
@@ -48,7 +46,7 @@
                 "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
             }
         },
-        "context": {
+        "interaction": {
             "pay": "Pay money",
             "clanInvite": "Invite to clan",
             "friendRequest": "Send friend request"
@@ -57,7 +55,7 @@
             "clickableNickname": "Click, to see the real name."
         },
         "rpc": {
-            "on": "Playing on %s",
+            "subserver": "Playing on %s",
             "players": "%s Players",
             "loading": "Loading player count..."
         }
