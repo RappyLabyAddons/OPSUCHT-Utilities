@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.core.context;
+package com.rappytv.opsucht.core.ui.interaction;
 
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import net.labymod.api.Laby;
@@ -7,18 +7,18 @@ import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.interaction.BulletPoint;
 import net.labymod.api.client.gui.icon.Icon;
 
-public class ClanInviteBulletPoint implements BulletPoint {
+public class FriendRequestBulletPoint implements BulletPoint {
 
-    private static final String COMMAND = "/clan verwalten einladen %s";
+    private static final String COMMAND = "/freund hinzufügen %s";
     private final OPSuchtAddon addon;
 
-    public ClanInviteBulletPoint(OPSuchtAddon addon) {
+    public FriendRequestBulletPoint(OPSuchtAddon addon) {
         this.addon = addon;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("opsucht.interaction.clanInvite");
+        return Component.translatable("opsucht.interaction.friendRequest");
     }
 
     @Override
@@ -35,6 +35,6 @@ public class ClanInviteBulletPoint implements BulletPoint {
 
     @Override
     public boolean isVisible(Player playerInfo) {
-        return this.addon.server().isConnected() && this.addon.configuration().interactionBulletConfig().clanInviteBullet().get();
+        return this.addon.server().isConnected() && this.addon.configuration().interactionBulletConfig().friendRequestBullet().get();
     }
 }
