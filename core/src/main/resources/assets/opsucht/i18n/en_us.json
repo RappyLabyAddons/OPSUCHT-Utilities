@@ -49,6 +49,7 @@
         "hudWidget": {
             "player_record": {
                 "name": "Player Record",
+                "apiError": "API Error",
                 "forceRefetch": {
                     "name": "Force refetch",
                     "description": "Checks if there is a new player record.",

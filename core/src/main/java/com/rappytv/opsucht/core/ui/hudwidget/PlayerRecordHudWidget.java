@@ -23,7 +23,9 @@ import net.labymod.api.util.io.web.request.Response;
 public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetConfig> {
 
     private static final String ENDPOINT = "https://prapi.rappytv.com/opsucht";
-    private static final Component ERROR_COMPONENT = Component.translatable("API Error");
+    private static final Component ERROR_COMPONENT = Component.translatable(
+        "opsucht.hudWidget.player_record.apiError"
+    );
 
     private final OPSuchtAddon addon;
     private final Task refetchTask;
@@ -48,7 +50,10 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
     @Override
     public void load(PlayerRecordHudWidgetConfig config) {
         super.load(config);
-        this.line = this.createLine(Component.translatable("Player Record"), this.lastValue);
+        this.line = this.createLine(
+            Component.translatable("opsucht.hudWidget.player_record.name"),
+            this.lastValue
+        );
         this.updateLine();
     }
 
