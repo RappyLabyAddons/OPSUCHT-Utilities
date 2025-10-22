@@ -42,7 +42,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         return referenceStorage.richPresenceManager();
     }
 
-    public static void updateRPC() {
+    public static void updateRPC() { // TODO: Fix this
 //        if(rpcManager != null) {
 //            rpcManager.updateCustomRPC(false);
 //        }
