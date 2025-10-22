@@ -5,6 +5,7 @@ import com.rappytv.opsucht.api.generated.ReferenceStorage;
 import com.rappytv.opsucht.core.config.OPSuchtConfig;
 import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
+import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
 import com.rappytv.opsucht.core.ui.interaction.ClanInviteBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.FriendRequestBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.PayBulletPoint;
@@ -32,6 +33,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.registerSettingCategory();
         this.registerListener(new ChatReceiveListener(this));
         this.registerListener(new PlayerInfoListener(this));
+        this.labyAPI().hudWidgetRegistry().register(new PlayerRecordHudWidget(this));
         this.labyAPI().interactionMenuRegistry().register(new ClanInviteBulletPoint(this));
         this.labyAPI().interactionMenuRegistry().register(new FriendRequestBulletPoint(this));
         this.labyAPI().interactionMenuRegistry().register(new PayBulletPoint(this));

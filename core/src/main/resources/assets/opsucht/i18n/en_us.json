@@ -46,6 +46,16 @@
                 "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
             }
         },
+        "hudWidget": {
+            "player_record": {
+                "name": "Player Record",
+                "forceRefetch": {
+                    "name": "Force refetch",
+                    "description": "Checks if there is a new player record.",
+                    "text": "Refetch"
+                }
+            }
+        },
         "interaction": {
             "pay": "Pay money",
             "clanInvite": "Invite to clan",
