@@ -1,5 +1,6 @@
 package com.rappytv.opsucht.core.ui.hudwidget;
 
+import com.rappytv.opsucht.api.OPSuchtTextures.SpriteHud;
 import com.rappytv.opsucht.api.market.MarketItem;
 import com.rappytv.opsucht.api.market.MarketStack;
 import com.rappytv.opsucht.core.OPSuchtAddon;
@@ -8,6 +9,7 @@ import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.entity.player.ClientPlayer;
+import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
@@ -26,9 +28,12 @@ public class InventoryValueHudWidget extends TextHudWidget<GlobalPriceHudWidgetC
     private TextLine line;
     private long lastUpdate = -1;
 
-    public InventoryValueHudWidget(OPSuchtAddon addon) {
+    public InventoryValueHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
         super("inventory_value", GlobalPriceHudWidgetConfig.class);
         this.addon = addon;
+
+        this.setIcon(SpriteHud.INVENTORY_VALUE);
+        this.bindCategory(category);
     }
 
     @Override

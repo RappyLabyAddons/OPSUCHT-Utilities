@@ -46,6 +46,12 @@
                 "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
             }
         },
+        "hudWidgetCategory": {
+            "opsucht": {
+                "name": "OPSUCHT",
+                "description": "Shows you §bopsucht.net§r related information"
+            }
+        },
         "hudWidget": {
             "config": {
                 "header": {
@@ -86,8 +92,8 @@
                 "invalidData": "Invalid Data",
                 "items": "%s Items"
             },
-            "item_price": {
-                "name": "Item Price",
+            "item_value": {
+                "name": "Item Value",
                 "noItem": "No Item",
                 "noPrice": "No Price",
                 "hideNonPrices": {

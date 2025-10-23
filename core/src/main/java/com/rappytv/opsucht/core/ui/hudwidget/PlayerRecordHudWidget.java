@@ -1,12 +1,14 @@
 package com.rappytv.opsucht.core.ui.hudwidget;
 
 import com.google.gson.JsonObject;
+import com.rappytv.opsucht.api.OPSuchtTextures.SpriteHud;
 import com.rappytv.opsucht.api.event.PlayerRecordForceRefetchEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget.PlayerRecordHudWidgetConfig;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
@@ -32,10 +34,9 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
     private TextLine line = null;
     private Integer lastValue = -1;
 
-    public PlayerRecordHudWidget(OPSuchtAddon addon) {
+    public PlayerRecordHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
         super("player_record", PlayerRecordHudWidgetConfig.class);
         this.addon = addon;
-
         this.refetchTask = Task.builder(() -> {
             this.lastValue = this.fetchPlayerRecord();
             if (this.line == null) {
@@ -44,6 +45,9 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
             Laby.labyAPI().minecraft().executeOnRenderThread(this::updateLine);
         }).repeat(1, TimeUnit.HOURS).build();
         this.refetchTask.execute();
+
+        this.setIcon(SpriteHud.PLAYER_RECORD);
+        this.bindCategory(category);
     }
 
     @Override
