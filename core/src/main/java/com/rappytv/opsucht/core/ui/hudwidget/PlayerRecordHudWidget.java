@@ -43,7 +43,6 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
             }
             Laby.labyAPI().minecraft().executeOnRenderThread(this::updateLine);
         }).repeat(1, TimeUnit.HOURS).build();
-        this.refetchTask.run();
         this.refetchTask.execute();
     }
 
@@ -65,7 +64,7 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
     }
 
     @Override
-    public boolean isVisibleInGame() {
+    public boolean isVisibleInGame() { // TODO: Add setting 'onlyShowWhenConnected'
         return this.addon.server().isConnected() && super.isVisibleInGame();
     }
 
@@ -82,7 +81,7 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
     private int fetchPlayerRecord() {
         Response<JsonObject> response = Request.ofGson(JsonObject.class)
             .url(ENDPOINT)
-            .addHeader("User-Agent", "OPSucht Addon v" + this.addon.addonInfo().getVersion())
+            .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
             .executeSync();
 
         if(response.hasException()) {
