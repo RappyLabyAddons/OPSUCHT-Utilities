@@ -1,63 +1,135 @@
 {
     "opsucht": {
+        "chat": {
+            "clickableNickname": "Klicke, um den echten Namen anzusehen."
+        },
+        "hudWidget": {
+            "config": {
+                "buyPriceColor": {
+                    "name": "Kaufpreis-Farbe"
+                },
+                "displayMode": {
+                    "description": "Welche Preise angezeigt werden sollen",
+                    "entries": {
+                        "both": "Beide",
+                        "onlyBuy": "Nur Kaufpreis",
+                        "onlySell": "Nur Verkaufspreis"
+                    },
+                    "name": "Anzeigemodus"
+                },
+                "header": {
+                    "colors": {
+                        "name": "Farben"
+                    },
+                    "format": {
+                        "name": "Format"
+                    }
+                },
+                "includeStackSize": {
+                    "description": "Entscheidet ob der ganze Stackpreis berechnet werden soll oder nur der Einzelpreis des Items",
+                    "name": "Stackpreis anzeigen"
+                },
+                "priceFormat": {
+                    "description": "Das Format, wie Preise angezeigt werden sollen. Du kannst §b{price}§r als Platzhalter für den Preis benutzen.",
+                    "name": "Preisformat"
+                },
+                "sellPriceColor": {
+                    "name": "Verkaufspreis-Farbe"
+                }
+            },
+            "inventory_value": {
+                "invalidData": "Ungültige Daten",
+                "items": "%s Items",
+                "loading": "Lädt…",
+                "name": "Inventarwert"
+            },
+            "item_value": {
+                "hideNonPrices": {
+                    "description": "Wenn diese Option aktiviert ist, ist das Widget nur sichtbar, wenn das aktuelle Item einen gültigen Preis hat",
+                    "name": "Nur gültige Preise anzeigen"
+                },
+                "name": "Itemwert",
+                "noItem": "Kein Item",
+                "noPrice": "Kein Preis",
+                "showItemName": {
+                    "name": "Itemnamen anzeigen"
+                }
+            },
+            "player_record": {
+                "apiError": "API Fehler",
+                "forceRefetch": {
+                    "description": "Überprüft, ob es einen neuen Spielerrekord ist.",
+                    "name": "Neu anfragen",
+                    "text": "Überprüfen"
+                },
+                "name": "Spielerrekord",
+                "onlyShowWhenConnected": {
+                    "description": "Wenn diese Option aktiviert ist, wird das Widget nur angezeigt, wenn du zum §bopsucht.net§r-Netzwerk verbunden bist.",
+                    "name": "Nur anzeigen, wenn du zum Server verbunden bist"
+                }
+            }
+        },
+        "hudWidgetCategory": {
+            "opsucht": {
+                "description": "Zeigt dir Informationen an, die mit dem §bopsucht.net§r-Netzwerk zu tun haben",
+                "name": "OPSUCHT"
+            }
+        },
+        "interaction": {
+            "clanInvite": "In den Clan einladen",
+            "friendRequest": "Freundschaftsanfrage senden",
+            "pay": "Geld überweisen"
+        },
+        "rpc": {
+            "loading": "Lädt Spieleranzahl…",
+            "players": "%s Spieler",
+            "subserver": "Spielt auf %s"
+        },
         "settings": {
-            "header": {
-                "chat": {
-                    "name": "Chat"
-                }
-            },
-            "enabled": {
-                "name": "Aktiviert"
-            },
-            "richPresenceConfig": {
-                "name": "Discord Rich Presence",
-                "showSubServer": {
-                    "name": "Unterserver anzeigen",
-                    "description": "Beispielsweise §bcb1 §foder §blobby-10"
-                },
-                "showPlayerCount": {
-                    "name": "Spieleranzahl anzeigen"
-                }
-            },
-            "interactionBulletConfig": {
-                "name": "Context Menü",
-                "payBullet": {
-                    "name": "Geld überweisen",
-                    "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler Geld zu überweisen."
-                },
-                "clanInviteBullet": {
-                    "name": "Clan-Einladung senden",
-                    "description": "Fügt dem Kontext-Menü die Option hinzu, einen Spieler in deinen aktuellen Clan einzuladen."
-                },
-                "friendRequestBullet": {
-                    "name": "Freundschaftsanfrage senden",
-                    "description": "Fügt dem Kontext-Menü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden."
-                }
-            },
             "autoFly": {
-                "name": "AutoFly",
-                "description": "Führt automatisch §b/fly §faus, wenn du einem anderen Unterserver von §bOPSUCHT.net §fbeitrittst.\nFunktioniert erst ab §cPLATIN§f."
+                "description": "Führt automatisch §b/fly §faus, wenn du einem anderen Unterserver von §bOPSUCHT.net §fbeitrittst.\nFunktioniert erst ab §cPLATIN§f.",
+                "name": "AutoFly"
             },
             "clickableNicknames": {
                 "name": "Klickbare Nicknamen"
             },
             "coloredMentions": {
-                "name": "Gefärbte Erwähnungen",
-                "description": "Jede Erwähnung eines gültigen Minecraft Namen @<Name> wird im Chat in Hellblau eingefärbt §b@<Name>"
+                "description": "Jede Erwähnung eines gültigen Minecraft Namen @<Name> wird im Chat in Hellblau eingefärbt §b@<Name>",
+                "name": "Gefärbte Erwähnungen"
+            },
+            "enabled": {
+                "name": "Aktiviert"
+            },
+            "header": {
+                "chat": {
+                    "name": "Chat"
+                }
+            },
+            "interactionBulletConfig": {
+                "clanInviteBullet": {
+                    "description": "Fügt dem Interaktionsmenü die Option hinzu, einen Spieler in deinen aktuellen Clan einzuladen.",
+                    "name": "Clan-Einladung senden"
+                },
+                "friendRequestBullet": {
+                    "description": "Fügt dem Interaktionsmenü die Option hinzu, einem Spieler eine Freundschaftsanfrage zu senden.",
+                    "name": "Freundschaftsanfrage senden"
+                },
+                "name": "Interaktionsmenü",
+                "payBullet": {
+                    "description": "Fügt dem Interaktionsmenü die Option hinzu, einem Spieler Geld zu überweisen.",
+                    "name": "Geld überweisen"
+                }
+            },
+            "richPresenceConfig": {
+                "name": "Discord Rich Presence",
+                "showPlayerCount": {
+                    "name": "Spieleranzahl anzeigen"
+                },
+                "showSubServer": {
+                    "description": "Beispielsweise §bcb1 §foder §blobby-10",
+                    "name": "Unterserver anzeigen"
+                }
             }
-        },
-        "interaction": {
-            "pay": "Geld überweisen",
-            "clanInvite": "In den Clan einladen",
-            "friendRequest": "Freundschaftsanfrage senden"
-        },
-        "chat": {
-            "clickableNickname": "Klicke, um den echten Namen anzusehen."
-        },
-        "rpc": {
-            "subserver": "Spielt auf %s",
-            "players": "%s Spieler",
-            "loading": "Lädt Spieleranzahl..."
         }
     }
 }
