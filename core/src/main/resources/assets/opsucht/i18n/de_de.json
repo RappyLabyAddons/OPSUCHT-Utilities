@@ -58,9 +58,9 @@
             "player_record": {
                 "apiError": "API Fehler",
                 "forceRefetch": {
-                    "description": "Überprüft, ob es einen neuen Spielerrekord ist.",
-                    "name": "Neu anfragen",
-                    "text": "Überprüfen"
+                    "description": "Überprüft, ob es einen neuen Spielerrekord gibt.",
+                    "name": "Spielerrekord neu anfragen",
+                    "text": "Anfragen"
                 },
                 "name": "Spielerrekord",
                 "onlyShowWhenConnected": {
