@@ -1,6 +1,6 @@
-package com.rappytv.opsucht.listeners;
+package com.rappytv.opsucht.core.listeners;
 
-import com.rappytv.opsucht.OPSuchtAddon;
+import com.rappytv.opsucht.core.OPSuchtAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.TranslatableComponent;
@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 
 public class ChatReceiveListener {
 
+    private static final Pattern MENTION_PATTERN = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
     private final OPSuchtAddon addon;
-    private final Pattern pattern = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
 
     public ChatReceiveListener(OPSuchtAddon addon) {
         this.addon = addon;
@@ -25,18 +25,18 @@ public class ChatReceiveListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent event) {
-        if(!addon.server().isConnected()) return;
+        if(!this.addon.server().isConnected()) return;
         Component message = event.message();
         String text = event.chatMessage().getPlainText();
 
-        if(addon.configuration().coloredMentions().get() && text.contains("@")) {
-            for(MatchResult matcher : pattern.matcher(text).results().toList()) {
+        if(this.addon.configuration().coloredMentions().get() && text.contains("@")) {
+            for(MatchResult matcher : MENTION_PATTERN.matcher(text).results().toList()) {
                 if(matcher.group().equals("@TEAM") || matcher.group().equals("@CLAN")) continue;
-                replaceComponent(message, matcher.group(), () -> Component.text(matcher.group(), NamedTextColor.AQUA).copy());
+                this.replaceComponent(message, matcher.group(), () -> Component.text(matcher.group(), NamedTextColor.AQUA).copy());
             }
             event.setMessage(message);
         }
-        if(addon.configuration().clickableNicknames().get()) {
+        if(this.addon.configuration().clickableNicknames().get()) {
             if(!text.contains("|") || !text.contains("~") || text.length() < 3) return;
 
             String nick = text.split(" ")[2];

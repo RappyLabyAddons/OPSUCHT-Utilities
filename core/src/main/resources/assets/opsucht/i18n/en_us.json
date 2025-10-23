@@ -1,65 +1,135 @@
 {
     "opsucht": {
+        "chat": {
+            "clickableNickname": "Click, to see the real name."
+        },
+        "hudWidget": {
+            "config": {
+                "buyPriceColor": {
+                    "name": "Buy price color"
+                },
+                "displayMode": {
+                    "description": "Which prices to display",
+                    "entries": {
+                        "both": "Both",
+                        "onlyBuy": "Only buy price",
+                        "onlySell": "Only sell price"
+                    },
+                    "name": "Dislay mode"
+                },
+                "header": {
+                    "colors": {
+                        "name": "Colors"
+                    },
+                    "format": {
+                        "name": "Format"
+                    }
+                },
+                "includeStackSize": {
+                    "description": "If the whole stack price should be displayed or only the single item price",
+                    "name": "Show stack price"
+                },
+                "priceFormat": {
+                    "description": "How prices should be displayed. You can use §b{price}§r as a placeholder for prices.",
+                    "name": "Price format"
+                },
+                "sellPriceColor": {
+                    "name": "Sell price color"
+                }
+            },
+            "inventory_value": {
+                "invalidData": "Invalid Data",
+                "items": "%s Items",
+                "loading": "Loading…",
+                "name": "Inventory Value"
+            },
+            "item_value": {
+                "hideNonPrices": {
+                    "description": "When enabled, the widget will only be visible if the current item has a valid price",
+                    "name": "Only show valid prices"
+                },
+                "name": "Item Value",
+                "noItem": "No Item",
+                "noPrice": "No Price",
+                "showItemName": {
+                    "name": "Show item name"
+                }
+            },
+            "player_record": {
+                "apiError": "API Error",
+                "forceRefetch": {
+                    "description": "Checks if there is a new player record.",
+                    "name": "Force refetch",
+                    "text": "Refetch"
+                },
+                "name": "Player Record",
+                "onlyShowWhenConnected": {
+                    "description": "When enabled, this widget will only show when connected to §bopsucht.net§r.",
+                    "name": "Only show when connected"
+                }
+            }
+        },
+        "hudWidgetCategory": {
+            "opsucht": {
+                "description": "Shows you §bopsucht.net§r related information",
+                "name": "OPSUCHT"
+            }
+        },
+        "interaction": {
+            "clanInvite": "Invite to clan",
+            "friendRequest": "Send friend request",
+            "pay": "Pay money"
+        },
+        "rpc": {
+            "loading": "Loading player count…",
+            "players": "%s Players",
+            "subserver": "Playing on %s"
+        },
         "settings": {
-            "name": "OPSUCHT Utilities",
-            "header": {
-                "chat": {
-                    "name": "Chat"
-                }
-            },
-            "enabled": {
-                "name": "Enabled"
-            },
-            "discordRPCSubconfig": {
-                "name": "Discord Rich Presence",
-                "showSubServer": {
-                    "name": "Show sub servers",
-                    "description": "For example §bcb1 §for §blobby-10"
-                },
-                "showPlayerCount": {
-                    "name": "Show player count"
-                }
-            },
-            "contextSubconfig": {
-                "name": "Context Menu",
-                "description": "More options in the menu that appears when you hold down center click on a player.",
-                "payContext": {
-                    "name": "Pay money",
-                    "description": "Adds the option to pay a player money."
-                },
-                "clanInviteContext": {
-                    "name": "Send Clan Invite",
-                    "description": "Adds the option to send a clan invite to the player."
-                },
-                "friendRequestContext": {
-                    "name": "Send friend request",
-                    "description": "Adds the option to send a friend request to the player."
-                }
-            },
             "autoFly": {
-                "name": "AutoFly",
-                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks."
+                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks.",
+                "name": "AutoFly"
             },
             "clickableNicknames": {
                 "name": "Clickable nicknames"
             },
             "coloredMentions": {
-                "name": "Colored mentions",
-                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
+                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>",
+                "name": "Colored mentions"
+            },
+            "enabled": {
+                "name": "Enabled"
+            },
+            "header": {
+                "chat": {
+                    "name": "Chat"
+                }
+            },
+            "interactionBulletConfig": {
+                "clanInviteBullet": {
+                    "description": "Adds the option to send a clan invite to the player.",
+                    "name": "Send Clan Invite"
+                },
+                "friendRequestBullet": {
+                    "description": "Adds the option to send a friend request to the player.",
+                    "name": "Send friend request"
+                },
+                "name": "Interaction Menu",
+                "payBullet": {
+                    "description": "Adds the option to pay a player money.",
+                    "name": "Pay money"
+                }
+            },
+            "richPresenceConfig": {
+                "name": "Discord Rich Presence",
+                "showPlayerCount": {
+                    "name": "Show player count"
+                },
+                "showSubServer": {
+                    "description": "For example §bcb1 §for §blobby-10",
+                    "name": "Show sub servers"
+                }
             }
-        },
-        "context": {
-            "pay": "Pay money",
-            "clanInvite": "Invite to clan",
-            "friendRequest": "Send friend request"
-        },
-        "chat": {
-            "clickableNickname": "Click, to see the real name."
-        },
-        "rpc": {
-            "on": "Playing on %s",
-            "players": "%s Players",
-            "loading": "Loading player count..."
         }
     }
 }
