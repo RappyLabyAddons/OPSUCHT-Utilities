@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.core.ui.hudwidget.config;
 
-import com.rappytv.opsucht.api.IPriceHudWidgetConfig;
-import com.rappytv.opsucht.api.MarketManager.DisplayMode;
+import com.rappytv.opsucht.api.market.IPriceHudWidgetConfig;
+import com.rappytv.opsucht.api.market.MarketManager.DisplayMode;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;

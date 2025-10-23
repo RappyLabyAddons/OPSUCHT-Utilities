@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.core.ui.hudwidget;
 
-import com.rappytv.opsucht.api.MarketItem;
-import com.rappytv.opsucht.api.MarketStack;
+import com.rappytv.opsucht.api.market.MarketItem;
+import com.rappytv.opsucht.api.market.MarketStack;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.ui.hudwidget.config.GlobalPriceHudWidgetConfig;
 import net.labymod.api.Laby;
@@ -71,7 +71,6 @@ public class InventoryValueHudWidget extends TextHudWidget<GlobalPriceHudWidgetC
         this.line.setState(State.HIDDEN);
         this.line.updateAndFlush(LOADING_COMPONENT);
         this.calculateInventoryValue(this::updateLine);
-
     }
 
     private void updateLine(@Nullable InventoryValueData data) {

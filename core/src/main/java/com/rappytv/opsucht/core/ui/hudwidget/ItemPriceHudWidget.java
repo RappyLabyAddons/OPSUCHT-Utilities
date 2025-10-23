@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.core.ui.hudwidget;
 
-import com.rappytv.opsucht.api.MarketItem;
-import com.rappytv.opsucht.api.MarketStack;
+import com.rappytv.opsucht.api.market.MarketItem;
+import com.rappytv.opsucht.api.market.MarketStack;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.ui.hudwidget.ItemPriceHudWidget.ItemPriceHudWidgetConfig;
 import com.rappytv.opsucht.core.ui.hudwidget.config.GlobalPriceHudWidgetConfig;

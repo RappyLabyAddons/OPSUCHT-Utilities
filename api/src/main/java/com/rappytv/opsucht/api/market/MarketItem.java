@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.api;
+package com.rappytv.opsucht.api.market;
 
 public class MarketItem {
 

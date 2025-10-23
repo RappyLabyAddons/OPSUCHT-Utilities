@@ -1,6 +1,6 @@
-package com.rappytv.opsucht.api;
+package com.rappytv.opsucht.api.market;
 
-import com.rappytv.opsucht.api.MarketManager.DisplayMode;
+import com.rappytv.opsucht.api.market.MarketManager.DisplayMode;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.util.Color;
 

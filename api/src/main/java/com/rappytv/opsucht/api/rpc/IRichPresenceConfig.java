@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.api;
+package com.rappytv.opsucht.api.rpc;
 
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 

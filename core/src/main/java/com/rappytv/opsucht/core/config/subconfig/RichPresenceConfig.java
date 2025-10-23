@@ -1,6 +1,6 @@
 package com.rappytv.opsucht.core.config.subconfig;
 
-import com.rappytv.opsucht.api.IRichPresenceConfig;
+import com.rappytv.opsucht.api.rpc.IRichPresenceConfig;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;

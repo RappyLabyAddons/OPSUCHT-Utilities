@@ -1,7 +1,7 @@
 package com.rappytv.opsucht.core.manager;
 
-import com.rappytv.opsucht.api.IRichPresenceConfig;
-import com.rappytv.opsucht.api.RichPresenceManager;
+import com.rappytv.opsucht.api.rpc.IRichPresenceConfig;
+import com.rappytv.opsucht.api.rpc.RichPresenceManager;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.scoreboard.Scoreboard;

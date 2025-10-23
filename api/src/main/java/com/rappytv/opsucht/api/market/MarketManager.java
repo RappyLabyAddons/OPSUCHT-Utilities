@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.api;
+package com.rappytv.opsucht.api.market;
 
 import net.labymod.api.client.component.Component;
 import net.labymod.api.reference.annotation.Referenceable;
