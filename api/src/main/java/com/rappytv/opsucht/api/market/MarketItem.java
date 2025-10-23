@@ -30,6 +30,7 @@ public class MarketItem {
         return this.sellPrice;
     }
 
+    @SuppressWarnings("all")
     public boolean isValid() {
         return this.buyPrice >= 0 && this.sellPrice >= 0;
     }
