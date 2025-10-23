@@ -1,7 +1,5 @@
 package com.rappytv.opsucht.core;
 
-import com.rappytv.opsucht.api.MarketManager;
-import com.rappytv.opsucht.api.RichPresenceManager;
 import com.rappytv.opsucht.api.generated.ReferenceStorage;
 import com.rappytv.opsucht.core.config.OPSuchtConfig;
 import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
@@ -11,13 +9,13 @@ import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
 import com.rappytv.opsucht.core.ui.interaction.ClanInviteBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.FriendRequestBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.PayBulletPoint;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.revision.SimpleRevision;
 import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.version.SemanticVersion;
-import java.util.concurrent.TimeUnit;
 
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
@@ -55,12 +53,8 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
             .execute();
     }
 
-    public static MarketManager marketManager() {
-        return referenceStorage.marketManager();
-    }
-
-    public static RichPresenceManager richPresenceManager() {
-        return referenceStorage.richPresenceManager();
+    public static ReferenceStorage references() {
+        return referenceStorage;
     }
 
     public static String getUserAgent() {

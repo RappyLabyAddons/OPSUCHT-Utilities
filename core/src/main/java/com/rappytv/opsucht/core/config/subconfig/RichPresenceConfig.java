@@ -13,7 +13,11 @@ import net.labymod.api.util.function.ChangeListener;
 public class RichPresenceConfig extends Config implements IRichPresenceConfig {
 
     public RichPresenceConfig() {
-        ChangeListener<Property<Boolean>, Boolean> listener = (property, oldValue, newValue) -> OPSuchtAddon.richPresenceManager().updateCustomRPC(this);
+        ChangeListener<Property<Boolean>, Boolean> listener =
+                (property, oldValue, newValue) ->
+                        OPSuchtAddon.references()
+                                .richPresenceManager()
+                                .updateCustomRPC(this);
         this.enabled.addChangeListener(listener);
         this.showSubServer.addChangeListener(listener);
         this.showPlayerCount.addChangeListener(listener);

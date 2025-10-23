@@ -30,7 +30,9 @@ public class PlayerInfoListener {
         Debounce.of(
             "refresh-opsucht-discord-rpc",
             2000,
-            () -> OPSuchtAddon.richPresenceManager().updateCustomRPC(this.addon.configuration().richPresenceConfig())
+            () -> OPSuchtAddon.references()
+                    .richPresenceManager()
+                    .updateCustomRPC(this.addon.configuration().richPresenceConfig())
         );
     }
 

@@ -25,7 +25,7 @@ public class OPSuchtServer extends AbstractServer {
         }
 
         Laby.labyAPI().minecraft().executeNextTick(() ->
-            OPSuchtAddon.richPresenceManager().updateCustomRPC(
+            OPSuchtAddon.references().richPresenceManager().updateCustomRPC(
                 this.addon.configuration().richPresenceConfig(),
                 phase == LoginPhase.LOGIN
             )
@@ -35,7 +35,7 @@ public class OPSuchtServer extends AbstractServer {
     @Override
     public void disconnect(Phase phase) {
         if(phase == Phase.POST) this.connected = false;
-        OPSuchtAddon.richPresenceManager().removeCustomRPC();
+        OPSuchtAddon.references().richPresenceManager().removeCustomRPC();
     }
 
     public boolean isConnected() {
