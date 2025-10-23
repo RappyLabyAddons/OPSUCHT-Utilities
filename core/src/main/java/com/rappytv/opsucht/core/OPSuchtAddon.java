@@ -1,6 +1,7 @@
 package com.rappytv.opsucht.core;
 
 import com.rappytv.opsucht.api.generated.ReferenceStorage;
+import com.rappytv.opsucht.core.command.MarketCommand;
 import com.rappytv.opsucht.core.config.OPSuchtConfig;
 import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
@@ -13,6 +14,9 @@ import com.rappytv.opsucht.core.ui.interaction.PayBulletPoint;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.revision.SimpleRevision;
@@ -22,6 +26,9 @@ import net.labymod.api.util.version.SemanticVersion;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
+    private static Component prefix = Component.empty()
+        .append(Component.text("OPSUCHT", NamedTextColor.RED).decorate(TextDecoration.BOLD))
+        .append(Component.text(" » ", NamedTextColor.DARK_GRAY));
     private static String userAgent = "OPSUCHT LabyAddon";
 
     private static ReferenceStorage referenceStorage;
@@ -42,6 +49,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.registerSettingCategory();
         this.labyAPI().serverController().registerServer(this.server = new OPSuchtServer(this));
 
+        this.registerCommand(new MarketCommand(this));
         this.registerListener(new ChatReceiveListener(this));
         this.registerListener(new PlayerInfoListener(this));
 
@@ -64,6 +72,10 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     public static ReferenceStorage references() {
         return referenceStorage;
+    }
+
+    public static Component prefix() {
+        return prefix.copy();
     }
 
     public static String getUserAgent() {

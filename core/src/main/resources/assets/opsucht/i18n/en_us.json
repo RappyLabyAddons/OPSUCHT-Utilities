@@ -1,5 +1,25 @@
 {
     "opsucht": {
+        "command": {
+            "usage": "Usage: /%s <%s>",
+            "noPlayer": "This shouldn't happen. Please contact the developers!",
+            "buyValue": "Buy Value: %s",
+            "sellValue": "Sell Value: %s",
+            "item": {
+                "emptySlot": "You're not holding any item!",
+                "itemNoPrice": "This item doesn't have a price!",
+                "holdingItemNoPrice": "The item you're holding doesn't have a price!",
+                "invalidAmount": "The amount must be between %s and %s!",
+                "invalidStack": "Your item stack contains invalid data!",
+                "value": "Market value of %s:",
+                "stackPrice": "(%s for %s items)"
+            },
+            "inventory": {
+                "empty": "You don't have any valuable items in your inventory!",
+                "invalidData": "Invalid inventory data!",
+                "value": "You have %s valuable items in your inventory."
+            }
+        },
         "chat": {
             "clickableNickname": "Click, to see the real name."
         },
