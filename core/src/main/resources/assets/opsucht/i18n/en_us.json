@@ -93,6 +93,10 @@
             "player_record": {
                 "name": "Player Record",
                 "apiError": "API Error",
+                "onlyShowWhenConnected": {
+                    "name": "Only show when connected",
+                    "description": "When enabled, this widget will only show when connected to §bopsucht.net§r."
+                },
                 "forceRefetch": {
                     "name": "Force refetch",
                     "description": "Checks if there is a new player record.",

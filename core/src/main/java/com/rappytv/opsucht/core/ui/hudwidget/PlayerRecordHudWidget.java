@@ -12,7 +12,7 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
-import net.labymod.api.configuration.loader.annotation.Exclude;
+import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.util.MethodOrder;
@@ -64,8 +64,9 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
     }
 
     @Override
-    public boolean isVisibleInGame() { // TODO: Add setting 'onlyShowWhenConnected'
-        return this.addon.server().isConnected() && super.isVisibleInGame();
+    public boolean isVisibleInGame() {
+        return (!this.config.onlyShowWhenConnected.get() || this.addon.server().isConnected())
+            && super.isVisibleInGame();
     }
 
     @Subscribe
@@ -111,11 +112,11 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
 
     public static class PlayerRecordHudWidgetConfig extends TextHudWidgetConfig {
 
-        @Exclude
-        private final ConfigProperty<Boolean> dummySetting = new ConfigProperty<>(false);
+        @SwitchSetting
+        private final ConfigProperty<Boolean> onlyShowWhenConnected = new ConfigProperty<>(true);
 
         @SuppressWarnings("deprecation")
-        @MethodOrder(after = "dummySetting")
+        @MethodOrder(after = "onlyShowWhenConnected")
         @ButtonSetting(translation = "opsucht.hudWidget.player_record.forceRefetch.text")
         public void forceRefetch() {
             Laby.fireEvent(new PlayerRecordForceRefetchEvent());
