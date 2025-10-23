@@ -31,7 +31,7 @@ public class DefaultMarketManager implements MarketManager {
     private final Map<String, MarketItem> items = new HashMap<>();
 
     @Override
-    public @Nullable MarketItem getPrice(String itemId) {
+    public @Nullable MarketItem getItem(String itemId) {
         return this.items.get(itemId.toLowerCase());
     }
 

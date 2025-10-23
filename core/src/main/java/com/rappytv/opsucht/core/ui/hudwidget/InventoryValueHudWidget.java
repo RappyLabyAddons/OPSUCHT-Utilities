@@ -123,7 +123,7 @@ public class InventoryValueHudWidget extends TextHudWidget<GlobalPriceHudWidgetC
                 continue;
             }
 
-            MarketItem item = OPSuchtAddon.references().marketManager().getPrice(identifier.getPath());
+            MarketItem item = OPSuchtAddon.references().marketManager().getItem(identifier.getPath());
             if(item == null || !item.isValid()) {
                 continue;
             }

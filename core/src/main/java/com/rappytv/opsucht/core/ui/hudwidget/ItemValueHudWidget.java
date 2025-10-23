@@ -57,7 +57,7 @@ public class ItemValueHudWidget extends TextHudWidget<ItemValueHudWidgetConfig> 
             return;
         }
         if(isEditorContext && !Laby.labyAPI().minecraft().isIngame()) {
-            MarketItem exampleItem = OPSuchtAddon.references().marketManager().getPrice("diamond");
+            MarketItem exampleItem = OPSuchtAddon.references().marketManager().getItem("diamond");
             this.updateLine(
                 exampleItem != null
                     ? new MarketStack(exampleItem, 3)
@@ -139,7 +139,7 @@ public class ItemValueHudWidget extends TextHudWidget<ItemValueHudWidgetConfig> 
             return null;
         }
 
-        MarketItem item = OPSuchtAddon.references().marketManager().getPrice(identifier.getPath());
+        MarketItem item = OPSuchtAddon.references().marketManager().getItem(identifier.getPath());
         return item != null ? new MarketStack(item, currentItem.getSize()) : INVALID_STACK;
     }
 

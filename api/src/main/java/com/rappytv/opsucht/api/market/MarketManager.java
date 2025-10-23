@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 public interface MarketManager {
 
     @Nullable
-    MarketItem getPrice(String itemId);
+    MarketItem getItem(String itemId);
 
     @NotNull
     Component formatValueComponent(float buyValue, float sellValue, IPriceHudWidgetConfig config);
