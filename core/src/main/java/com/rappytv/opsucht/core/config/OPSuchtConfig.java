@@ -34,7 +34,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
 
-    @IntroducedIn(namespace = "opsucht", value = "1.4.0")
+    @IntroducedIn(namespace = "opsucht", value = "1.1.7")
     @SpriteSlot(size = 32, y = 2, x = 2)
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);

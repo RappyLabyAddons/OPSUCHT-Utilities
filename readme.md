@@ -1,4 +1,4 @@
-# OPSucht Utilities
+# OPSUCHT Utilities
 Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH
 
 ### ✨ Features
@@ -7,6 +7,7 @@ Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia G
 - [x] Discord rich presence
 - [x] AutoFly
 - [x] Automatic coloring of @pings in chat
+- [x] Widgets
 
 ### 📦 Installation
 1. Press `Win` + `R`

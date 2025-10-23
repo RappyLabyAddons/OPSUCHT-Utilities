@@ -8,6 +8,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.color.ColorPickerWidget.ColorPickerSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
+import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.CustomTranslation;
 import net.labymod.api.configuration.settings.annotation.SettingOrder;
@@ -19,28 +20,33 @@ public class GlobalPriceHudWidgetConfig extends TextHudWidgetConfig implements
     IPriceHudWidgetConfig {
 
     @SettingSection(value = "format", translation = "opsucht.hudWidget.config")
+    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
     @SettingOrder(Order.NORMAL)
     @CustomTranslation("opsucht.hudWidget.config.includeStackSize")
     @SwitchSetting
     private final ConfigProperty<Boolean> includeStackSize = new ConfigProperty<>(true);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
     @SettingOrder(Order.NORMAL)
     @CustomTranslation("opsucht.hudWidget.config.displayMode")
     @DropdownSetting
     private final ConfigProperty<DisplayMode> displayMode = new ConfigProperty<>(
         DisplayMode.BOTH);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
     @SettingOrder(Order.NORMAL)
     @CustomTranslation("opsucht.hudWidget.config.priceFormat")
     @TextFieldSetting(maxLength = 10)
     private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
     @SettingOrder(Order.NORMAL)
     @SettingSection(value = "format", translation = "opsucht.hudWidget.config")
     @CustomTranslation("opsucht.hudWidget.config.buyPriceColor")
     @ColorPickerSetting
     private final ConfigProperty<Color> buyPriceColor = new ConfigProperty<>(NamedTextColor.AQUA.color());
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
     @SettingOrder(Order.NORMAL)
     @CustomTranslation("opsucht.hudWidget.config.sellPriceColor")
     @ColorPickerSetting

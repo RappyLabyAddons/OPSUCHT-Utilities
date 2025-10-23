@@ -22,7 +22,7 @@ import net.labymod.api.util.version.SemanticVersion;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
-    private static String userAgent = "";
+    private static String userAgent = "OPSUCHT LabyAddon";
 
     private static ReferenceStorage referenceStorage;
     private OPSuchtServer server;
@@ -30,13 +30,14 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     @Override
     protected void preConfigurationLoad() {
         Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.1.7"), "2023-11-21"));
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.2.1"), "2025-10-23"));
     }
 
     @Override
     protected void enable() {
         referenceStorage = this.referenceStorageAccessor();
 
-        userAgent = "OPSucht Addon v" + this.addonInfo().getVersion();
+        userAgent += " v" + this.addonInfo().getVersion();
 
         this.registerSettingCategory();
         this.labyAPI().serverController().registerServer(this.server = new OPSuchtServer(this));

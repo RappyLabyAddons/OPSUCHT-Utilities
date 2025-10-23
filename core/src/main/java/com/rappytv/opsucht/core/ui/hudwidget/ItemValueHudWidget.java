@@ -17,6 +17,7 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.client.world.item.ItemStack;
+import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -144,9 +145,11 @@ public class ItemValueHudWidget extends TextHudWidget<ItemValueHudWidgetConfig> 
 
     public static class ItemValueHudWidgetConfig extends GlobalPriceHudWidgetConfig {
 
+        @IntroducedIn(namespace = "opsucht", value = "1.2.1")
         @SwitchSetting
         private final ConfigProperty<Boolean> hideNonPrices = new ConfigProperty<>(false);
 
+        @IntroducedIn(namespace = "opsucht", value = "1.2.1")
         @SwitchSetting
         private final ConfigProperty<Boolean> showItemName = new ConfigProperty<>(true);
     }
