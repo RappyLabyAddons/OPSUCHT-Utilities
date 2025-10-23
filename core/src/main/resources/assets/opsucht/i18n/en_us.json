@@ -47,10 +47,7 @@
             }
         },
         "hudWidget": {
-            "item_price": {
-                "name": "Item Price",
-                "noItem": "No Item",
-                "noPrice": "No Price",
+            "config": {
                 "header": {
                     "format": {
                         "name": "Format"
@@ -58,13 +55,6 @@
                     "colors": {
                         "name": "Colors"
                     }
-                },
-                "hideNonPrices": {
-                    "name": "Only show valid prices",
-                    "description": "When enabled, the widget will only be visible if the current item has a valid price"
-                },
-                "showItemName": {
-                    "name": "Show item name"
                 },
                 "includeStackSize": {
                     "name": "Show stack price",
@@ -88,6 +78,24 @@
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
+                }
+            },
+            "inventory_value": {
+                "name": "Inventory Value",
+                "loading": "Loading...",
+                "invalidData": "Invalid Data",
+                "items": "%s Items"
+            },
+            "item_price": {
+                "name": "Item Price",
+                "noItem": "No Item",
+                "noPrice": "No Price",
+                "hideNonPrices": {
+                    "name": "Only show valid prices",
+                    "description": "When enabled, the widget will only be visible if the current item has a valid price"
+                },
+                "showItemName": {
+                    "name": "Show item name"
                 }
             },
             "player_record": {
