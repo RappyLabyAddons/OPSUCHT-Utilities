@@ -1,13 +1,12 @@
 package com.rappytv.opsucht.core.command;
 
+import com.rappytv.opsucht.api.ValueFormatter;
 import com.rappytv.opsucht.api.market.MarketItem;
 import com.rappytv.opsucht.api.market.MarketManager;
 import com.rappytv.opsucht.api.market.MarketStack;
 import com.rappytv.opsucht.core.OPSuchtAddon;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import net.labymod.api.Laby;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.chat.command.SubCommand;
@@ -47,11 +46,13 @@ public class MarketCommand extends Command {
 
         private final OPSuchtAddon addon;
         private final MarketManager manager;
+        private final ValueFormatter formatter;
 
         public InventoryValueCommand(OPSuchtAddon addon) {
             super("inventory", "inventar");
             this.addon = addon;
             this.manager = OPSuchtAddon.references().marketManager();
+            this.formatter = OPSuchtAddon.references().valueFormatter();
 
             this.translationKey("opsucht.command");
         }
@@ -70,6 +71,7 @@ public class MarketCommand extends Command {
                 return true;
             }
 
+            String priceFormat = this.addon.configuration().priceFormat().get();
             this.manager.calculateInventoryValue(
                 player.inventory(),
                 true,
@@ -100,14 +102,22 @@ public class MarketCommand extends Command {
                         .append(Component.translatable(
                             this.getTranslationKey("buyValue"),
                             NamedTextColor.GRAY,
-                            Component.text(this.manager.formatFloat(data.buyValue()), NamedTextColor.AQUA)
+                            this.formatter.formatSingleValueComponent(
+                                priceFormat,
+                                data.buyValue(),
+                                NamedTextColor.AQUA
+                            )
                         ))
                         .append(Component.newline())
                         .append(OPSuchtAddon.prefix())
                         .append(Component.translatable(
                             this.getTranslationKey("sellValue"),
                             NamedTextColor.GRAY,
-                            Component.text(this.manager.formatFloat(data.sellValue()), NamedTextColor.RED)
+                            this.formatter.formatSingleValueComponent(
+                                priceFormat,
+                                data.sellValue(),
+                                NamedTextColor.RED
+                            )
                         ));
 
                     this.displayMessage(component);
@@ -124,11 +134,13 @@ public class MarketCommand extends Command {
 
         private final OPSuchtAddon addon;
         private final MarketManager manager;
+        private final ValueFormatter formatter;
 
         public ItemValueCommand(OPSuchtAddon addon) {
             super("item");
             this.addon = addon;
             this.manager = OPSuchtAddon.references().marketManager();
+            this.formatter = OPSuchtAddon.references().valueFormatter();
 
             this.translationKey("opsucht.command");
         }
@@ -264,29 +276,46 @@ public class MarketCommand extends Command {
             return true;
         }
 
-        private Component[] getValueComponents(MarketStack stack) { // TODO: Add missing currency
+        private Component[] getValueComponents(MarketStack stack) {
+            String priceFormat = this.addon.configuration().priceFormat().get();
             Component[] components = new Component[2];
 
             components[0] = Component.translatable(
                 this.getTranslationKey("buyValue"),
                 NamedTextColor.GRAY,
-                Component.text(this.manager.formatFloat(stack.getBuyPrice()), NamedTextColor.AQUA)
+                this.formatter.formatSingleValueComponent(
+                    priceFormat,
+                    stack.getBuyPrice(),
+                    NamedTextColor.AQUA
+                )
             );
             components[1] = Component.translatable(
                 this.getTranslationKey("sellValue"),
                 NamedTextColor.GRAY,
-                Component.text(this.manager.formatFloat(stack.getSellPrice()), NamedTextColor.RED)
+                this.formatter.formatSingleValueComponent(
+                    priceFormat,
+                    stack.getSellPrice(),
+                    NamedTextColor.RED
+                )
             );
 
             if(stack.getSize() > 1) {
                 components[0].append(Component.space()).append(Component.translatable(
                     this.getTranslationKey("item.stackPrice"),
-                    Component.text(this.manager.formatFloat(stack.getStackBuyPrice()), NamedTextColor.AQUA),
+                    this.formatter.formatSingleValueComponent(
+                        priceFormat,
+                        stack.getStackBuyPrice(),
+                        NamedTextColor.AQUA
+                    ),
                     Component.text(stack.getSize(), NamedTextColor.YELLOW)
                 ));
                 components[1].append(Component.space()).append(Component.translatable(
                     this.getTranslationKey("item.stackPrice"),
-                    Component.text(this.manager.formatFloat(stack.getStackSellPrice()), NamedTextColor.RED),
+                    this.formatter.formatSingleValueComponent(
+                        priceFormat,
+                        stack.getStackSellPrice(),
+                        NamedTextColor.RED
+                    ),
                     Component.text(stack.getSize(), NamedTextColor.YELLOW)
                 ));
             }

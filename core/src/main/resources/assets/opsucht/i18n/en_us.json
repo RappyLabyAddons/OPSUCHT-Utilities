@@ -1,5 +1,58 @@
 {
     "opsucht": {
+        "settings": {
+            "header": {
+                "chat": {
+                    "name": "Chat"
+                },
+                "opmarket": {
+                    "name": "OP Market"
+                }
+            },
+            "enabled": {
+                "name": "Enabled"
+            },
+            "richPresenceConfig": {
+                "name": "Discord Rich Presence",
+                "showPlayerCount": {
+                    "name": "Show player count"
+                },
+                "showSubServer": {
+                    "description": "For example §bcb1 §for §blobby-10",
+                    "name": "Show sub servers"
+                }
+            },
+            "interactionBulletConfig": {
+                "clanInviteBullet": {
+                    "description": "Adds the option to send a clan invite to the player.",
+                    "name": "Send Clan Invite"
+                },
+                "friendRequestBullet": {
+                    "description": "Adds the option to send a friend request to the player.",
+                    "name": "Send friend request"
+                },
+                "name": "Interaction Menu",
+                "payBullet": {
+                    "description": "Adds the option to pay a player money.",
+                    "name": "Pay money"
+                }
+            },
+            "autoFly": {
+                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks.",
+                "name": "AutoFly"
+            },
+            "clickableNicknames": {
+                "name": "Clickable nicknames"
+            },
+            "coloredMentions": {
+                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>",
+                "name": "Colored mentions"
+            },
+            "priceFormat": {
+                "description": "How prices should be displayed. You can use §b{price}§r as a placeholder for prices.",
+                "name": "Price format"
+            }
+        },
         "command": {
             "usage": "Usage: /%s <%s>",
             "noPlayer": "This shouldn't happen. Please contact the developers!",
@@ -48,10 +101,6 @@
                 "includeStackSize": {
                     "description": "If the whole stack price should be displayed or only the single item price",
                     "name": "Show stack price"
-                },
-                "priceFormat": {
-                    "description": "How prices should be displayed. You can use §b{price}§r as a placeholder for prices.",
-                    "name": "Price format"
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
@@ -104,52 +153,6 @@
             "loading": "Loading player count…",
             "players": "%s Players",
             "subserver": "Playing on %s"
-        },
-        "settings": {
-            "autoFly": {
-                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks.",
-                "name": "AutoFly"
-            },
-            "clickableNicknames": {
-                "name": "Clickable nicknames"
-            },
-            "coloredMentions": {
-                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>",
-                "name": "Colored mentions"
-            },
-            "enabled": {
-                "name": "Enabled"
-            },
-            "header": {
-                "chat": {
-                    "name": "Chat"
-                }
-            },
-            "interactionBulletConfig": {
-                "clanInviteBullet": {
-                    "description": "Adds the option to send a clan invite to the player.",
-                    "name": "Send Clan Invite"
-                },
-                "friendRequestBullet": {
-                    "description": "Adds the option to send a friend request to the player.",
-                    "name": "Send friend request"
-                },
-                "name": "Interaction Menu",
-                "payBullet": {
-                    "description": "Adds the option to pay a player money.",
-                    "name": "Pay money"
-                }
-            },
-            "richPresenceConfig": {
-                "name": "Discord Rich Presence",
-                "showPlayerCount": {
-                    "name": "Show player count"
-                },
-                "showSubServer": {
-                    "description": "For example §bcb1 §for §blobby-10",
-                    "name": "Show sub servers"
-                }
-            }
         }
     }
 }

@@ -3,22 +3,15 @@ package com.rappytv.opsucht.core.manager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.rappytv.opsucht.api.market.IPriceHudWidgetConfig;
 import com.rappytv.opsucht.api.market.InventoryValueData;
 import com.rappytv.opsucht.api.market.MarketItem;
 import com.rappytv.opsucht.api.market.MarketManager;
 import com.rappytv.opsucht.api.market.MarketStack;
 import com.rappytv.opsucht.core.OPSuchtAddon;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 import javax.inject.Singleton;
-import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.client.world.item.ItemStack;
@@ -39,30 +32,6 @@ public class DefaultMarketManager implements MarketManager {
     @Override
     public @Nullable MarketItem getItem(String itemId) {
         return this.items.get(itemId.toLowerCase());
-    }
-
-    @Override
-    public @NotNull Component formatValueComponent(
-        float buyValue,
-        float sellValue,
-        @NotNull IPriceHudWidgetConfig config
-    ) {
-        String format = config.priceFormat().get();
-        Component buyComponent = Component.text(format.replace(
-            "{price}", this.formatFloat(buyValue)
-        ), TextColor.color(config.buyPriceColor().get().get()));
-        Component sellComponent = Component.text(format.replace(
-            "{price}", this.formatFloat(sellValue)
-        ), TextColor.color(config.sellPriceColor().get().get()));
-
-        return switch (config.displayMode().get()) {
-            case BOTH -> Component.empty()
-                .append(buyComponent)
-                .append(Component.text(" | ", NamedTextColor.GRAY))
-                .append(sellComponent);
-            case ONLY_BUY -> buyComponent;
-            case ONLY_SELL -> sellComponent;
-        };
     }
 
     public void calculateInventoryValue(
@@ -96,12 +65,6 @@ public class DefaultMarketManager implements MarketManager {
         }
 
         consumer.accept(new InventoryValueData(items, totalBuyValue, totalSellValue));
-    }
-
-    @Override
-    public @NotNull String formatFloat(float number) {
-        DecimalFormat format = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMANY));
-        return format.format(number);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.rappytv.opsucht.core.config.subconfig.InteractionBulletConfig;
 import com.rappytv.opsucht.core.config.subconfig.RichPresenceConfig;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
@@ -39,6 +40,10 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
+    @SettingSection("opmarket")
+    @TextFieldSetting(maxLength = 10)
+    private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");
+
     @Override
     public ConfigProperty<Boolean> enabled() {
         return this.enabled;
@@ -62,5 +67,9 @@ public class OPSuchtConfig extends AddonConfig {
 
     public ConfigProperty<Boolean> coloredMentions() {
         return this.coloredMentions;
+    }
+
+    public ConfigProperty<String> priceFormat() {
+        return this.priceFormat;
     }
 }

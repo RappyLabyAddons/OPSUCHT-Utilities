@@ -7,6 +7,7 @@ import com.rappytv.opsucht.core.ui.hudwidget.config.GlobalPriceHudWidgetConfig;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -97,10 +98,13 @@ public class InventoryValueHudWidget extends TextHudWidget<GlobalPriceHudWidgetC
                 Component.text(data.itemAmount())
             ))
             .append(Component.text(": ", NamedTextColor.GRAY))
-            .append(OPSuchtAddon.references().marketManager().formatValueComponent(
+            .append(OPSuchtAddon.references().valueFormatter().formatValueComponent(
                 data.buyValue(),
                 data.sellValue(),
-                this.config
+                this.addon.configuration().priceFormat().get(),
+                TextColor.color(this.config.buyPriceColor().get().get()),
+                TextColor.color(this.config.sellPriceColor().get().get()),
+                this.config.displayMode().get()
             ));
 
         this.line.setState(State.VISIBLE);

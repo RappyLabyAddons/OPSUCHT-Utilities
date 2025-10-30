@@ -26,7 +26,7 @@ import net.labymod.api.util.version.SemanticVersion;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
-    private static Component prefix = Component.empty()
+    private static final Component prefix = Component.empty()
         .append(Component.text("OPSUCHT", NamedTextColor.RED).decorate(TextDecoration.BOLD))
         .append(Component.text(" » ", NamedTextColor.DARK_GRAY));
     private static String userAgent = "OPSUCHT LabyAddon";
