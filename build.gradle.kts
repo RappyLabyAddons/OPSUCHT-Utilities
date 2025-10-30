@@ -15,7 +15,7 @@ labyMod {
         namespace = "opsucht"
         displayName = "OPSUCHT Utilities"
         author = "RappyTV"
-        description = "Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH"
+        description = "Adds some ingame utilities for OPSUCHT.net (Inofficial addon)"
         minecraftVersion = "*"
         version = rootProject.version.toString()
     }
