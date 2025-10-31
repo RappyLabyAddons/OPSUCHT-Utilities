@@ -9,6 +9,7 @@ import com.rappytv.opsucht.core.ui.hudwidget.config.GlobalPriceHudWidgetConfig;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -57,7 +58,7 @@ public class ItemValueHudWidget extends TextHudWidget<ItemValueHudWidgetConfig> 
             return;
         }
         if(isEditorContext && !Laby.labyAPI().minecraft().isIngame()) {
-            MarketItem exampleItem = OPSuchtAddon.references().marketManager().getPrice("diamond");
+            MarketItem exampleItem = OPSuchtAddon.references().marketManager().getItem("diamond");
             this.updateLine(
                 exampleItem != null
                     ? new MarketStack(exampleItem, 3)
@@ -115,10 +116,13 @@ public class ItemValueHudWidget extends TextHudWidget<ItemValueHudWidgetConfig> 
             component.append(Component.text(": ", NamedTextColor.GRAY));
         }
 
-        return component.append(OPSuchtAddon.references().marketManager().formatValueComponent(
+        return component.append(OPSuchtAddon.references().valueFormatter().formatValueComponent(
             includeStack ? stack.getStackBuyPrice() : stack.getBuyPrice(),
             includeStack ? stack.getStackSellPrice() : stack.getSellPrice(),
-            this.config
+            this.addon.configuration().priceFormat().get(),
+            TextColor.color(this.config.buyPriceColor().get().get()),
+            TextColor.color(this.config.sellPriceColor().get().get()),
+            this.config.displayMode().get()
         ));
     }
 
@@ -139,7 +143,7 @@ public class ItemValueHudWidget extends TextHudWidget<ItemValueHudWidgetConfig> 
             return null;
         }
 
-        MarketItem item = OPSuchtAddon.references().marketManager().getPrice(identifier.getPath());
+        MarketItem item = OPSuchtAddon.references().marketManager().getItem(identifier.getPath());
         return item != null ? new MarketStack(item, currentItem.getSize()) : INVALID_STACK;
     }
 

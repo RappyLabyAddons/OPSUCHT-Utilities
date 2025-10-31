@@ -25,9 +25,8 @@ import net.labymod.api.util.io.web.request.Response;
 public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetConfig> {
 
     private static final String ENDPOINT = "https://prapi.rappytv.com/opsucht";
-    private static final Component ERROR_COMPONENT = Component.translatable(
-        "opsucht.hudWidget.player_record.apiError"
-    );
+    private static final Component ERROR_COMPONENT = Component.empty()
+        .append(Component.translatable("opsucht.hudWidget.player_record.apiError"));
 
     private final OPSuchtAddon addon;
     private final Task refetchTask;
@@ -87,6 +86,7 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
         Response<JsonObject> response = Request.ofGson(JsonObject.class)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+            .handleErrorStream()
             .executeSync();
 
         if(response.hasException()) {

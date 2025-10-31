@@ -6,7 +6,7 @@ plugins {
 val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().split(";")
 
 group = "org.example"
-version = providers.environmentVariable("VERSION").getOrElse("1.2.1")
+version = providers.environmentVariable("VERSION").getOrElse("1.2.2")
 
 labyMod {
     defaultPackageName = "com.rappytv.opsucht"
@@ -15,7 +15,7 @@ labyMod {
         namespace = "opsucht"
         displayName = "OPSUCHT Utilities"
         author = "RappyTV"
-        description = "Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH"
+        description = "Adds some ingame utilities for OPSUCHT.net (Inofficial addon)"
         minecraftVersion = "*"
         version = rootProject.version.toString()
     }

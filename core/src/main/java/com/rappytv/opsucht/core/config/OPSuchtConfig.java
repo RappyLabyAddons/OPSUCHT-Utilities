@@ -4,6 +4,7 @@ import com.rappytv.opsucht.core.config.subconfig.InteractionBulletConfig;
 import com.rappytv.opsucht.core.config.subconfig.RichPresenceConfig;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
@@ -15,29 +16,35 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 @SpriteTexture("settings.png")
 public class OPSuchtConfig extends AddonConfig {
 
-    @SpriteSlot(size = 32)
+    @SpriteSlot
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
-    @SpriteSlot(size = 32, x = 1)
+    @SpriteSlot(x = 1)
     private final RichPresenceConfig richPresenceConfig = new RichPresenceConfig();
 
-    @SpriteSlot(size = 32, y = 1)
+    @SpriteSlot(x = 4)
     private final InteractionBulletConfig interactionBulletConfig = new InteractionBulletConfig();
 
-    @SpriteSlot(size = 32, y = 2)
+    @SpriteSlot(size = 32, y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
 
     @SettingSection("chat")
-    @SpriteSlot(size = 32, y = 2, x = 1)
+    @SpriteSlot(y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
 
     @IntroducedIn(namespace = "opsucht", value = "1.1.7")
-    @SpriteSlot(size = 32, y = 2, x = 2)
+    @SpriteSlot(x = 1, y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
+
+    @SettingSection("opmarket")
+    @IntroducedIn(namespace = "opsucht", value = "1.2.2")
+    @SpriteSlot(x = 7)
+    @TextFieldSetting(maxLength = 10)
+    private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");
 
     @Override
     public ConfigProperty<Boolean> enabled() {
@@ -62,5 +69,9 @@ public class OPSuchtConfig extends AddonConfig {
 
     public ConfigProperty<Boolean> coloredMentions() {
         return this.coloredMentions;
+    }
+
+    public ConfigProperty<String> priceFormat() {
+        return this.priceFormat;
     }
 }

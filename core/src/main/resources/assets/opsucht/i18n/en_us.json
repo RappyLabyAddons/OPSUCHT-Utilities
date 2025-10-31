@@ -1,22 +1,83 @@
 {
     "opsucht": {
+        "settings": {
+            "header": {
+                "chat": {
+                    "name": "Chat"
+                },
+                "opmarket": {
+                    "name": "OP Market"
+                }
+            },
+            "enabled": {
+                "name": "Enabled"
+            },
+            "richPresenceConfig": {
+                "name": "Discord Rich Presence",
+                "showSubServer": {
+                    "name": "Show sub servers",
+                    "description": "For example §bcb1 §for §blobby-10"
+                },
+                "showPlayerCount": {
+                    "name": "Show player count"
+                }
+            },
+            "interactionBulletConfig": {
+                "name": "Interaction Menu",
+                "payBullet": {
+                    "name": "Pay money",
+                    "description": "Adds the option to pay a player money."
+                },
+                "clanInviteBullet": {
+                    "name": "Send Clan Invite",
+                    "description": "Adds the option to send a clan invite to the player."
+                },
+                "friendRequestBullet": {
+                    "name": "Send friend request",
+                    "description": "Adds the option to send a friend request to the player."
+                }
+            },
+            "autoFly": {
+                "name": "AutoFly",
+                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks."
+            },
+            "clickableNicknames": {
+                "name": "Clickable nicknames"
+            },
+            "coloredMentions": {
+                "name": "Colored mentions",
+                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
+            },
+            "priceFormat": {
+                "name": "Price format",
+                "description": "How prices should be displayed. You can use §b{price}§r as a placeholder for prices."
+            }
+        },
+        "command": {
+            "usage": "Usage: /%s <%s>",
+            "noPlayer": "This shouldn't happen. Please contact the developers!",
+            "buyValue": "Buy Value: %s",
+            "sellValue": "Sell Value: %s",
+            "item": {
+                "emptySlot": "You're not holding any item!",
+                "itemNoPrice": "This item doesn't have a price!",
+                "holdingItemNoPrice": "The item you're holding doesn't have a price!",
+                "invalidAmount": "The amount must be between %s and %s!",
+                "invalidStack": "Your item stack contains invalid data!",
+                "value": "Market value of %s:",
+                "stackPrice": "(%s for %s items)"
+            },
+            "inventory": {
+                "empty": "You don't have any valuable items in your inventory!",
+                "invalidData": "Invalid inventory data!",
+                "value": "You have %s valuable items in your inventory."
+            }
+        },
         "chat": {
             "clickableNickname": "Click, to see the real name."
         },
         "hudWidget": {
             "config": {
-                "buyPriceColor": {
-                    "name": "Buy price color"
-                },
-                "displayMode": {
-                    "description": "Which prices to display",
-                    "entries": {
-                        "both": "Both",
-                        "onlyBuy": "Only buy price",
-                        "onlySell": "Only sell price"
-                    },
-                    "name": "Dislay mode"
-                },
                 "header": {
                     "colors": {
                         "name": "Colors"
@@ -29,50 +90,85 @@
                     "description": "If the whole stack price should be displayed or only the single item price",
                     "name": "Show stack price"
                 },
-                "priceFormat": {
-                    "description": "How prices should be displayed. You can use §b{price}§r as a placeholder for prices.",
-                    "name": "Price format"
+                "displayMode": {
+                    "name": "Dislay mode",
+                    "description": "Which prices to display",
+                    "entries": {
+                        "both": "Both",
+                        "onlyBuy": "Only buy price",
+                        "onlySell": "Only sell price"
+                    }
+                },
+                "buyPriceColor": {
+                    "name": "Buy price color"
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
                 }
             },
+            "auction_list": {
+                "name": "Auctions",
+                "empty": "No active auctions found.",
+                "maxAuctions": {
+                    "name": "Max results"
+                },
+                "sortType": {
+                    "name": "Sort by",
+                    "entries": {
+                        "endingSoon": "Ending soon",
+                        "highestBids": "Highest bids",
+                        "lowestBids": "Lowest bids"
+                    }
+                },
+                "category": {
+                    "name": "Category",
+                    "entries": {
+                        "all": "All",
+                        "customItems": "Custom Items",
+                        "tools": "Tools",
+                        "armor": "Armor",
+                        "opItems": "OP Items",
+                        "spawnEggs": "Spawn Eggs",
+                        "other": "Other"
+                    }
+                }
+            },
             "inventory_value": {
+                "name": "Inventory Value",
                 "invalidData": "Invalid Data",
-                "items": "%s Items",
                 "loading": "Loading…",
-                "name": "Inventory Value"
+                "items": "%s Items"
             },
             "item_value": {
-                "hideNonPrices": {
-                    "description": "When enabled, the widget will only be visible if the current item has a valid price",
-                    "name": "Only show valid prices"
-                },
                 "name": "Item Value",
                 "noItem": "No Item",
                 "noPrice": "No Price",
+                "hideNonPrices": {
+                    "name": "Only show valid prices",
+                    "description": "When enabled, the widget will only be visible if the current item has a valid price"
+                },
                 "showItemName": {
                     "name": "Show item name"
                 }
             },
             "player_record": {
-                "apiError": "API Error",
-                "forceRefetch": {
-                    "description": "Checks if there is a new player record.",
-                    "name": "Force refetch",
-                    "text": "Refetch"
-                },
                 "name": "Player Record",
+                "apiError": "API Error",
                 "onlyShowWhenConnected": {
-                    "description": "When enabled, this widget will only show when connected to §bopsucht.net§r.",
-                    "name": "Only show when connected"
+                    "name": "Only show when connected",
+                    "description": "When enabled, this widget will only show when connected to §bopsucht.net§r."
+                },
+                "forceRefetch": {
+                    "name": "Force refetch",
+                    "description": "Checks if there is a new player record.",
+                    "text": "Refetch"
                 }
             }
         },
         "hudWidgetCategory": {
             "opsucht": {
-                "description": "Shows you §bopsucht.net§r related information",
-                "name": "OPSUCHT"
+                "name": "OPSUCHT",
+                "description": "Shows you §bopsucht.net§r related information"
             }
         },
         "interaction": {
@@ -84,52 +180,6 @@
             "loading": "Loading player count…",
             "players": "%s Players",
             "subserver": "Playing on %s"
-        },
-        "settings": {
-            "autoFly": {
-                "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks.",
-                "name": "AutoFly"
-            },
-            "clickableNicknames": {
-                "name": "Clickable nicknames"
-            },
-            "coloredMentions": {
-                "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>",
-                "name": "Colored mentions"
-            },
-            "enabled": {
-                "name": "Enabled"
-            },
-            "header": {
-                "chat": {
-                    "name": "Chat"
-                }
-            },
-            "interactionBulletConfig": {
-                "clanInviteBullet": {
-                    "description": "Adds the option to send a clan invite to the player.",
-                    "name": "Send Clan Invite"
-                },
-                "friendRequestBullet": {
-                    "description": "Adds the option to send a friend request to the player.",
-                    "name": "Send friend request"
-                },
-                "name": "Interaction Menu",
-                "payBullet": {
-                    "description": "Adds the option to pay a player money.",
-                    "name": "Pay money"
-                }
-            },
-            "richPresenceConfig": {
-                "name": "Discord Rich Presence",
-                "showPlayerCount": {
-                    "name": "Show player count"
-                },
-                "showSubServer": {
-                    "description": "For example §bcb1 §for §blobby-10",
-                    "name": "Show sub servers"
-                }
-            }
         }
     }
 }
