@@ -16,31 +16,32 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 @SpriteTexture("settings.png")
 public class OPSuchtConfig extends AddonConfig {
 
-    @SpriteSlot(size = 32)
+    @SpriteSlot
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
-    @SpriteSlot(size = 32, x = 1)
+    @SpriteSlot(x = 1)
     private final RichPresenceConfig richPresenceConfig = new RichPresenceConfig();
 
-    @SpriteSlot(size = 32, y = 1)
+    @SpriteSlot(x = 4)
     private final InteractionBulletConfig interactionBulletConfig = new InteractionBulletConfig();
 
-    @SpriteSlot(size = 32, y = 2)
+    @SpriteSlot(size = 32, y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
 
     @SettingSection("chat")
-    @SpriteSlot(size = 32, y = 2, x = 1)
+    @SpriteSlot(y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
 
     @IntroducedIn(namespace = "opsucht", value = "1.1.7")
-    @SpriteSlot(size = 32, y = 2, x = 2)
+    @SpriteSlot(x = 1, y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
-    @SettingSection("opmarket") // TODO: Add icon
+    @SettingSection("opmarket")
+    @SpriteSlot(x = 7)
     @TextFieldSetting(maxLength = 10)
     private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");
 

@@ -1,5 +1,6 @@
 package com.rappytv.opsucht.core.ui.hudwidget;
 
+import com.rappytv.opsucht.api.OPSuchtTextures.SpriteHud;
 import com.rappytv.opsucht.api.auction.Auction;
 import com.rappytv.opsucht.api.event.AuctionDataRefreshEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
@@ -30,7 +31,7 @@ public class AuctionListWidget extends TextHudWidget<AuctionListWidgetConfig> {
         super("auction_list", AuctionListWidgetConfig.class);
         this.addon = addon;
 
-        // TODO: Add icon
+        this.setIcon(SpriteHud.AUCTIONS);
         this.bindCategory(category);
     }
 
