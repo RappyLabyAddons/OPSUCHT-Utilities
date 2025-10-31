@@ -91,9 +91,12 @@ public class DefaultRichPresenceManager implements RichPresenceManager {
         Scoreboard scoreboard = Laby.labyAPI().minecraft().getScoreboard();
         if(scoreboard == null) return null;
 
-        ScoreboardTeam scoreboardTeam = scoreboard.getTeams().stream()
-            .filter(team -> team.getTeamName().equals(teamname))
-            .findFirst().orElse(null);
+        ScoreboardTeam scoreboardTeam = null;
+        for (ScoreboardTeam team : scoreboard.getTeams()) {
+            if(team.getTeamName().equals(teamname)) {
+                scoreboardTeam = team;
+            }
+        }
         if(scoreboardTeam == null) return null;
 
         if(scoreboardTeam.getSuffix() instanceof TextComponent suffixComponent) {
