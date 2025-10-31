@@ -29,10 +29,6 @@
                     "description": "Entscheidet ob der ganze Stackpreis berechnet werden soll oder nur der Einzelpreis des Items",
                     "name": "Stackpreis anzeigen"
                 },
-                "priceFormat": {
-                    "description": "Das Format, wie Preise angezeigt werden sollen. Du kannst §b{price}§r als Platzhalter für den Preis benutzen.",
-                    "name": "Preisformat"
-                },
                 "sellPriceColor": {
                     "name": "Verkaufspreis-Farbe"
                 }
