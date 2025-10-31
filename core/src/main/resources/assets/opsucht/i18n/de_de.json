@@ -63,6 +63,21 @@
                     "description": "Wenn diese Option aktiviert ist, wird das Widget nur angezeigt, wenn du zum §bopsucht.net§r-Netzwerk verbunden bist.",
                     "name": "Nur anzeigen, wenn du zum Server verbunden bist"
                 }
+            },
+            "auction_list": {
+                "name": "Auktionen",
+                "empty": "Keine aktiven Auktionen gefunden.",
+                "maxAuctions": {
+                    "name": "Maximale Ergebnisse"
+                },
+                "sortType": {
+                    "name": "Sortieren",
+                    "entries": {
+                        "endingSoon": "Endet bald",
+                        "highestBids": "Höchste Gebote",
+                        "lowestBids": "Niedrigste Gebote"
+                    }
+                }
             }
         },
         "hudWidgetCategory": {
@@ -99,6 +114,9 @@
             "header": {
                 "chat": {
                     "name": "Chat"
+                },
+                "opmarket": {
+                    "name": "OP Markt"
                 }
             },
             "interactionBulletConfig": {
@@ -125,6 +143,30 @@
                     "description": "Beispielsweise §bcb1 §foder §blobby-10",
                     "name": "Unterserver anzeigen"
                 }
+            },
+            "priceFormat": {
+                "name": "Preisformat",
+                "description": "Wie Preise angezeigt werden sollen. Du kannst §b{price}§r als Platzhalter für den Preis benutzen."
+            }
+        },
+        "command": {
+            "usage": "Verwendung: /%s <%s>",
+            "noPlayer": "Das sollte nicht passieren, bitte kontaktiere die Entwickler!",
+            "buyValue": "Kaufwert: %s",
+            "sellValue": "Verkaufswert: %s",
+            "item": {
+                "emptySlot": "Du hast kein Item in der Hand!",
+                "itemNoPrice": "Dieses Item hat keinen Preis!",
+                "holdingItemNoPrice": "Das Item, welches du in der Hand hältst, hat keinen Preis!",
+                "invalidAmount": "Die Menge muss zwischen %s und %s liegen!",
+                "invalidStack": "Dein Itemstack enthält ungültige Daten!",
+                "value": "Marktwert von %s:",
+                "stackPrice": "(%s für %s Items)"
+            },
+            "inventory": {
+                "empty": "Du hast keine Items in deinem Inventar, die einen Wert haben!",
+                "invalidData": "Ungültige Inventardaten!",
+                "value": "Du hast %s Items mit einem Wert in deinem Inventar."
             }
         }
     }
