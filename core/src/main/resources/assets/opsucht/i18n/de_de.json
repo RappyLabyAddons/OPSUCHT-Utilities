@@ -77,6 +77,18 @@
                         "highestBids": "Höchste Gebote",
                         "lowestBids": "Niedrigste Gebote"
                     }
+                },
+                "category": {
+                    "name": "Kategorie",
+                    "entries": {
+                        "all": "Alle",
+                        "customItems": "Custom Items",
+                        "tools": "Werkzeuge",
+                        "armor": "Rüstung",
+                        "opItems": "OP Items",
+                        "spawnEggs": "Spawn Eggs",
+                        "other": "Andere"
+                    }
                 }
             }
         },
