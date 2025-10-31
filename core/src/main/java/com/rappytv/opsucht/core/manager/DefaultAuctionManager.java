@@ -40,13 +40,10 @@ public class DefaultAuctionManager implements AuctionManager {
         Response<Auction[]> response = Request.ofGson(Auction[].class, gson)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+            .handleErrorStream()
             .executeSync();
 
-        if (response.hasException()) {
-            return;
-        }
-
-        if(response.getStatusCode() != 200) {
+        if (response.hasException() || response.getStatusCode() != 200) {
             return;
         }
 

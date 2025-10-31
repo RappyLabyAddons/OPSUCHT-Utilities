@@ -72,13 +72,10 @@ public class DefaultMarketManager implements MarketManager {
         Response<JsonObject> response = Request.ofGson(JsonObject.class)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+            .handleErrorStream()
             .executeSync();
 
-        if (response.hasException()) {
-            return;
-        }
-
-        if(response.getStatusCode() != 200) {
+        if (response.hasException() || response.getStatusCode() != 200) {
             return;
         }
 

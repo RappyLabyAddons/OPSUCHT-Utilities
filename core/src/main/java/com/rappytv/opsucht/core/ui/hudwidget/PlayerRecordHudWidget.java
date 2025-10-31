@@ -86,6 +86,7 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
         Response<JsonObject> response = Request.ofGson(JsonObject.class)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+            .handleErrorStream()
             .executeSync();
 
         if(response.hasException()) {
