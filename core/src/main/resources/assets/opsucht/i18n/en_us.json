@@ -123,12 +123,12 @@
                 "category": {
                     "name": "Category",
                     "entries": {
-                        "all": "Alle",
+                        "all": "All",
                         "customItems": "Custom Items",
                         "tools": "Tools",
                         "armor": "Armor",
                         "opItems": "OP Items",
-                        "spawnEggs": "Spawn eggs",
+                        "spawnEggs": "Spawn Eggs",
                         "other": "Other"
                     }
                 }
