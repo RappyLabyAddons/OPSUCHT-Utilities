@@ -5,13 +5,13 @@ import com.rappytv.opsucht.core.command.MarketCommand;
 import com.rappytv.opsucht.core.config.OPSuchtConfig;
 import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
+import com.rappytv.opsucht.core.ui.hudwidget.AuctionListWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.InventoryValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.ItemValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
 import com.rappytv.opsucht.core.ui.interaction.ClanInviteBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.FriendRequestBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.PayBulletPoint;
-import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -22,6 +22,7 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.revision.SimpleRevision;
 import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.version.SemanticVersion;
+import java.util.concurrent.TimeUnit;
 
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
@@ -47,6 +48,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         userAgent += " v" + this.addonInfo().getVersion();
 
         this.registerSettingCategory();
+        this.registerTasks();
         this.labyAPI().serverController().registerServer(this.server = new OPSuchtServer(this));
 
         this.registerCommand(new MarketCommand(this));
@@ -56,6 +58,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         HudWidgetCategory category = new HudWidgetCategory(this, "opsucht");
 
         this.labyAPI().hudWidgetRegistry().categoryRegistry().register(category);
+        this.labyAPI().hudWidgetRegistry().register(new AuctionListWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new InventoryValueHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new ItemValueHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new PlayerRecordHudWidget(this, category));
@@ -63,11 +66,6 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.labyAPI().interactionMenuRegistry().register(new ClanInviteBulletPoint(this));
         this.labyAPI().interactionMenuRegistry().register(new FriendRequestBulletPoint(this));
         this.labyAPI().interactionMenuRegistry().register(new PayBulletPoint(this));
-
-        Task.builder(referenceStorage.marketManager()::cachePrices)
-            .repeat(30, TimeUnit.MINUTES)
-            .build()
-            .execute();
     }
 
     public static ReferenceStorage references() {
@@ -84,6 +82,21 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     public OPSuchtServer server() {
         return this.server;
+    }
+
+    private void registerTasks() {
+        Task.builder(() -> {
+                if(referenceStorage.auctionManager().getActiveAuctions().isEmpty() || this.server.isConnected()) {
+                    referenceStorage.auctionManager().cacheAuctions();
+                }
+            }).repeat(2, TimeUnit.MINUTES)
+            .build()
+            .execute();
+
+        Task.builder(referenceStorage.marketManager()::cachePrices)
+            .repeat(30, TimeUnit.MINUTES)
+            .build()
+            .execute();
     }
 
     @Override

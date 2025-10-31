@@ -40,7 +40,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
-    @SettingSection("opmarket")
+    @SettingSection("opmarket") // TODO: Add icon
     @TextFieldSetting(maxLength = 10)
     private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");
 

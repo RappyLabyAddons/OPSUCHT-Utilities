@@ -35,8 +35,8 @@ public class MarketItem {
         return this.buyPrice >= 0 && this.sellPrice >= 0;
     }
 
-    private static String formatName(String id) {
-        String[] parts = id.split("_");
+    public static String formatName(String id) {
+        String[] parts = id.toLowerCase().split("_");
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < parts.length; i++) {
