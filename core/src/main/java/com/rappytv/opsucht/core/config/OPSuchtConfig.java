@@ -41,6 +41,7 @@ public class OPSuchtConfig extends AddonConfig {
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
     @SettingSection("opmarket")
+    @IntroducedIn(namespace = "opsucht", value = "1.2.2")
     @SpriteSlot(x = 7)
     @TextFieldSetting(maxLength = 10)
     private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");

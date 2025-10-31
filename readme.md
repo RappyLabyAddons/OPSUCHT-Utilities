@@ -2,7 +2,7 @@
 Adds some ingame utilities for OPSUCHT.net | Not affiliated with Interwebmedia GmbH
 
 ### ✨ Features
-- [x] New context menu bullets
+- [x] Context menu bullets
 - [x] Clickable nicknames
 - [x] Discord rich presence
 - [x] AutoFly

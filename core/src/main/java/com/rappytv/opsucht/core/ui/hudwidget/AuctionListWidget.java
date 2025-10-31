@@ -23,6 +23,7 @@ import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
+import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.CustomTranslation;
 import net.labymod.api.configuration.settings.annotation.SettingListener;
@@ -132,13 +133,16 @@ public class AuctionListWidget extends TextHudWidget<AuctionListWidgetConfig> {
         private static final String ENDPOINT = "https://api.opsucht.net/auctions/categories";
         private static final Map<String, AuctionCategory> CATEGORIES = new HashMap<>();
 
+        @IntroducedIn(namespace = "opsucht", value = "1.2.2")
         @SliderSetting(min = 1, max = 50)
         private final ConfigProperty<Integer> maxAuctions = new ConfigProperty<>(5);
 
+        @IntroducedIn(namespace = "opsucht", value = "1.2.2")
         @CustomTranslation("opsucht.hudWidget.auction_list.sortType")
         @DropdownSetting
         private final ConfigProperty<SortType> sortType = new ConfigProperty<>(SortType.ENDING_SOON);
 
+        @IntroducedIn(namespace = "opsucht", value = "1.2.2")
         @CustomTranslation("opsucht.hudWidget.auction_list.category")
         @DropdownSetting
         private final ConfigProperty<String> category = new ConfigProperty<>("all");
