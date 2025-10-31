@@ -119,6 +119,18 @@
                         "highestBids": "Highest bids",
                         "lowestBids": "Lowest bids"
                     }
+                },
+                "category": {
+                    "name": "Category",
+                    "entries": {
+                        "all": "Alle",
+                        "customItems": "Custom Items",
+                        "tools": "Tools",
+                        "armor": "Armor",
+                        "opItems": "OP Items",
+                        "spawnEggs": "Spawn eggs",
+                        "other": "Other"
+                    }
                 }
             },
             "inventory_value": {
