@@ -37,9 +37,9 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     @Override
     protected void preConfigurationLoad() {
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.1.7"), "2023-11-21"));
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.2.1"), "2025-10-23"));
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion("1.2.2"), "2025-11-10"));
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion(1, 1, 7), "2023-11-21"));
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion(1, 2, 1), "2025-10-23"));
+        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion(1, 2, 2), "2025-11-10"));
     }
 
     @Override
@@ -87,12 +87,10 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
     private void registerTasks() {
         Task.builder(() -> {
-                if(referenceStorage.auctionManager().getActiveAuctions().isEmpty() || this.server.isConnected()) {
-                    referenceStorage.auctionManager().cacheAuctions();
-                }
-            }).repeat(2, TimeUnit.MINUTES)
-            .build()
-            .execute();
+            if(referenceStorage.auctionManager().getActiveAuctions().isEmpty() || this.server.isConnected()) {
+                referenceStorage.auctionManager().cacheAuctions();
+            }
+        }).repeat(2, TimeUnit.MINUTES).build().execute();
 
         Task.builder(referenceStorage.marketManager()::cachePrices)
             .repeat(30, TimeUnit.MINUTES)
