@@ -6,13 +6,6 @@ import com.rappytv.opsucht.api.auction.AuctionCategory;
 import com.rappytv.opsucht.api.event.AuctionDataRefreshEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.ui.hudwidget.AuctionListHudWidget.AuctionListWidgetConfig;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
@@ -34,6 +27,9 @@ import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.request.Request;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig> {
 
     private final OPSuchtAddon addon;
@@ -54,14 +50,18 @@ public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig>
             Component.translatable("opsucht.hudWidget.auction_list.name"),
             this.getAuctionList()
         );
-        Task.builder(() -> this.line.updateAndFlush(this.getAuctionList()))
+        Task.builder(this::updateAuctionList)
             .repeat(30, TimeUnit.SECONDS)
             .build()
             .execute();
     }
 
     @Subscribe
-    private void onAuctionDataRefresh(AuctionDataRefreshEvent event) {
+    public void onAuctionDataRefresh(AuctionDataRefreshEvent event) {
+        this.updateAuctionList();
+    }
+
+    private void updateAuctionList() {
         this.line.updateAndFlush(this.getAuctionList());
     }
 
@@ -134,6 +134,7 @@ public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig>
         private static final Map<String, AuctionCategory> CATEGORIES = new HashMap<>();
 
         @IntroducedIn(namespace = "opsucht", value = "1.2.2")
+        @CustomTranslation("opsucht.hudWidget.config.maxResults")
         @SliderSetting(min = 1, max = 50)
         private final ConfigProperty<Integer> maxAuctions = new ConfigProperty<>(5);
 
@@ -159,7 +160,7 @@ public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig>
                 .async()
                 .execute(response -> {
                     if(response.hasException() || response.getStatusCode() != 200) {
-                        category.set("all");
+                        this.category.set("all");
                     } else {
                         for (AuctionCategory category : response.get()) {
                             CATEGORIES.put(category.name(), category);

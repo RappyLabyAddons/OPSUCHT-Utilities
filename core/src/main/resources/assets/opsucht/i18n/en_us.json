@@ -104,14 +104,14 @@
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
+                },
+                "maxResults": {
+                    "name": "Max results"
                 }
             },
             "auction_list": {
                 "name": "Auctions",
                 "empty": "No active auctions found.",
-                "maxAuctions": {
-                    "name": "Max results"
-                },
                 "sortType": {
                     "name": "Sort by",
                     "entries": {
@@ -149,6 +149,15 @@
                 },
                 "showItemName": {
                     "name": "Show item name"
+                }
+            },
+            "merchant_rates": {
+                "name": "Merchant Rates",
+                "noRates": "Failed to load rates...",
+                "forceRefetch": {
+                    "name": "Refresh data",
+                    "text": "Fetch",
+                    "description": "Pulls new data from the server"
                 }
             },
             "player_record": {
