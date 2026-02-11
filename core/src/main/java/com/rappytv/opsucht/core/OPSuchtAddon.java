@@ -98,7 +98,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
             .execute();
 
         Task.builder(referenceStorage.merchantManager()::cacheRates)
-            .repeat(30, TimeUnit.MINUTES) // TODO: Tweak this
+            .repeat(1, TimeUnit.HOURS)
             .build()
             .execute();
     }
