@@ -5,7 +5,7 @@ import com.rappytv.opsucht.api.auction.Auction;
 import com.rappytv.opsucht.api.auction.AuctionCategory;
 import com.rappytv.opsucht.api.event.AuctionDataRefreshEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
-import com.rappytv.opsucht.core.ui.hudwidget.AuctionListWidget.AuctionListWidgetConfig;
+import com.rappytv.opsucht.core.ui.hudwidget.AuctionListHudWidget.AuctionListWidgetConfig;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,12 +34,12 @@ import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.request.Request;
 import org.jetbrains.annotations.Nullable;
 
-public class AuctionListWidget extends TextHudWidget<AuctionListWidgetConfig> {
+public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig> {
 
     private final OPSuchtAddon addon;
     private TextLine line;
 
-    public AuctionListWidget(OPSuchtAddon addon, HudWidgetCategory category) {
+    public AuctionListHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
         super("auction_list", AuctionListWidgetConfig.class);
         this.addon = addon;
 

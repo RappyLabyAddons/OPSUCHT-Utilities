@@ -5,7 +5,7 @@ import com.rappytv.opsucht.core.command.MarketCommand;
 import com.rappytv.opsucht.core.config.OPSuchtConfig;
 import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
-import com.rappytv.opsucht.core.ui.hudwidget.AuctionListWidget;
+import com.rappytv.opsucht.core.ui.hudwidget.AuctionListHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.InventoryValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.ItemValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
@@ -59,7 +59,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         HudWidgetCategory category = new HudWidgetCategory(this, "opsucht");
 
         this.labyAPI().hudWidgetRegistry().categoryRegistry().register(category);
-        this.labyAPI().hudWidgetRegistry().register(new AuctionListWidget(this, category));
+        this.labyAPI().hudWidgetRegistry().register(new AuctionListHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new InventoryValueHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new ItemValueHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new PlayerRecordHudWidget(this, category));
