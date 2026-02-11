@@ -8,6 +8,7 @@ import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
 import com.rappytv.opsucht.core.ui.hudwidget.AuctionListHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.InventoryValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.ItemValueHudWidget;
+import com.rappytv.opsucht.core.ui.hudwidget.MerchantHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
 import com.rappytv.opsucht.core.ui.interaction.ClanInviteBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.FriendRequestBulletPoint;
@@ -62,6 +63,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.labyAPI().hudWidgetRegistry().register(new AuctionListHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new InventoryValueHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new ItemValueHudWidget(this, category));
+        this.labyAPI().hudWidgetRegistry().register(new MerchantHudWidget(this, category));
         this.labyAPI().hudWidgetRegistry().register(new PlayerRecordHudWidget(this, category));
 
         this.labyAPI().interactionMenuRegistry().register(new ClanInviteBulletPoint(this));
