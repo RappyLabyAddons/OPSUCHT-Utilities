@@ -12,6 +12,7 @@ import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
 import com.rappytv.opsucht.core.ui.interaction.ClanInviteBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.FriendRequestBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.PayBulletPoint;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -22,7 +23,6 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.revision.SimpleRevision;
 import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.version.SemanticVersion;
-import java.util.concurrent.TimeUnit;
 
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
@@ -94,6 +94,11 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
         Task.builder(referenceStorage.marketManager()::cachePrices)
             .repeat(30, TimeUnit.MINUTES)
+            .build()
+            .execute();
+
+        Task.builder(referenceStorage.merchantManager()::cacheRates)
+            .repeat(30, TimeUnit.MINUTES) // TODO: Tweak this
             .build()
             .execute();
     }
