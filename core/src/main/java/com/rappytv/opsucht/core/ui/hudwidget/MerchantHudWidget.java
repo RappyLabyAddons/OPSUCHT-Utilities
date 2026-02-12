@@ -13,12 +13,10 @@ import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
-import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.CustomTranslation;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.util.MethodOrder;
 
 public class MerchantHudWidget extends TextHudWidget<MerchantHudWidgetConfig> {
 
@@ -29,7 +27,7 @@ public class MerchantHudWidget extends TextHudWidget<MerchantHudWidgetConfig> {
         super("merchant_rates", MerchantHudWidgetConfig.class);
         this.addon = addon;
 
-        this.setIcon(SpriteHud.ITEM_VALUE); // add own icon
+        this.setIcon(SpriteHud.AUCTIONS); // TODO: add own icon
         this.bindCategory(category);
     }
 
@@ -90,20 +88,14 @@ public class MerchantHudWidget extends TextHudWidget<MerchantHudWidgetConfig> {
             .append(rate.source())
             .append(Component.text(" -> ", NamedTextColor.GRAY))
             .append(Component.text(rate.exchangeRate()))
-            .append(Component.text("x "))
+            .append(Component.space())
             .append(rate.target());
     }
 
     public static class MerchantHudWidgetConfig extends TextHudWidgetConfig {
 
+        @CustomTranslation("opsucht.hudWidget.config.maxResults")
         @SliderSetting(min = 1, max = 15) // May need to be adjusted in the future
         private final ConfigProperty<Integer> maxRates = new ConfigProperty<>(4);
-
-        @MethodOrder(after = "maxRates")
-        @CustomTranslation("opsucht.hudWidget.merchant_rates.forceRefetch")
-        @ButtonSetting
-        private void forceRefetch() {
-            OPSuchtAddon.references().merchantManager().cacheRates();
-        }
     }
 }
