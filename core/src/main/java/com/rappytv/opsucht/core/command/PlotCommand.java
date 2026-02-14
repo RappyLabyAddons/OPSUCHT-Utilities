@@ -35,7 +35,7 @@ public class PlotCommand extends Command {
                     plot = Integer.parseInt(arguments[1]);
                 } catch (NumberFormatException ignored) {}
             }
-            OPSuchtAddon.references().plotSwitchManager().init(username, plot);
+            OPSuchtAddon.references().plotSwitchManager().setData(username, plot);
             return false;
         }
     }

@@ -1,5 +1,6 @@
 package com.rappytv.opsucht.core.listeners;
 
+import com.rappytv.opsucht.api.plotswitch.PlotSwitchManager;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
@@ -9,18 +10,30 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import java.util.function.Supplier;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 
-public class ChatReceiveListener {
+public class ChatListener {
 
     private static final Pattern MENTION_PATTERN = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
-    private final OPSuchtAddon addon;
 
-    public ChatReceiveListener(OPSuchtAddon addon) {
+    private final OPSuchtAddon addon;
+    private final PlotSwitchManager plotSwitchManager;
+
+    public ChatListener(OPSuchtAddon addon) {
         this.addon = addon;
+        this.plotSwitchManager = OPSuchtAddon.references().plotSwitchManager();
+    }
+
+    @Subscribe
+    public void onChat(ChatMessageSendEvent event) {
+        // TODO: Add regex like /(p|plot|whatever) (visit|v|home) {username} {number}
+        if(!event.getMessage().matches("...") && this.plotSwitchManager.getCurrentPlayer() != null) {
+            this.plotSwitchManager.resetData();
+        }
     }
 
     @Subscribe
@@ -28,6 +41,19 @@ public class ChatReceiveListener {
         if(!this.addon.server().isConnected()) return;
         Component message = event.message();
         String text = event.chatMessage().getPlainText();
+
+        if(OPSuchtAddon.references().plotSwitchManager().isAwaitingTeleportation()) {
+            /*
+             * TODO: stop awaiting teleportation based on incoming message
+             * TODO: example: "You have been teleported" should stop the teleportation gracefully
+             * TODO: i'm offline rn so I cannot retrieve the messages which are used in production
+             */
+            if(text.equals("...")) {
+                this.plotSwitchManager.stopAwaitingTeleportation(true);
+            } else if(text.equals("....")) {
+                this.plotSwitchManager.stopAwaitingTeleportation(false);
+            }
+        }
 
         if(this.addon.configuration().coloredMentions().get() && text.contains("@")) {
             for(MatchResult matcher : MENTION_PATTERN.matcher(text).results().toList()) {

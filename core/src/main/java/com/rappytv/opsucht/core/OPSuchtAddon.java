@@ -4,9 +4,10 @@ import com.rappytv.opsucht.api.generated.ReferenceStorage;
 import com.rappytv.opsucht.core.command.MarketCommand;
 import com.rappytv.opsucht.core.command.PlotCommand;
 import com.rappytv.opsucht.core.config.OPSuchtConfig;
-import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
+import com.rappytv.opsucht.core.listeners.ChatListener;
 import com.rappytv.opsucht.core.listeners.KeyListener;
 import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
+import com.rappytv.opsucht.core.listeners.PlotSwitchListener;
 import com.rappytv.opsucht.core.ui.hudwidget.AuctionListWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.InventoryValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.ItemValueHudWidget;
@@ -56,9 +57,11 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
         this.registerCommand(new MarketCommand(this));
         this.registerCommand(new PlotCommand());
-        this.registerListener(new ChatReceiveListener(this));
+
+        this.registerListener(new ChatListener(this));
         this.registerListener(new KeyListener(this));
         this.registerListener(new PlayerInfoListener(this));
+        this.registerListener(new PlotSwitchListener(this));
 
         HudWidgetCategory category = new HudWidgetCategory(this, "opsucht");
 

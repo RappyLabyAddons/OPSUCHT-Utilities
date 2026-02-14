@@ -1,20 +1,36 @@
 package com.rappytv.opsucht.core.manager;
 
-import com.rappytv.opsucht.api.PlotSwitchManager;
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchTeleportationEvent;
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchTimeoutEvent;
+import com.rappytv.opsucht.api.plotswitch.PlotSwitchDirection;
+import com.rappytv.opsucht.api.plotswitch.PlotSwitchManager;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import net.labymod.api.Laby;
 import net.labymod.api.models.Implements;
+import net.labymod.api.util.concurrent.task.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import java.util.Objects;
 
 @Implements(PlotSwitchManager.class)
 public class DefaultPlotSwitchManager implements PlotSwitchManager {
 
+    private static final String PLOT_VISIT_COMMAND = "/plot visit %s %s";
+    private final Task teleportationTimeoutTask = Task.builder(() -> {
+        if(!this.isAwaitingTeleportation()) return;
+        this.stopAwaitingTeleportation(false);
+        Laby.fireEvent(new PlotSwitchTimeoutEvent());
+    }).delay(10, TimeUnit.SECONDS).build();
+
     private String currentPlayer = null;
+    private PlotSwitchDirection direction = null;
     private int currentPlot = -1;
+    private int teleportationAmount = -1;
 
     @Override
-    public void init(@NotNull String player, int plot) {
+    public void setData(@NotNull String player, int plot) {
         Objects.requireNonNull(player);
+        this.resetData();
         this.currentPlayer = player;
         this.currentPlot = plot;
     }
@@ -25,16 +41,70 @@ public class DefaultPlotSwitchManager implements PlotSwitchManager {
     }
 
     @Override
-    public int nextPlot() {
-        return this.currentPlot++;
+    public void teleportPrevious(int amount) {
+        if(amount <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than zero");
+        }
+        if(this.currentPlot - amount < 1) {
+            throw new IllegalArgumentException("Cannot teleport to a negative plot");
+        }
+        this.awaitTeleportation(PlotSwitchDirection.PREVIOUS, amount);
+        Laby.references().chatExecutor().chat(String.format(
+            PLOT_VISIT_COMMAND,
+            this.currentPlayer,
+            Math.max(this.currentPlot - amount, 1)
+        ), false);
     }
 
     @Override
-    public int previousPlot() {
-        if(this.currentPlot == 1) {
-            return this.currentPlot;
+    public void teleportNext(int amount) {
+        if(amount <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than zero");
         }
-        return this.currentPlot--;
+        this.awaitTeleportation(PlotSwitchDirection.NEXT, amount);
+        Laby.references().chatExecutor().chat(String.format(
+            PLOT_VISIT_COMMAND,
+            this.currentPlayer,
+            this.currentPlot + amount
+        ), false);
+    }
+
+    @Override
+    public void awaitTeleportation(@NotNull PlotSwitchDirection direction, int amount) throws IllegalStateException {
+        if(this.isAwaitingTeleportation()) {
+            throw new IllegalStateException("Already awaiting teleportation");
+        }
+        Objects.requireNonNull(direction);
+        this.direction = direction;
+        this.teleportationAmount = amount;
+        this.teleportationTimeoutTask.execute();
+    }
+
+    @Override
+    public void stopAwaitingTeleportation(boolean teleported) {
+        if(!this.isAwaitingTeleportation()) {
+            throw new IllegalStateException("Not awaiting teleportation");
+        }
+        if(teleported) {
+            int previousPlot = this.currentPlot;
+            if(this.direction == PlotSwitchDirection.NEXT) {
+                this.currentPlot += this.teleportationAmount;
+            } else if(this.currentPlot > 1) {
+                this.currentPlot -= this.teleportationAmount;
+            }
+            Laby.fireEvent(new PlotSwitchTeleportationEvent(
+                this.currentPlayer,
+                previousPlot,
+                this.currentPlot
+            ));
+        }
+        this.direction = null;
+        this.teleportationAmount = -1;
+    }
+
+    @Override
+    public boolean isAwaitingTeleportation() {
+        return this.direction != null && this.teleportationAmount > 0;
     }
 
     @Override
@@ -43,8 +113,10 @@ public class DefaultPlotSwitchManager implements PlotSwitchManager {
     }
 
     @Override
-    public void reset() {
+    public void resetData() {
         this.currentPlayer = null;
+        this.direction = null;
         this.currentPlot = -1;
+        this.teleportationAmount = -1;
     }
 }
