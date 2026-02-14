@@ -1,10 +1,11 @@
 package com.rappytv.opsucht.core.listeners;
 
-import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchFailEvent;
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchErrorEvent;
 import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchTeleportationEvent;
-import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchTimeoutEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.notification.Notification;
 
@@ -18,21 +19,31 @@ public class PlotSwitchListener {
 
     @Subscribe
     public void onTeleport(PlotSwitchTeleportationEvent event) {
-        // TODO: add real logic. probably with chat messages
-        System.out.println("Teleported from " + event.username() + "'s " + event.previousPlot() + ". plot to their " + event.currentPlot() + ". plot");
+        Laby.references().chatExecutor().displayClientMessage(
+            OPSuchtAddon.prefix().append(Component.translatable(
+                "opsucht.plotSwitch.teleported",
+                Component.text(event.username(), NamedTextColor.AQUA),
+                Component.text(event.previousPlot(), NamedTextColor.AQUA),
+                Component.text(event.currentPlot(), NamedTextColor.AQUA)
+            ))
+        );
     }
 
     @Subscribe
-    public void onTimeout(PlotSwitchTimeoutEvent event) {
-        Notification.builder() // TODO: Translate messages
-            .title(Component.translatable("Teleportation timeout"))
-            .text(Component.translatable("The teleportation was not successfuly. Try again later!"))
-            .buildAndPush();
-    }
-
-    @Subscribe
-    public void onFail(PlotSwitchFailEvent event) {
-        System.out.println("Plot switch failed: " + event.reason());
+    public void onFail(PlotSwitchErrorEvent event) {
+        if(!this.addon.configuration().plotSwitch().get()) {
+            return;
+        }
+        if(Laby.labyAPI().minecraft().isIngame()) {
+            Laby.references().chatExecutor().displayClientMessage(
+                OPSuchtAddon.prefix().append(event.reasonComponent().color(NamedTextColor.RED))
+            );
+        } else {
+            Notification.builder()
+                .title(Component.translatable("opsucht.plotSwitch.error"))
+                .text(event.reasonComponent())
+                .buildAndPush();
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.rappytv.opsucht.core.listeners;
 
-import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchFailEvent;
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchErrorEvent;
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchErrorEvent.Reason;
 import com.rappytv.opsucht.api.plotswitch.PlotSwitchDirection;
 import com.rappytv.opsucht.api.plotswitch.PlotSwitchManager;
 import com.rappytv.opsucht.core.OPSuchtAddon;
@@ -30,13 +31,19 @@ public class KeyListener {
     @Subscribe
     public void onKeyDown(KeyEvent event) {
         if(!this.addon.server().isConnected()
+            || !this.addon.configuration().plotSwitch().get()
             || !Key.L_SHIFT.isPressed()
             || event.state() != State.PRESS
             || Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()) {
             return;
         }
 
-        if(this.manager.getCurrentPlayer() == null || this.manager.isAwaitingTeleportation()) {
+        if(this.manager.getCurrentPlayer() == null) {
+            Laby.fireEvent(new PlotSwitchErrorEvent(Reason.NOT_INITIALIZED));
+            return;
+        }
+        if(this.manager.isAwaitingTeleportation()) {
+            Laby.fireEvent(new PlotSwitchErrorEvent(Reason.ALREADY_AWAITING_TELEPORTATION));
             return;
         }
         if(event.key() == Key.ARROW_LEFT) {
@@ -45,7 +52,7 @@ public class KeyListener {
                 return;
             }
             if(this.manager.getCurrentPlot() == 1) { // Can't teleport to negative plots
-                Laby.fireEvent(new PlotSwitchFailEvent("Cannot teleport to a negative plot"));
+                Laby.fireEvent(new PlotSwitchErrorEvent(Reason.NEGATIVE_PLOT));
                 return;
             }
             this.direction = PlotSwitchDirection.PREVIOUS;
@@ -70,8 +77,8 @@ public class KeyListener {
         Debounce.of(DEBOUNCE_ID, 700, () -> {
             try {
                 teleport.accept(this.amount);
-            } catch (IllegalArgumentException e) {
-                Laby.fireEvent(new PlotSwitchFailEvent(e.getMessage()));
+            } catch (Exception e) {
+                Laby.fireEvent(new PlotSwitchErrorEvent(e.getMessage()));
             }
             this.reset();
         });

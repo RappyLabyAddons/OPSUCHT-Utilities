@@ -45,8 +45,8 @@ public class ChatListener {
         if(OPSuchtAddon.references().plotSwitchManager().isAwaitingTeleportation()) {
             /*
              * TODO: stop awaiting teleportation based on incoming message
-             * TODO: example: "You have been teleported" should stop the teleportation gracefully
-             * TODO: i'm offline rn so I cannot retrieve the messages which are used in production
+             * example: "You have been teleported" should stop the teleportation gracefully
+             * i'm offline rn so I cannot retrieve the messages which are used in production
              */
             if(text.equals("...")) {
                 this.plotSwitchManager.stopAwaitingTeleportation(true);

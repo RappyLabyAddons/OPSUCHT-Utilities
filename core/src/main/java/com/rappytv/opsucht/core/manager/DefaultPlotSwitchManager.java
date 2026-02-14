@@ -1,7 +1,8 @@
 package com.rappytv.opsucht.core.manager;
 
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchErrorEvent;
+import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchErrorEvent.Reason;
 import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchTeleportationEvent;
-import com.rappytv.opsucht.api.event.plotswitch.PlotSwitchTimeoutEvent;
 import com.rappytv.opsucht.api.plotswitch.PlotSwitchDirection;
 import com.rappytv.opsucht.api.plotswitch.PlotSwitchManager;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class DefaultPlotSwitchManager implements PlotSwitchManager {
     private final Task teleportationTimeoutTask = Task.builder(() -> {
         if(!this.isAwaitingTeleportation()) return;
         this.stopAwaitingTeleportation(false);
-        Laby.fireEvent(new PlotSwitchTimeoutEvent());
+        Laby.fireEvent(new PlotSwitchErrorEvent(Reason.TIMED_OUT));
     }).delay(10, TimeUnit.SECONDS).build();
 
     private String currentPlayer = null;

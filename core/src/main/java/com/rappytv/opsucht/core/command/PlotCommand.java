@@ -1,15 +1,17 @@
 package com.rappytv.opsucht.core.command;
 
 import com.rappytv.opsucht.core.OPSuchtAddon;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.chat.command.SubCommand;
 
 public class PlotCommand extends Command {
 
-    public PlotCommand() {
+    public PlotCommand(OPSuchtAddon addon) {
         super("plot", "p");
 
-        this.withSubCommand(new VisitCommand());
+        this.withSubCommand(new HomeCommand(addon));
+        this.withSubCommand(new VisitCommand(addon));
     }
 
     @Override
@@ -17,10 +19,41 @@ public class PlotCommand extends Command {
         return false;
     }
 
+    public static class HomeCommand extends SubCommand {
+
+        private final OPSuchtAddon addon;
+
+        private HomeCommand(OPSuchtAddon addon) {
+            super("home", "h");
+            this.addon = addon;
+        }
+
+        @Override
+        public boolean execute(String prefix, String[] arguments) {
+            String username = Laby.labyAPI().getName();
+            int plot = 1;
+            if(arguments.length > 1) {
+                try {
+                    plot = Integer.parseInt(arguments[0]);
+                } catch (NumberFormatException ignored) {}
+            }
+            OPSuchtAddon.references().plotSwitchManager().setData(username, plot);
+            this.addon.logger().debug(
+                "Remembered own (%s) %s. plot for plotswitch",
+                username,
+                plot
+            );
+            return false;
+        }
+    }
+
     public static class VisitCommand extends SubCommand {
 
-        private VisitCommand() {
+        private final OPSuchtAddon addon;
+
+        private VisitCommand(OPSuchtAddon addon) {
             super("visit", "v");
+            this.addon = addon;
         }
 
         @Override
@@ -36,6 +69,11 @@ public class PlotCommand extends Command {
                 } catch (NumberFormatException ignored) {}
             }
             OPSuchtAddon.references().plotSwitchManager().setData(username, plot);
+            this.addon.logger().debug(
+                "Remembered %s's %s. plot for plotswitch",
+                username,
+                plot
+            );
             return false;
         }
     }

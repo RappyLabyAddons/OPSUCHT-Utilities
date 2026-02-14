@@ -56,7 +56,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.labyAPI().serverController().registerServer(this.server = new OPSuchtServer(this));
 
         this.registerCommand(new MarketCommand(this));
-        this.registerCommand(new PlotCommand());
+        this.registerCommand(new PlotCommand(this));
 
         this.registerListener(new ChatListener(this));
         this.registerListener(new KeyListener(this));

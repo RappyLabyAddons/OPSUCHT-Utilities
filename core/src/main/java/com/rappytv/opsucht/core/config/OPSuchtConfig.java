@@ -40,6 +40,10 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
+    // TODO: Add icon
+    @SwitchSetting
+    private final ConfigProperty<Boolean> plotSwitch = new ConfigProperty<>(true);
+
     @SettingSection("opmarket")
     @IntroducedIn(namespace = "opsucht", value = "1.2.2")
     @SpriteSlot(x = 7)
@@ -69,6 +73,10 @@ public class OPSuchtConfig extends AddonConfig {
 
     public ConfigProperty<Boolean> coloredMentions() {
         return this.coloredMentions;
+    }
+
+    public ConfigProperty<Boolean> plotSwitch() {
+        return this.plotSwitch;
     }
 
     public ConfigProperty<String> priceFormat() {

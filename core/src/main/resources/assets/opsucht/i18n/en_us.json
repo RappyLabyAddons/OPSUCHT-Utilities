@@ -48,6 +48,10 @@
                 "name": "Colored mentions",
                 "description": "Every instance of @<Name> you receive as a chat message gets replaced by the colored version §b@<Name>"
             },
+            "plotSwitch": {
+                "name": "Easy plot switching",
+                "description": "This setting allows you to easily switch between someone's plots with your arrow keys (while holding shift) after using §b/plot home §ror §b/plot visit §rwith any parameters. You can also use the command aliases (e. g. §b/p h§r, etc.)\nExample: You just teleported to the third plot of a player, then you can just press §nShift + Left arrow§r to get to their second plot or §nShift + Right arrow§r to get to their fourth plot. This is also optimized to acknowledge multiple arrow presses to jump from the third to the fifth plot by pressing the right arrow key twice for example."
+            },
             "priceFormat": {
                 "name": "Price format",
                 "description": "How prices should be displayed. You can use §b{price}§r as a placeholder for prices."
@@ -169,6 +173,16 @@
             "opsucht": {
                 "name": "OPSUCHT",
                 "description": "Shows you §bopsucht.net§r related information"
+            }
+        },
+        "plotSwitch": {
+            "error": "Plot switch error",
+            "teleported": "%s's plots: %s. -> %s.",
+            "errors": {
+                "timedOut": "Plot switch teleportation timed out",
+                "negativePlot": "Cannot teleport to a negative plot",
+                "notInitialized": "Teleport to a player's plot first!",
+                "alreadyAwaitingTeleportation": "Please wait a second before teleporting again."
             }
         },
         "interaction": {
