@@ -12,6 +12,11 @@
             "enabled": {
                 "name": "Enabled"
             },
+            "github": {
+                "name": "Request a feature / Report a bug",
+                "text": "Open issue tracker",
+                "description": "I am no longer actively playing on §bopsucht.net §rbut I still want to maintain this addon so if you find any bugs or want to suggest a feature just create an issue on the github issue tracker :)"
+            },
             "richPresenceConfig": {
                 "name": "Discord Rich Presence",
                 "showSubServer": {
