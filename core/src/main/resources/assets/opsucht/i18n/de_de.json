@@ -67,9 +67,6 @@
             "auction_list": {
                 "name": "Auktionen",
                 "empty": "Keine aktiven Auktionen gefunden.",
-                "maxAuctions": {
-                    "name": "Maximale Ergebnisse"
-                },
                 "sortType": {
                     "name": "Sortieren",
                     "entries": {
