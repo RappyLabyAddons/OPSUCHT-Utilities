@@ -27,7 +27,7 @@ public class MerchantHudWidget extends TextHudWidget<MerchantHudWidgetConfig> {
         super("merchant_rates", MerchantHudWidgetConfig.class);
         this.addon = addon;
 
-        this.setIcon(SpriteHud.AUCTIONS); // TODO: add own icon
+        this.setIcon(SpriteHud.MERCHANT);
         this.bindCategory(category);
     }
 
