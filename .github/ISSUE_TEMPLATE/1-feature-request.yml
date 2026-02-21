@@ -1,3 +1,13 @@
 name: "✨ Suggest a new feature"
 about: Create a feature request issue
-# TODO: Customize templates
+type: feature
+title: "feat: "
+labels: ["feature", "pending"]
+assignees: ["RappyTV"]
+body:
+    -   type: textarea
+        attributes:
+            label: Your idea
+            description: Tell us about your vision and maybe also provide examples how we should implement it to your liking
+        validations:
+            required: true
