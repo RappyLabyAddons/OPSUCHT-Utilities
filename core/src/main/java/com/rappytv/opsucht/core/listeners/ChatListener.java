@@ -31,9 +31,9 @@ public class ChatListener {
     @Subscribe
     public void onChat(ChatMessageSendEvent event) {
         // TODO: Add regex like /(p|plot|whatever) (visit|v|home) {username} {number}
-        if(!event.getMessage().matches("...") && this.plotSwitchManager.getCurrentPlayer() != null) {
-            this.plotSwitchManager.resetData();
-        }
+//        if(!event.getMessage().matches("...") && this.plotSwitchManager.getCurrentPlayer() != null) {
+//            this.plotSwitchManager.resetData();
+//        }
     }
 
     @Subscribe
@@ -43,14 +43,9 @@ public class ChatListener {
         String text = event.chatMessage().getPlainText();
 
         if(OPSuchtAddon.references().plotSwitchManager().isAwaitingTeleportation()) {
-            /*
-             * TODO: stop awaiting teleportation based on incoming message
-             * example: "You have been teleported" should stop the teleportation gracefully
-             * i'm offline rn so I cannot retrieve the messages which are used in production
-             */
-            if(text.equals("...")) {
+            if(text.matches("^OPSUCHT » Du wurdest teleportiert\\.$")) {
                 this.plotSwitchManager.stopAwaitingTeleportation(true);
-            } else if(text.equals("....")) {
+            } else if(text.matches("^OPSUCHT » Das ist keine gültige Zahl innerhalb des Bereichs: \\((-?\\d+), (-?\\d+)\\)$")) {
                 this.plotSwitchManager.stopAwaitingTeleportation(false);
             }
         }

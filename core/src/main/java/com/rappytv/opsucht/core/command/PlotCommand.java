@@ -32,14 +32,19 @@ public class PlotCommand extends Command {
         public boolean execute(String prefix, String[] arguments) {
             String username = Laby.labyAPI().getName();
             int plot = 1;
-            if(arguments.length > 1) {
+            if(arguments.length == 1) {
                 try {
                     plot = Integer.parseInt(arguments[0]);
                 } catch (NumberFormatException ignored) {}
+            } else if(arguments.length == 2) {
+                username = arguments[0];
+                try {
+                    plot = Integer.parseInt(arguments[1]);
+                } catch (NumberFormatException ignored) {}
             }
             OPSuchtAddon.references().plotSwitchManager().setData(username, plot);
-            this.addon.logger().debug(
-                "Remembered own (%s) %s. plot for plotswitch",
+            this.addon.logger().info(
+                "Remembered own ({}) {}. plot for plotswitch",
                 username,
                 plot
             );
@@ -52,7 +57,7 @@ public class PlotCommand extends Command {
         private final OPSuchtAddon addon;
 
         private VisitCommand(OPSuchtAddon addon) {
-            super("visit", "v");
+            super("visit", "v", "tp", "teleport", "goto", "warp");
             this.addon = addon;
         }
 
@@ -69,8 +74,8 @@ public class PlotCommand extends Command {
                 } catch (NumberFormatException ignored) {}
             }
             OPSuchtAddon.references().plotSwitchManager().setData(username, plot);
-            this.addon.logger().debug(
-                "Remembered %s's %s. plot for plotswitch",
+            this.addon.logger().info(
+                "Remembered {}'s {}. plot for plotswitch",
                 username,
                 plot
             );

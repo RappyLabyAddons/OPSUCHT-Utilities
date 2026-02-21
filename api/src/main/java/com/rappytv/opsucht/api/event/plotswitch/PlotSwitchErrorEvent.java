@@ -13,7 +13,7 @@ public class PlotSwitchErrorEvent implements Event {
     }
 
     public PlotSwitchErrorEvent(Reason reason) {
-        this.reason = Component.translatable("opsucht.plotswitch.errors" + reason.toString());
+        this.reason = Component.translatable("opsucht.plotSwitch.errors." + reason.toString());
     }
 
     public Component reasonComponent() {

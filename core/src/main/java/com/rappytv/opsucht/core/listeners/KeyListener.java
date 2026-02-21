@@ -30,10 +30,14 @@ public class KeyListener {
 
     @Subscribe
     public void onKeyDown(KeyEvent event) {
+        boolean leftArrowKeyDown = event.key() == Key.ARROW_LEFT;
+        boolean rightArrowKeyDown = event.key() == Key.ARROW_RIGHT;
+
         if(!this.addon.server().isConnected()
             || !this.addon.configuration().plotSwitch().get()
             || !Key.L_SHIFT.isPressed()
             || event.state() != State.PRESS
+            || (!leftArrowKeyDown && !rightArrowKeyDown)
             || Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()) {
             return;
         }
@@ -46,7 +50,7 @@ public class KeyListener {
             Laby.fireEvent(new PlotSwitchErrorEvent(Reason.ALREADY_AWAITING_TELEPORTATION));
             return;
         }
-        if(event.key() == Key.ARROW_LEFT) {
+        if(leftArrowKeyDown) {
             // To prevent changing the direction
             if(this.direction == PlotSwitchDirection.NEXT) {
                 return;
@@ -56,16 +60,14 @@ public class KeyListener {
                 return;
             }
             this.direction = PlotSwitchDirection.PREVIOUS;
-            this.amount++;
-            this.runDebounce();
-        } else if(event.key() == Key.ARROW_RIGHT) {
+        } else {
             if(this.direction == PlotSwitchDirection.PREVIOUS) {
                 return;
             }
             this.direction = PlotSwitchDirection.NEXT;
-            this.amount++;
-            this.runDebounce();
         }
+        this.amount++;
+        this.runDebounce();
     }
 
     // Using a Debounce to be able to jump over multiple plots without command spam
@@ -74,7 +76,7 @@ public class KeyListener {
             ? this.manager::teleportNext
             : this.manager::teleportPrevious;
 
-        Debounce.of(DEBOUNCE_ID, 700, () -> {
+        Debounce.of(DEBOUNCE_ID, 300, () -> {
             try {
                 teleport.accept(this.amount);
             } catch (Exception e) {

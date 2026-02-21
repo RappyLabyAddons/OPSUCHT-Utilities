@@ -12,7 +12,9 @@ import net.labymod.api.models.Implements;
 import net.labymod.api.util.concurrent.task.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import javax.inject.Singleton;
 
+@Singleton
 @Implements(PlotSwitchManager.class)
 public class DefaultPlotSwitchManager implements PlotSwitchManager {
 
