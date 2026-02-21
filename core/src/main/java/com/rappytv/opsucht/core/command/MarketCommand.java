@@ -60,7 +60,11 @@ public class MarketCommand extends Command {
         @Override
         public boolean execute(String prefix, String[] arguments) {
             if(!this.addon.server().isConnected()) {
-                return false;
+                this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
+                    this.getTranslationKey("notConnected"),
+                    NamedTextColor.RED
+                )));
+                return true;
             }
             ClientPlayer player = Laby.labyAPI().minecraft().getClientPlayer();
             if(player == null) {
@@ -148,7 +152,11 @@ public class MarketCommand extends Command {
         @Override
         public boolean execute(String prefix, String[] arguments) {
             if(!this.addon.server().isConnected()) {
-                return false;
+                this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
+                    this.getTranslationKey("notConnected"),
+                    NamedTextColor.RED
+                )));
+                return true;
             }
             ClientPlayer player = Laby.labyAPI().minecraft().getClientPlayer();
             if(player == null) {

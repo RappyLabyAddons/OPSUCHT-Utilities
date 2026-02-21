@@ -60,6 +60,7 @@
         },
         "command": {
             "usage": "Usage: /%s <%s>",
+            "notConnected": "You are not connected to OPSUCHT.NET! Make sure you are connecting through the official domain.",
             "noPlayer": "This shouldn't happen. Please contact the developers!",
             "buyValue": "Buy Value: %s",
             "sellValue": "Sell Value: %s",
