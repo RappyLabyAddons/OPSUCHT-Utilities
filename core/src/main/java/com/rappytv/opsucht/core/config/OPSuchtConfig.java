@@ -2,7 +2,9 @@ package com.rappytv.opsucht.core.config;
 
 import com.rappytv.opsucht.core.config.subconfig.InteractionBulletConfig;
 import com.rappytv.opsucht.core.config.subconfig.RichPresenceConfig;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.AddonConfig;
+import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
@@ -19,6 +21,12 @@ public class OPSuchtConfig extends AddonConfig {
     @SpriteSlot
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
+
+    // TODO: Add icon
+    @ButtonSetting
+    public void github() {
+        Laby.references().chatExecutor().openUrl("https://media.rappytv.com/go/opsucht-issues");
+    }
 
     @SpriteSlot(x = 1)
     private final RichPresenceConfig richPresenceConfig = new RichPresenceConfig();
