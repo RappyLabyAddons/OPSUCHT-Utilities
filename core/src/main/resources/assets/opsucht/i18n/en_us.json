@@ -2,6 +2,9 @@
     "opsucht": {
         "settings": {
             "header": {
+                "general": {
+                    "name": "General"
+                },
                 "chat": {
                     "name": "Chat"
                 },
@@ -11,6 +14,11 @@
             },
             "enabled": {
                 "name": "Enabled"
+            },
+            "github": {
+                "name": "Request a feature / Report a bug",
+                "text": "Open",
+                "description": "I am no longer actively playing on §bopsucht.net §rbut I still want to maintain this addon so if you find any bugs or want to suggest a feature just create an issue on the GitHub issue tracker :)"
             },
             "richPresenceConfig": {
                 "name": "Discord Rich Presence",
@@ -59,6 +67,7 @@
         },
         "command": {
             "usage": "Usage: /%s <%s>",
+            "notConnected": "You are not connected to OPSUCHT.NET! Make sure you are connecting through the official domain.",
             "noPlayer": "This shouldn't happen. Please contact the developers!",
             "buyValue": "Buy Value: %s",
             "sellValue": "Sell Value: %s",
@@ -108,14 +117,14 @@
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
+                },
+                "maxResults": {
+                    "name": "Max results"
                 }
             },
             "auction_list": {
                 "name": "Auctions",
                 "empty": "No active auctions found.",
-                "maxAuctions": {
-                    "name": "Max results"
-                },
                 "sortType": {
                     "name": "Sort by",
                     "entries": {
@@ -153,6 +162,15 @@
                 },
                 "showItemName": {
                     "name": "Show item name"
+                }
+            },
+            "merchant_rates": {
+                "name": "Merchant Rates",
+                "noRates": "Failed to load rates...",
+                "forceRefetch": {
+                    "name": "Refresh data",
+                    "text": "Fetch",
+                    "description": "Pulls new data from the server"
                 }
             },
             "player_record": {

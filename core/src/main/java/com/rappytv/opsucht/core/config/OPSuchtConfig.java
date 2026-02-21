@@ -2,7 +2,9 @@ package com.rappytv.opsucht.core.config;
 
 import com.rappytv.opsucht.core.config.subconfig.InteractionBulletConfig;
 import com.rappytv.opsucht.core.config.subconfig.RichPresenceConfig;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.AddonConfig;
+import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
@@ -11,6 +13,7 @@ import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
+import net.labymod.api.util.MethodOrder;
 
 @ConfigName("settings")
 @SpriteTexture("settings.png")
@@ -20,10 +23,18 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
+    @SpriteSlot(x = 2)
+    @MethodOrder(after = "enabled")
+    @ButtonSetting
+    public void github() {
+        Laby.references().chatExecutor().openUrl("https://media.rappytv.com/go/opsucht-issues");
+    }
+
+    @SettingSection("general")
     @SpriteSlot(x = 1)
     private final RichPresenceConfig richPresenceConfig = new RichPresenceConfig();
 
-    @SpriteSlot(x = 4)
+    @SpriteSlot(x = 5)
     private final InteractionBulletConfig interactionBulletConfig = new InteractionBulletConfig();
 
     @SpriteSlot(size = 32, y = 1)
@@ -31,12 +42,12 @@ public class OPSuchtConfig extends AddonConfig {
     private final ConfigProperty<Boolean> autoFly = new ConfigProperty<>(true);
 
     @SettingSection("chat")
-    @SpriteSlot(y = 1)
+    @SpriteSlot(x = 1, y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> clickableNicknames = new ConfigProperty<>(true);
 
     @IntroducedIn(namespace = "opsucht", value = "1.1.7")
-    @SpriteSlot(x = 1, y = 1)
+    @SpriteSlot(x = 2, y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> coloredMentions = new ConfigProperty<>(true);
 
@@ -46,7 +57,7 @@ public class OPSuchtConfig extends AddonConfig {
 
     @SettingSection("opmarket")
     @IntroducedIn(namespace = "opsucht", value = "1.2.2")
-    @SpriteSlot(x = 7)
+    @SpriteSlot(y = 1)
     @TextFieldSetting(maxLength = 10)
     private final ConfigProperty<String> priceFormat = new ConfigProperty<>("{price}$");
 

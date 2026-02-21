@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+    -   name: ⭐️ Rate the addon
+        url: https://flintmc.net/modification/76.opsucht
+        about: Leave me a good review on FlintMC
+    -   name: 🔨 Check out my other addons
+        url: https://github.com/RappyLabyAddons
+        about: I made some more addons, maybe you're already using one :)

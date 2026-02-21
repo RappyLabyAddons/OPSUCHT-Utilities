@@ -27,11 +27,11 @@ public class RichPresenceConfig extends Config implements IRichPresenceConfig {
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
     @SwitchSetting
-    @SpriteSlot(x = 2)
+    @SpriteSlot(x = 3)
     private final ConfigProperty<Boolean> showSubServer = new ConfigProperty<>(true);
 
     @SwitchSetting
-    @SpriteSlot(x = 3)
+    @SpriteSlot(x = 4)
     private final ConfigProperty<Boolean> showPlayerCount = new ConfigProperty<>(true);
 
     public ConfigProperty<Boolean> enabled() {
