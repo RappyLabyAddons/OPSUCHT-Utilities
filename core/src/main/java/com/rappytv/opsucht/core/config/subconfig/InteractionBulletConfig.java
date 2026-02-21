@@ -7,15 +7,15 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public class InteractionBulletConfig extends Config {
 
-    @SpriteSlot(x = 5)
+    @SpriteSlot(x = 6)
     @SwitchSetting
     private final ConfigProperty<Boolean> clanInviteBullet = new ConfigProperty<>(true);
 
-    @SpriteSlot(x = 6)
+    @SpriteSlot(x = 7)
     @SwitchSetting
     private final ConfigProperty<Boolean> friendRequestBullet = new ConfigProperty<>(true);
 
-    @SpriteSlot(x = 7)
+    @SpriteSlot(y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> payBullet = new ConfigProperty<>(true);
 

@@ -2,6 +2,9 @@
     "opsucht": {
         "settings": {
             "header": {
+                "general": {
+                    "name": "General"
+                },
                 "chat": {
                     "name": "Chat"
                 },
@@ -14,8 +17,8 @@
             },
             "github": {
                 "name": "Request a feature / Report a bug",
-                "text": "Open issue tracker",
-                "description": "I am no longer actively playing on §bopsucht.net §rbut I still want to maintain this addon so if you find any bugs or want to suggest a feature just create an issue on the github issue tracker :)"
+                "text": "Open",
+                "description": "I am no longer actively playing on §bopsucht.net §rbut I still want to maintain this addon so if you find any bugs or want to suggest a feature just create an issue on the GitHub issue tracker :)"
             },
             "richPresenceConfig": {
                 "name": "Discord Rich Presence",
@@ -110,14 +113,14 @@
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
+                },
+                "maxResults": {
+                    "name": "Max results"
                 }
             },
             "auction_list": {
                 "name": "Auctions",
                 "empty": "No active auctions found.",
-                "maxAuctions": {
-                    "name": "Max results"
-                },
                 "sortType": {
                     "name": "Sort by",
                     "entries": {
@@ -155,6 +158,15 @@
                 },
                 "showItemName": {
                     "name": "Show item name"
+                }
+            },
+            "merchant_rates": {
+                "name": "Merchant Rates",
+                "noRates": "Failed to load rates...",
+                "forceRefetch": {
+                    "name": "Refresh data",
+                    "text": "Fetch",
+                    "description": "Pulls new data from the server"
                 }
             },
             "player_record": {
