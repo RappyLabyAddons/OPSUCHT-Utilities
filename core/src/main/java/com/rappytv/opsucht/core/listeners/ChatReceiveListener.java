@@ -12,11 +12,13 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import java.util.function.Supplier;
 import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatReceiveListener {
 
     private static final Pattern MENTION_PATTERN = Pattern.compile("@\\w{3,16}", Pattern.CASE_INSENSITIVE);
+    private static final Pattern SKULL_PATTERN = Pattern.compile("^OPSUCHT » Du hast den Kopf von ([A-Za-z0-9_]{3,16}) erhalten\\.$");
     private final OPSuchtAddon addon;
 
     public ChatReceiveListener(OPSuchtAddon addon) {
@@ -28,6 +30,16 @@ public class ChatReceiveListener {
         if(!this.addon.server().isConnected()) return;
         Component message = event.message();
         String text = event.chatMessage().getPlainText();
+
+        Matcher skullMatcher = SKULL_PATTERN.matcher(text);
+
+        if(skullMatcher.find()) {
+            this.addon.configuration()
+                .reminderConfig()
+                .lastSkullClaim()
+                .set(System.currentTimeMillis());
+            this.addon.logger().info("Saved last skull claim timestamp");
+        }
 
         if(this.addon.configuration().coloredMentions().get() && text.contains("@")) {
             for(MatchResult matcher : MENTION_PATTERN.matcher(text).results().toList()) {

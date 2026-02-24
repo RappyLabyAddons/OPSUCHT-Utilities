@@ -20,6 +20,20 @@
                 "text": "Open",
                 "description": "I am no longer actively playing on §bopsucht.net §rbut I still want to maintain this addon so if you find any bugs or want to suggest a feature just create an issue on the GitHub issue tracker :)"
             },
+            "rank": {
+                "name": "Your ingame rank",
+                "description": "Tells the addon which rank you have ingame. This is useful to calculate when to remind you for the §b/skull §freminder for example.",
+                "entries": {
+                    "player": "Spieler",
+                    "premium": "§6Premium",
+                    "diamond": "§bDiamond",
+                    "ultra": "§aUltra",
+                    "legend": "§eLegende",
+                    "supreme": "§dSupreme",
+                    "platin": "§cPlatin",
+                    "op": "§f§lOP"
+                }
+            },
             "richPresenceConfig": {
                 "name": "Discord Rich Presence",
                 "showSubServer": {
@@ -43,6 +57,27 @@
                 "friendRequestBullet": {
                     "name": "Send friend request",
                     "description": "Adds the option to send a friend request to the player."
+                }
+            },
+            "reminderConfig": {
+                "header": {
+                    "skull": {
+                        "name": "Skull"
+                    }
+                },
+                "name": "Reminders",
+                "skullReminders": {
+                    "name": "Skull reminders"
+                },
+                "playSkullSound": {
+                    "name": "Play notification sound"
+                },
+                "skullSoundVolume": {
+                    "name": "Skull sound volume"
+                },
+                "resetSkullReminder": {
+                    "name": "Reset skull reminder timestamp",
+                    "text": "Reset"
                 }
             },
             "autoFly": {
@@ -84,6 +119,12 @@
         },
         "chat": {
             "clickableNickname": "Click, to see the real name."
+        },
+        "reminders": {
+            "skull": {
+                "title": "Skull reminder",
+                "description": "You can use %s again!"
+            }
         },
         "hudWidget": {
             "config": {
