@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.api.event;
+package com.rappytv.opsucht.api.event.reminders;
 
 import net.labymod.api.event.Event;
 

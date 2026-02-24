@@ -1,7 +1,8 @@
 package com.rappytv.opsucht.core;
 
 import com.rappytv.opsucht.api.OPSuchtRank;
-import com.rappytv.opsucht.api.event.SkullReminderEvent;
+import com.rappytv.opsucht.api.event.reminders.DailyRewardReminderEvent;
+import com.rappytv.opsucht.api.event.reminders.SkullReminderEvent;
 import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
 import net.labymod.api.Laby;
 import net.labymod.api.client.network.server.AbstractServer;
@@ -15,6 +16,7 @@ public class OPSuchtServer extends AbstractServer {
     private final OPSuchtAddon addon;
     private final Task autoFlyTask;
     private final Task compareSkullDateTask;
+    private final Task compareDailyRewardDateTask;
     private boolean connected;
 
     public OPSuchtServer(OPSuchtAddon addon) {
@@ -42,7 +44,23 @@ public class OPSuchtServer extends AbstractServer {
             }
             Laby.fireEvent(new SkullReminderEvent());
         }).repeat(5, TimeUnit.MINUTES).build();
+        this.compareDailyRewardDateTask = Task.builder(() -> {
+            if(!addon.configuration().enabled().get() || !addon.server().isConnected()) {
+                return;
+            }
+            ReminderConfig config = addon.configuration().reminderConfig();
+            if(!config.dailyRewardClaimer().get() || config.lastDailyRewardClaim().get() == -1L) {
+                return;
+            }
+            long nextDaily = config.lastDailyRewardClaim().get() + 86400000L;
+
+            if(nextDaily > System.currentTimeMillis()) {
+                return;
+            }
+            Laby.fireEvent(new DailyRewardReminderEvent());
+        }).repeat(5, TimeUnit.MINUTES).build();
         this.compareSkullDateTask.execute();
+        this.compareDailyRewardDateTask.execute();
         this.connected = false;
     }
 
@@ -52,8 +70,11 @@ public class OPSuchtServer extends AbstractServer {
             this.connected = true;
             this.compareSkullDateTask.run();
         }
-        else if(phase == LoginPhase.SWITCH && this.addon.configuration().autoFly().get()) {
-            this.autoFlyTask.execute();
+        else if(phase == LoginPhase.SWITCH) {
+            if(this.addon.configuration().autoFly().get()) {
+                this.autoFlyTask.execute();
+            }
+            this.compareDailyRewardDateTask.run();
         }
 
         Laby.labyAPI().minecraft().executeNextTick(() ->

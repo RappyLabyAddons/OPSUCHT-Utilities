@@ -1,6 +1,7 @@
 package com.rappytv.opsucht.core.listeners;
 
-import com.rappytv.opsucht.api.event.SkullReminderEvent;
+import com.rappytv.opsucht.api.event.reminders.DailyRewardReminderEvent;
+import com.rappytv.opsucht.api.event.reminders.SkullReminderEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
 import net.labymod.api.Laby;
@@ -10,6 +11,8 @@ import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.notification.Notification;
+import net.labymod.api.util.concurrent.task.Task;
+import java.util.concurrent.TimeUnit;
 
 public class ReminderListener {
 
@@ -23,6 +26,19 @@ public class ReminderListener {
 
     public ReminderListener(OPSuchtAddon addon) {
         this.config = addon.configuration().reminderConfig();
+    }
+
+    @Subscribe
+    public void onDailyRewardReminderEvent(DailyRewardReminderEvent event) {
+        if(!config.dailyRewardClaimer().get()) {
+            return;
+        }
+        Task.builder(() -> {
+            Laby.references().chatExecutor().chat("/belohnung");
+            Laby.labyAPI().minecraft().executeNextTick(() -> // TODO: add this with an event
+                OPSuchtAddon.references().inventoryApi().clickSlot(20)
+            );
+        }).delay(5, TimeUnit.SECONDS).build().execute();
     }
 
     @Subscribe
