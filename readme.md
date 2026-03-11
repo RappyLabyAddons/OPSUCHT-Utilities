@@ -8,9 +8,8 @@ Adds some ingame utilities for the OPSUCHT.net minecraft network | Not affiliate
 - [x] AutoFly on join
 - [x] Automatic coloring of @pings in chat
 - [x] OPSUCHT Market, auction and merchant Widgets
-- [ ] Plotswitcher
 - [ ] Auto reward claimer
-- [ ] Command cooldown reminders (e.g. for `/skull`)
+- [x] Command cooldown reminders (e.g. for `/skull`)
 
 ### 📦 Installation
 1. Press `Win` + `R`
