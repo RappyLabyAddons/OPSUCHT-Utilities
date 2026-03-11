@@ -18,6 +18,7 @@ public class TaskManager {
 
     private final OPSuchtAddon addon;
     private final ReferenceStorage references;
+    private boolean initialized = false;
 
     public TaskManager(OPSuchtAddon addon) {
         this.addon = addon;
@@ -25,6 +26,11 @@ public class TaskManager {
     }
 
     public void executeTasks() {
+        if(this.initialized) {
+            throw new IllegalStateException("Task manager is already initialized");
+        }
+        this.initialized = true;
+
         // OPSucht HTTP API Cache
         this.cacheAuctionTask().execute();
         this.cacheMarketPriceTask().execute();
@@ -110,6 +116,19 @@ public class TaskManager {
                 }
                 Laby.fireEvent(new DailyRewardReminderEvent());
             }).repeat(5, TimeUnit.MINUTES).build()
+        );
+    }
+
+    public Task claimDailyRewardTask() {
+        return TASK_CACHE.computeIfAbsent("claim-daily-reward", (key) ->
+            Task.builder(() -> {
+                Laby.references().chatExecutor().chat("/belohnung");
+                // TODO: execute this after the gui is opened with a custom event.
+                // if i'm god i'll also implement this without the gui ever being opened visibly for the client
+                Laby.labyAPI().minecraft().executeNextTick(() ->
+                    OPSuchtAddon.references().inventoryApi().clickSlot(20)
+                );
+            }).delay(5, TimeUnit.SECONDS).build()
         );
     }
 }

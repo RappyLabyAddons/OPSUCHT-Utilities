@@ -11,8 +11,6 @@ import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.notification.Notification;
-import net.labymod.api.util.concurrent.task.Task;
-import java.util.concurrent.TimeUnit;
 
 public class ReminderListener {
 
@@ -21,10 +19,12 @@ public class ReminderListener {
         "lootbox.common"
     );
 
+    private final OPSuchtAddon addon;
     private final ReminderConfig config;
-    private boolean notified = false;
+    private boolean sentSkullNotification = false;
 
     public ReminderListener(OPSuchtAddon addon) {
+        this.addon = addon;
         this.config = addon.configuration().reminderConfig();
     }
 
@@ -33,17 +33,12 @@ public class ReminderListener {
         if(!config.dailyRewardClaimer().get()) {
             return;
         }
-        Task.builder(() -> {
-            Laby.references().chatExecutor().chat("/belohnung");
-            Laby.labyAPI().minecraft().executeNextTick(() -> // TODO: add this with an event
-                OPSuchtAddon.references().inventoryApi().clickSlot(20)
-            );
-        }).delay(5, TimeUnit.SECONDS).build().execute();
+        this.addon.taskManager().claimDailyRewardTask().execute();
     }
 
     @Subscribe
     public void onSkullReminder(SkullReminderEvent event) {
-        if(this.notified) {
+        if(this.sentSkullNotification) {
             return;
         }
         if(this.config.playSkullSound().get()) {
@@ -68,12 +63,12 @@ public class ReminderListener {
                 OPSuchtAddon.prefix().append(description.color(NamedTextColor.GREEN))
             );
         }
-        this.notified = true;
+        this.sentSkullNotification = true;
     }
 
     @Subscribe
     public void onDisconnect(ServerDisconnectEvent event) {
-        this.notified = false;
+        this.sentSkullNotification = false;
     }
 
 }
