@@ -1,7 +1,7 @@
 rootProject.name = "opsucht"
 
 pluginManagement {
-    val labyGradlePluginVersion = "0.6.0"
+    val labyGradlePluginVersion = "0.6.2"
 
     buildscript {
         repositories {
