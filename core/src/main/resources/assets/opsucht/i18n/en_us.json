@@ -63,6 +63,9 @@
                 "header": {
                     "skull": {
                         "name": "Skull"
+                    },
+                    "dailyReward": {
+                        "name": "Daily Reward"
                     }
                 },
                 "name": "Reminders",
@@ -77,6 +80,13 @@
                 },
                 "resetSkullReminder": {
                     "name": "Reset skull reminder timestamp",
+                    "text": "Reset"
+                },
+                "dailyRewardClaimer": {
+                    "name": "Automatically claim daily reward"
+                },
+                "resetDailyRewardClaimer": {
+                    "name": "Reset daily reward claimer timestamp",
                     "text": "Reset"
                 }
             },

@@ -42,7 +42,7 @@ public class ReminderConfig extends Config { // TODO: add icons
 
     @MethodOrder(after = "dailyRewardClaimer")
     @ButtonSetting
-    public void resetDailyRewardReminder() {
+    public void resetDailyRewardClaimer() {
         this.lastDailyRewardClaim.reset();
     }
 
