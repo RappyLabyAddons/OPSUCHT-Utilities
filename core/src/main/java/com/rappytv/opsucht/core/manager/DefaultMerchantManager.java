@@ -23,7 +23,7 @@ import net.labymod.api.util.io.web.request.Response;
 public class DefaultMerchantManager implements MerchantManager {
 
     private static final String ENDPOINT = "https://api.opsucht.net/merchant/rates";
-    private static final Gson gson = new GsonBuilder()
+    private static final Gson GSON = new GsonBuilder()
         .registerTypeAdapter(Component.class, new MerchantComponentAdapter())
         .create();
 
@@ -36,7 +36,7 @@ public class DefaultMerchantManager implements MerchantManager {
 
     public void cacheRates() {
         this.merchantRates.clear();
-        Response<MerchantRate[]> response = Request.ofGson(MerchantRate[].class, gson)
+        Response<MerchantRate[]> response = Request.ofGson(MerchantRate[].class, GSON)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
             .handleErrorStream()

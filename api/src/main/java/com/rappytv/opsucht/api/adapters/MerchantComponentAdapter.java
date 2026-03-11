@@ -13,7 +13,9 @@ import net.labymod.api.client.component.serializer.gson.GsonComponentSerializer;
 
 public class MerchantComponentAdapter extends TypeAdapter<Component> {
 
-    private static final Pattern componentPattern = Pattern.compile("item_name='((?:\\\\'|[^'])*)'");
+    private static final Pattern COMPONENT_PATTERN = Pattern.compile(
+        "item_name='((?:\\\\'|[^'])*)'"
+    );
 
     @Override
     public void write(JsonWriter out, Component value) throws IOException {
@@ -23,7 +25,7 @@ public class MerchantComponentAdapter extends TypeAdapter<Component> {
     @Override
     public Component read(JsonReader in) throws IOException {
         String item = in.nextString();
-        Matcher matcher = componentPattern.matcher(item);
+        Matcher matcher = COMPONENT_PATTERN.matcher(item);
         if(!matcher.find()) {
             if(item.equals("opshards")) {
                 return Component.text("OPShards", NamedTextColor.AQUA);

@@ -29,7 +29,7 @@ import net.labymod.api.util.version.SemanticVersion;
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
 
-    private static final Component prefix = Component.empty()
+    private static final Component PREFIX = Component.empty()
         .append(Component.text("OPSUCHT", NamedTextColor.RED).decorate(TextDecoration.BOLD))
         .append(Component.text(" » ", NamedTextColor.DARK_GRAY));
     private static String userAgent = "OPSUCHT LabyAddon";
@@ -78,7 +78,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     }
 
     public static Component prefix() {
-        return prefix.copy();
+        return PREFIX.copy();
     }
 
     public static String getUserAgent() {
