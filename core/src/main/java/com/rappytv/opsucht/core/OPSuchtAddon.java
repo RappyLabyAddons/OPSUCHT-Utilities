@@ -6,6 +6,7 @@ import com.rappytv.opsucht.core.config.OPSuchtConfig;
 import com.rappytv.opsucht.core.listeners.ChatReceiveListener;
 import com.rappytv.opsucht.core.listeners.PlayerInfoListener;
 import com.rappytv.opsucht.core.listeners.ReminderListener;
+import com.rappytv.opsucht.core.manager.TaskManager;
 import com.rappytv.opsucht.core.ui.hudwidget.AuctionListHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.InventoryValueHudWidget;
 import com.rappytv.opsucht.core.ui.hudwidget.ItemValueHudWidget;
@@ -14,7 +15,6 @@ import com.rappytv.opsucht.core.ui.hudwidget.PlayerRecordHudWidget;
 import com.rappytv.opsucht.core.ui.interaction.ClanInviteBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.FriendRequestBulletPoint;
 import com.rappytv.opsucht.core.ui.interaction.PayBulletPoint;
-import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -23,7 +23,6 @@ import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.revision.SimpleRevision;
-import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
@@ -35,13 +34,14 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
     private static String userAgent = "OPSUCHT LabyAddon";
 
     private static ReferenceStorage referenceStorage;
+    private TaskManager taskManager;
     private OPSuchtServer server;
 
     @Override
     protected void preConfigurationLoad() {
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion(1, 1, 7), "2023-11-21"));
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion(1, 2, 1), "2025-10-23"));
-        Laby.references().revisionRegistry().register(new SimpleRevision("opsucht", new SemanticVersion(1, 2, 2), "2025-11-10"));
+        this.registerRevision(1, 1, 7, "2023-11-21");
+        this.registerRevision(1, 2, 1, "2025-10-23");
+        this.registerRevision(1, 2, 2, "2025-11-10");
     }
 
     @Override
@@ -51,7 +51,8 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         userAgent += " v" + this.addonInfo().getVersion();
 
         this.registerSettingCategory();
-        this.registerTasks();
+        this.taskManager = new TaskManager(this);
+        this.taskManager.executeTasks();
         this.labyAPI().serverController().registerServer(this.server = new OPSuchtServer(this));
 
         this.registerCommand(new MarketCommand(this));
@@ -89,26 +90,20 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         return this.server;
     }
 
-    private void registerTasks() {
-        Task.builder(() -> {
-            if(referenceStorage.auctionManager().getActiveAuctions().isEmpty() || this.server.isConnected()) {
-                referenceStorage.auctionManager().cacheAuctions();
-            }
-        }).repeat(2, TimeUnit.MINUTES).build().execute();
-
-        Task.builder(referenceStorage.marketManager()::cachePrices)
-            .repeat(30, TimeUnit.MINUTES)
-            .build()
-            .execute();
-
-        Task.builder(referenceStorage.merchantManager()::cacheRates)
-            .repeat(30, TimeUnit.MINUTES)
-            .build()
-            .execute();
+    public TaskManager taskManager() {
+        return taskManager;
     }
 
     @Override
     protected Class<? extends OPSuchtConfig> configurationClass() {
         return OPSuchtConfig.class;
+    }
+
+    private void registerRevision(int major, int minor, int patch, String releaseDate) {
+        Laby.references().revisionRegistry().register(new SimpleRevision(
+            "opsucht",
+            new SemanticVersion(major, minor, patch),
+            releaseDate
+        ));
     }
 }
