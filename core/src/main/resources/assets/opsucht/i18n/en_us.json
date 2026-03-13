@@ -69,11 +69,11 @@
                     }
                 },
                 "name": "Reminders",
+                "playSound": {
+                    "name": "Play notification sound"
+                },
                 "skullReminders": {
                     "name": "Skull reminders"
-                },
-                "playSkullSound": {
-                    "name": "Play notification sound"
                 },
                 "skullSoundVolume": {
                     "name": "Skull sound volume"
@@ -82,8 +82,17 @@
                     "name": "Reset skull reminder timestamp",
                     "text": "Reset"
                 },
-                "dailyRewardClaimer": {
-                    "name": "Automatically claim daily reward"
+                "dailyRewardReminderType": {
+                    "name": "Daily reward reminder type",
+                    "entries": {
+                        "none": "None",
+                        "onlyRemind": "Notification",
+                        "onlyClaim": "Autoclaim",
+                        "both": "Both"
+                    }
+                },
+                "dailyRewardSoundVolume": {
+                    "name": "Daily reward sound volume"
                 },
                 "resetDailyRewardClaimer": {
                     "name": "Reset daily reward claimer timestamp",
@@ -134,6 +143,10 @@
             "skull": {
                 "title": "Skull reminder",
                 "description": "You can use %s again!"
+            },
+            "dailyReward": {
+                "title": "Reward reminder",
+                "description": "You can claim your daily reward!"
             }
         },
         "hudWidget": {

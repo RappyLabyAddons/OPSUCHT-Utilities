@@ -5,6 +5,7 @@ import com.rappytv.opsucht.api.event.reminders.SkullReminderEvent;
 import com.rappytv.opsucht.api.inventory.ContainerOpenEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
+import com.rappytv.opsucht.core.config.subconfig.ReminderConfig.DailyRewardReminderType;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
@@ -25,6 +26,7 @@ public class ReminderListener {
 
     private final OPSuchtAddon addon;
     private final ReminderConfig config;
+    private boolean sentDailyRewardNotification = false;
     private boolean sentSkullNotification = false;
 
     public ReminderListener(OPSuchtAddon addon) {
@@ -34,10 +36,21 @@ public class ReminderListener {
 
     @Subscribe
     public void onDailyRewardReminderEvent(DailyRewardReminderEvent event) {
-        if(!config.dailyRewardClaimer().get()) {
-            return;
+        DailyRewardReminderType type = config.dailyRewardReminderType().get();
+        if(type.remind() && !this.sentDailyRewardNotification) {
+            if(config.playDailyRewardSound().get()) {
+                Laby.references().minecraftSounds().playSound(
+                    NOTIFICATION_SOUND,
+                    config.dailyRewardVolume().get() * 0.1F,
+                    2f
+                );
+            }
+            this.sendNotification("dailyReward");
+            this.sentDailyRewardNotification = true;
         }
-        this.addon.taskManager().claimDailyRewardTask().execute();
+        if(type.autoClaim()) {
+            this.addon.taskManager().claimDailyRewardTask().execute();
+        }
     }
 
     @Subscribe
@@ -45,6 +58,7 @@ public class ReminderListener {
         if(!(event.title() instanceof TextComponent component) || !awaitingRewardContainer) {
             return;
         }
+        awaitingRewardContainer = false;
         String text = PlainTextComponentSerializer.plainText().serialize(component);
 
         if(!text.matches("^OPSUCHT » Belohnungen$")) {
@@ -53,7 +67,6 @@ public class ReminderListener {
         OPSuchtAddon.references().containerApi().clickSlot(20);
         OPSuchtAddon.references().containerApi().closeContainer();
         this.addon.logger().info("Claimed daily reward");
-        awaitingRewardContainer = false;
     }
 
     @Subscribe
@@ -65,16 +78,27 @@ public class ReminderListener {
             Laby.references().minecraftSounds().playSound(
                 NOTIFICATION_SOUND,
                 config.skullSoundVolume().get() * 0.1F,
-                1f
+                2f
             );
         }
+        this.sendNotification("skull");
+        this.sentSkullNotification = true;
+    }
+
+    @Subscribe
+    public void onDisconnect(ServerDisconnectEvent event) {
+        this.sentDailyRewardNotification = false;
+        this.sentSkullNotification = false;
+    }
+
+    private void sendNotification(String type) {
         Component description = Component.translatable(
-            "opsucht.reminders.skull.description",
+            "opsucht.reminders." + type + ".description",
             Component.text("/skull", NamedTextColor.AQUA)
         );
         if(Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()) {
             Notification.builder()
-                .title(Component.translatable("opsucht.reminders.skull.title"))
+                .title(Component.translatable("opsucht.reminders." + type + ".title"))
                 .text(description)
                 .duration(30000L)
                 .buildAndPush();
@@ -83,12 +107,6 @@ public class ReminderListener {
                 OPSuchtAddon.prefix().append(description.color(NamedTextColor.GREEN))
             );
         }
-        this.sentSkullNotification = true;
-    }
-
-    @Subscribe
-    public void onDisconnect(ServerDisconnectEvent event) {
-        this.sentSkullNotification = false;
     }
 
     public static void awaitRewardContainer() {

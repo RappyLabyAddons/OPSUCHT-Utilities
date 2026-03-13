@@ -6,6 +6,7 @@ import com.rappytv.opsucht.api.event.reminders.SkullReminderEvent;
 import com.rappytv.opsucht.api.generated.ReferenceStorage;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
+import com.rappytv.opsucht.core.config.subconfig.ReminderConfig.DailyRewardReminderType;
 import com.rappytv.opsucht.core.listeners.ReminderListener;
 import net.labymod.api.Laby;
 import net.labymod.api.util.concurrent.task.Task;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TaskManager {
 
+    private static final long ONE_DAY = 86400000L;
     private static final Map<String, Task> TASK_CACHE = new HashMap<>();
 
     private final OPSuchtAddon addon;
@@ -89,7 +91,7 @@ public class TaskManager {
                 }
                 long nextSkull = config.lastSkullClaim().get()
                     + rank.getSkullCooldownDays()
-                    * 86400000L;
+                    * ONE_DAY;
 
                 if(nextSkull > System.currentTimeMillis()) {
                     return;
@@ -106,11 +108,11 @@ public class TaskManager {
                     return;
                 }
                 ReminderConfig config = addon.configuration().reminderConfig();
-                if(!config.dailyRewardClaimer().get()
+                if(config.dailyRewardReminderType().get() == DailyRewardReminderType.NONE
                     || config.lastDailyRewardClaim().get() == -1L) {
                     return;
                 }
-                long nextDaily = config.lastDailyRewardClaim().get() + 86400000L;
+                long nextDaily = config.lastDailyRewardClaim().get() + ONE_DAY;
 
                 if(nextDaily > System.currentTimeMillis()) {
                     return;
@@ -123,8 +125,12 @@ public class TaskManager {
     public Task claimDailyRewardTask() {
         return TASK_CACHE.computeIfAbsent("claim-daily-reward", (key) ->
             Task.builder(() -> {
+                if(Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()) {
+                    this.claimDailyRewardTask().execute();
+                    return;
+                }
                 ReminderListener.awaitRewardContainer();
-                Laby.references().chatExecutor().chat("/belohnung");
+                Laby.references().chatExecutor().chat("/belohnung", false);
             }).delay(5, TimeUnit.SECONDS).build()
         );
     }
