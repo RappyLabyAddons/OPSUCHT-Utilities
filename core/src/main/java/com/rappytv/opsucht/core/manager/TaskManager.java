@@ -6,6 +6,7 @@ import com.rappytv.opsucht.api.event.reminders.SkullReminderEvent;
 import com.rappytv.opsucht.api.generated.ReferenceStorage;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
+import com.rappytv.opsucht.core.listeners.ReminderListener;
 import net.labymod.api.Laby;
 import net.labymod.api.util.concurrent.task.Task;
 import java.util.HashMap;
@@ -122,12 +123,8 @@ public class TaskManager {
     public Task claimDailyRewardTask() {
         return TASK_CACHE.computeIfAbsent("claim-daily-reward", (key) ->
             Task.builder(() -> {
+                ReminderListener.awaitRewardContainer();
                 Laby.references().chatExecutor().chat("/belohnung");
-                // TODO: execute this after the gui is opened with a custom event.
-                // if i'm god i'll also implement this without the gui ever being opened visibly for the client
-                Laby.labyAPI().minecraft().executeNextTick(() ->
-                    OPSuchtAddon.references().inventoryApi().clickSlot(20)
-                );
             }).delay(5, TimeUnit.SECONDS).build()
         );
     }

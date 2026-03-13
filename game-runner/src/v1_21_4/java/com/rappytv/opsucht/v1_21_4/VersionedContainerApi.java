@@ -1,6 +1,6 @@
 package com.rappytv.opsucht.v1_21_4;
 
-import com.rappytv.opsucht.api.inventory.InventoryApi;
+import com.rappytv.opsucht.api.inventory.ContainerApi;
 import javax.inject.Singleton;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
@@ -9,8 +9,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.inventory.ClickType;
 
 @Singleton
-@Implements(InventoryApi.class)
-public class VersionedInventoryApi implements InventoryApi {
+@Implements(ContainerApi.class)
+public class VersionedContainerApi implements ContainerApi {
 
     @Override
     public void clickSlot(int slot) { // TODO: Implement other versions
@@ -22,9 +22,18 @@ public class VersionedInventoryApi implements InventoryApi {
         gameMode.handleInventoryMouseClick(
             player.containerMenu.containerId,
             slot,
-            0,
+            0, // Left mouse button
             ClickType.PICKUP,
             player
         );
+    }
+
+    @Override
+    public void closeContainer() {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if(player == null) {
+            return;
+        }
+        player.closeContainer();
     }
 }

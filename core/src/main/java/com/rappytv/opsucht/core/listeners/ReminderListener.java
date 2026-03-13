@@ -2,11 +2,14 @@ package com.rappytv.opsucht.core.listeners;
 
 import com.rappytv.opsucht.api.event.reminders.DailyRewardReminderEvent;
 import com.rappytv.opsucht.api.event.reminders.SkullReminderEvent;
+import com.rappytv.opsucht.api.inventory.ContainerOpenEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
@@ -18,6 +21,7 @@ public class ReminderListener {
         "labymod",
         "lootbox.common"
     );
+    private static boolean awaitingRewardContainer = false;
 
     private final OPSuchtAddon addon;
     private final ReminderConfig config;
@@ -34,6 +38,22 @@ public class ReminderListener {
             return;
         }
         this.addon.taskManager().claimDailyRewardTask().execute();
+    }
+
+    @Subscribe
+    public void onInventoryOpen(ContainerOpenEvent event) {
+        if(!(event.title() instanceof TextComponent component) || !awaitingRewardContainer) {
+            return;
+        }
+        String text = PlainTextComponentSerializer.plainText().serialize(component);
+
+        if(!text.matches("^OPSUCHT » Belohnungen$")) {
+            return;
+        }
+        OPSuchtAddon.references().containerApi().clickSlot(20);
+        OPSuchtAddon.references().containerApi().closeContainer();
+        this.addon.logger().info("Claimed daily reward");
+        awaitingRewardContainer = false;
     }
 
     @Subscribe
@@ -69,6 +89,10 @@ public class ReminderListener {
     @Subscribe
     public void onDisconnect(ServerDisconnectEvent event) {
         this.sentSkullNotification = false;
+    }
+
+    public static void awaitRewardContainer() {
+        awaitingRewardContainer = true;
     }
 
 }
