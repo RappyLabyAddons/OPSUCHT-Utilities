@@ -33,6 +33,7 @@ public class OPSuchtConfig extends AddonConfig {
         Laby.references().chatExecutor().openUrl("https://media.rappytv.com/go/opsucht-issues");
     }
 
+    @SpriteSlot(x = 3, y = 1)
     @DropdownSetting
     private final ConfigProperty<OPSuchtRank> rank = new ConfigProperty<>(OPSuchtRank.PLAYER);
 
@@ -43,6 +44,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SpriteSlot(x = 5)
     private final InteractionBulletConfig interactionBulletConfig = new InteractionBulletConfig();
 
+    @SpriteSlot(x = 4, y = 1)
     private final ReminderConfig reminderConfig = new ReminderConfig();
 
     @SpriteSlot(size = 32, y = 1)
