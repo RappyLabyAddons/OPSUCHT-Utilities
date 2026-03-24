@@ -58,7 +58,7 @@ public class ReminderListener {
     }
 
     @Subscribe
-    public void onInventoryOpen(ContainerOpenEvent event) {
+    public void onContainerOpen(ContainerOpenEvent event) {
         if(!(event.title() instanceof TextComponent component) || !awaitingRewardContainer) {
             return;
         }
