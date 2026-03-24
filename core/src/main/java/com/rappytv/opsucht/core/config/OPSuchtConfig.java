@@ -1,12 +1,15 @@
 package com.rappytv.opsucht.core.config;
 
+import com.rappytv.opsucht.api.OPSuchtRank;
 import com.rappytv.opsucht.core.config.subconfig.InteractionBulletConfig;
+import com.rappytv.opsucht.core.config.subconfig.ReminderConfig;
 import com.rappytv.opsucht.core.config.subconfig.RichPresenceConfig;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
@@ -30,12 +33,19 @@ public class OPSuchtConfig extends AddonConfig {
         Laby.references().chatExecutor().openUrl("https://media.rappytv.com/go/opsucht-issues");
     }
 
+    @SpriteSlot(x = 3, y = 1)
+    @DropdownSetting
+    private final ConfigProperty<OPSuchtRank> rank = new ConfigProperty<>(OPSuchtRank.PLAYER);
+
     @SettingSection("general")
     @SpriteSlot(x = 1)
     private final RichPresenceConfig richPresenceConfig = new RichPresenceConfig();
 
     @SpriteSlot(x = 5)
     private final InteractionBulletConfig interactionBulletConfig = new InteractionBulletConfig();
+
+    @SpriteSlot(x = 4, y = 1)
+    private final ReminderConfig reminderConfig = new ReminderConfig();
 
     @SpriteSlot(size = 32, y = 1)
     @SwitchSetting
@@ -62,12 +72,20 @@ public class OPSuchtConfig extends AddonConfig {
         return this.enabled;
     }
 
+    public ConfigProperty<OPSuchtRank> rank() {
+        return this.rank;
+    }
+
     public RichPresenceConfig richPresenceConfig() {
         return this.richPresenceConfig;
     }
 
     public InteractionBulletConfig interactionBulletConfig() {
         return this.interactionBulletConfig;
+    }
+
+    public ReminderConfig reminderConfig() {
+        return this.reminderConfig;
     }
 
     public ConfigProperty<Boolean> autoFly() {
