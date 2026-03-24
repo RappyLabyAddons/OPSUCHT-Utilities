@@ -38,8 +38,9 @@ public class ReminderListener {
     public void onDailyRewardReminderEvent(DailyRewardReminderEvent event) {
         boolean supportsAutoClaim = ReminderConfig.SUPPORTS_DAILY_REWARD_AUTO_CLAIMER;
         DailyRewardReminderType reminderType = config.dailyRewardReminderType().get();
-        boolean remind = supportsAutoClaim ? reminderType.remind() : config.dailyRewardReminder().get();
-        boolean autoClaim = supportsAutoClaim && reminderType.autoClaim();
+        boolean remind = supportsAutoClaim
+            ? reminderType.remind()
+            : config.dailyRewardReminder().get();
 
         if(remind && !this.sentDailyRewardNotification) {
             if(config.playDailyRewardSound().get()) {
@@ -52,7 +53,7 @@ public class ReminderListener {
             this.sendNotification("dailyReward");
             this.sentDailyRewardNotification = true;
         }
-        if(autoClaim) {
+        if(supportsAutoClaim && reminderType.autoClaim()) {
             this.addon.taskManager().claimDailyRewardTask().execute();
         }
     }
