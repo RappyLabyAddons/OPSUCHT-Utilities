@@ -21,9 +21,13 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
+import net.labymod.api.loader.MinecraftVersion;
+import net.labymod.api.loader.MinecraftVersions;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.revision.SimpleRevision;
 import net.labymod.api.util.version.SemanticVersion;
+import net.labymod.api.util.version.comparison.VersionMultiRangeComparison;
+import net.labymod.api.util.version.serial.VersionDeserializer;
 
 @AddonMain
 public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
@@ -74,18 +78,6 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.labyAPI().interactionMenuRegistry().register(new PayBulletPoint(this));
     }
 
-    public static ReferenceStorage references() {
-        return referenceStorage;
-    }
-
-    public static Component prefix() {
-        return PREFIX.copy();
-    }
-
-    public static String getUserAgent() {
-        return userAgent;
-    }
-
     public OPSuchtServer server() {
         return this.server;
     }
@@ -105,5 +97,26 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
             new SemanticVersion(major, minor, patch),
             releaseDate
         ));
+    }
+
+    public static ReferenceStorage references() {
+        return referenceStorage;
+    }
+
+    public static Component prefix() {
+        return PREFIX.copy();
+    }
+
+    public static String getUserAgent() {
+        return userAgent;
+    }
+
+    public static boolean isMinecraftMultiVersionSupported(String version) {
+        MinecraftVersion runningVersion = MinecraftVersions.byId(Laby.labyAPI().labyModLoader().version());
+        VersionMultiRangeComparison<MinecraftVersion> comparison = VersionMultiRangeComparison.parse(
+            version,
+            v -> MinecraftVersions.byId(VersionDeserializer.from(v))
+        );
+        return comparison.isCompatible(runningVersion);
     }
 }

@@ -1,5 +1,6 @@
 package com.rappytv.opsucht.core.config.subconfig;
 
+import com.rappytv.opsucht.core.OPSuchtAddon;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
@@ -13,6 +14,10 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 import net.labymod.api.util.MethodOrder;
 
 public class ReminderConfig extends Config { // TODO: add icons
+
+    private static final String DAILY_REWARD_AUTO_CLAIMER_COMPAT = "1.16.5<1.21.11";
+    public static final boolean SUPPORTS_DAILY_REWARD_AUTO_CLAIMER =
+        OPSuchtAddon.isMinecraftMultiVersionSupported(DAILY_REWARD_AUTO_CLAIMER_COMPAT);
 
     @Exclude
     private final ConfigProperty<Long> lastSkullClaim = new ConfigProperty<>(-1L);
@@ -41,13 +46,21 @@ public class ReminderConfig extends Config { // TODO: add icons
 
     @SettingSection("dailyReward")
     @DropdownSetting
-    private final ConfigProperty<DailyRewardReminderType> dailyRewardReminderType = new ConfigProperty<>(
-        DailyRewardReminderType.ONLY_CLAIM);
+    private final ConfigProperty<DailyRewardReminderType> dailyRewardReminderType =
+        new ConfigProperty<>(DailyRewardReminderType.ONLY_CLAIM)
+            .visibilitySupplier(() -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
+
+    @SwitchSetting
+    private final ConfigProperty<Boolean> dailyRewardReminder = new ConfigProperty<>(true)
+        .visibilitySupplier(() -> !SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
 
     @CustomTranslation("opsucht.settings.reminderConfig.playSound")
     @SwitchSetting
     private final ConfigProperty<Boolean> playDailyRewardSound = new ConfigProperty<>(true)
-        .customRequires((value) -> this.dailyRewardReminderType.get().remind);
+        .customRequires((value) -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER
+            ? this.dailyRewardReminderType.get().remind
+            : this.dailyRewardReminder.get()
+        );
 
     @SettingRequires("playDailyRewardSound")
     @SliderSetting(min = 1, max = 10)
@@ -84,6 +97,10 @@ public class ReminderConfig extends Config { // TODO: add icons
         return this.dailyRewardReminderType;
     }
 
+    public ConfigProperty<Boolean> dailyRewardReminder() {
+        return this.dailyRewardReminder;
+    }
+
     public ConfigProperty<Boolean> playDailyRewardSound() {
         return playDailyRewardSound;
     }
@@ -114,5 +131,4 @@ public class ReminderConfig extends Config { // TODO: add icons
             return this.autoClaim;
         }
     }
-
 }

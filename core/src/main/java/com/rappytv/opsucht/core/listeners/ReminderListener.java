@@ -36,8 +36,12 @@ public class ReminderListener {
 
     @Subscribe
     public void onDailyRewardReminderEvent(DailyRewardReminderEvent event) {
-        DailyRewardReminderType type = config.dailyRewardReminderType().get();
-        if(type.remind() && !this.sentDailyRewardNotification) {
+        boolean supportsAutoClaim = ReminderConfig.SUPPORTS_DAILY_REWARD_AUTO_CLAIMER;
+        DailyRewardReminderType reminderType = config.dailyRewardReminderType().get();
+        boolean remind = supportsAutoClaim ? reminderType.remind() : config.dailyRewardReminder().get();
+        boolean autoClaim = supportsAutoClaim && reminderType.autoClaim();
+
+        if(remind && !this.sentDailyRewardNotification) {
             if(config.playDailyRewardSound().get()) {
                 Laby.references().minecraftSounds().playSound(
                     NOTIFICATION_SOUND,
@@ -48,7 +52,7 @@ public class ReminderListener {
             this.sendNotification("dailyReward");
             this.sentDailyRewardNotification = true;
         }
-        if(type.autoClaim()) {
+        if(autoClaim) {
             this.addon.taskManager().claimDailyRewardTask().execute();
         }
     }

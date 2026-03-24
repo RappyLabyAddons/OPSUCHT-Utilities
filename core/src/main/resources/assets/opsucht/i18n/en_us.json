@@ -91,6 +91,9 @@
                         "both": "Both"
                     }
                 },
+                "dailyRewardReminder": {
+                    "name": "Daily reward reminders"
+                },
                 "dailyRewardSoundVolume": {
                     "name": "Daily reward sound volume"
                 },
