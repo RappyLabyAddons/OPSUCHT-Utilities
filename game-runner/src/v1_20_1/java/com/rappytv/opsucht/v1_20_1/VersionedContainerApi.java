@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.v1_21_4;
+package com.rappytv.opsucht.v1_20_1;
 
 import com.rappytv.opsucht.api.inventory.ContainerApi;
 import javax.inject.Singleton;

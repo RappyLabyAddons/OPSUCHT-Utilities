@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.v1_21_4.mixins;
+package com.rappytv.opsucht.v1_20_4.mixins;
 
 import com.rappytv.opsucht.api.inventory.ContainerOpenEvent;
 import net.labymod.api.Laby;
