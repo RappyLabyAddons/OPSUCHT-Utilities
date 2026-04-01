@@ -101,7 +101,7 @@ public class MerchantHudWidget extends TextHudWidget<MerchantHudWidgetConfig> {
     public static class MerchantHudWidgetConfig extends TextHudWidgetConfig {
 
         @CustomTranslation("opsucht.hudWidget.config.maxResults")
-        @SliderSetting(min = 1, max = 15) // May need to be adjusted in the future
-        private final ConfigProperty<Integer> maxRates = new ConfigProperty<>(4);
+        @SliderSetting(min = 1, max = 20) // May need to be adjusted in the future
+        private final ConfigProperty<Integer> maxRates = new ConfigProperty<>(10);
     }
 }
