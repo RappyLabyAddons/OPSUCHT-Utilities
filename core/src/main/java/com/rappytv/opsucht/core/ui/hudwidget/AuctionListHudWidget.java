@@ -56,6 +56,11 @@ public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig>
             .execute();
     }
 
+    @Override
+    public boolean isVisibleInGame() {
+        return this.addon.server().isConnected() && super.isVisibleInGame();
+    }
+
     @Subscribe
     public void onAuctionDataRefresh(AuctionDataRefreshEvent event) {
         this.updateAuctionList();
