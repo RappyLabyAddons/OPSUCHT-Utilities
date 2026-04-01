@@ -2,6 +2,7 @@ package com.rappytv.opsucht.core.manager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rappytv.opsucht.api.NbtComponentSerializer;
 import com.rappytv.opsucht.api.adapters.MerchantComponentAdapter;
 import com.rappytv.opsucht.api.event.MerchantDataRefreshEvent;
 import com.rappytv.opsucht.api.merchant.MerchantManager;
@@ -23,11 +24,15 @@ import net.labymod.api.util.io.web.request.Response;
 public class DefaultMerchantManager implements MerchantManager {
 
     private static final String ENDPOINT = "https://api.opsucht.net/merchant/rates";
-    private static final Gson GSON = new GsonBuilder()
-        .registerTypeAdapter(Component.class, new MerchantComponentAdapter())
-        .create();
 
     private final List<MerchantRate> merchantRates = new ArrayList<>();
+    private final Gson gson;
+
+    public DefaultMerchantManager(NbtComponentSerializer serializer) {
+        this.gson = new GsonBuilder()
+            .registerTypeAdapter(Component.class, new MerchantComponentAdapter(serializer))
+            .create();
+    }
 
     @Override
     public List<MerchantRate> getRates() {
@@ -36,7 +41,7 @@ public class DefaultMerchantManager implements MerchantManager {
 
     public void cacheRates() {
         this.merchantRates.clear();
-        Response<MerchantRate[]> response = Request.ofGson(MerchantRate[].class, GSON)
+        Response<MerchantRate[]> response = Request.ofGson(MerchantRate[].class, this.gson)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
             .handleErrorStream()
