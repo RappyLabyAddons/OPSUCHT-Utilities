@@ -14,7 +14,7 @@ import net.labymod.api.client.component.serializer.gson.GsonComponentSerializer;
 public class MerchantComponentAdapter extends TypeAdapter<Component> {
 
     private static final Pattern COMPONENT_PATTERN = Pattern.compile(
-        "item_name='((?:\\\\'|[^'])*)'"
+        "custom_name='((?:\\\\'|[^'])*)'"
     );
 
     @Override

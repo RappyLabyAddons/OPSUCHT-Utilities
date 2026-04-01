@@ -6,6 +6,14 @@ import com.rappytv.opsucht.api.auction.AuctionCategory;
 import com.rappytv.opsucht.api.event.AuctionDataRefreshEvent;
 import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.ui.hudwidget.AuctionListHudWidget.AuctionListWidgetConfig;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
@@ -27,9 +35,6 @@ import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.request.Request;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig> {
 
     private final OPSuchtAddon addon;
@@ -50,7 +55,7 @@ public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig>
             Component.translatable("opsucht.hudWidget.auction_list.name"),
             this.getAuctionList()
         );
-        Task.builder(this::updateAuctionList)
+        Task.builder(this::updateAuctionListOnRenderThread)
             .repeat(30, TimeUnit.SECONDS)
             .build()
             .execute();
@@ -63,11 +68,16 @@ public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig>
 
     @Subscribe
     public void onAuctionDataRefresh(AuctionDataRefreshEvent event) {
-        this.updateAuctionList();
+        this.updateAuctionListOnRenderThread();
     }
 
-    private void updateAuctionList() {
-        this.line.updateAndFlush(this.getAuctionList());
+    private void updateAuctionListOnRenderThread() {
+        Runnable runnable = () -> this.line.updateAndFlush(this.getAuctionList());
+        if(Laby.labyAPI().minecraft().isOnRenderThread()) {
+            runnable.run();
+        } else {
+            Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
+        }
     }
 
     private Component getAuctionList() {

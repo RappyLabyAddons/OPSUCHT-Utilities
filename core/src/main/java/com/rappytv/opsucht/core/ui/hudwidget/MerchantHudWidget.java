@@ -7,6 +7,7 @@ import com.rappytv.opsucht.core.OPSuchtAddon;
 import com.rappytv.opsucht.core.ui.hudwidget.MerchantHudWidget.MerchantHudWidgetConfig;
 import java.util.ArrayList;
 import java.util.List;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
@@ -43,11 +44,16 @@ public class MerchantHudWidget extends TextHudWidget<MerchantHudWidgetConfig> {
 
     @Subscribe
     public void onMerchantDataRefresh(MerchantDataRefreshEvent event) {
-        this.updateMerchantRates();
+        this.updateLineOnRenderThread();
     }
 
-    private void updateMerchantRates() {
-        this.line.updateAndFlush(this.getMerchantRates());
+    private void updateLineOnRenderThread() {
+        Runnable runnable = () -> this.line.updateAndFlush(this.getMerchantRates());
+        if(Laby.labyAPI().minecraft().isOnRenderThread()) {
+            runnable.run();
+        } else {
+            Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
+        }
     }
 
     @Override
