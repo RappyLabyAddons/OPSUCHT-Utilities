@@ -46,6 +46,7 @@ public class OPSuchtAddon extends LabyAddon<OPSuchtConfig> {
         this.registerRevision(1, 1, 7, "2023-11-21");
         this.registerRevision(1, 2, 1, "2025-10-23");
         this.registerRevision(1, 2, 2, "2025-11-10");
+        this.registerRevision(1, 2, 3, "2026-04-10");
     }
 
     @Override

@@ -26,6 +26,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 2)
     @MethodOrder(after = "enabled")
     @ButtonSetting
@@ -33,6 +34,7 @@ public class OPSuchtConfig extends AddonConfig {
         Laby.references().chatExecutor().openUrl("https://media.rappytv.com/go/opsucht-issues");
     }
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 3, y = 1)
     @DropdownSetting
     private final ConfigProperty<OPSuchtRank> rank = new ConfigProperty<>(OPSuchtRank.PLAYER);
@@ -44,6 +46,7 @@ public class OPSuchtConfig extends AddonConfig {
     @SpriteSlot(x = 5)
     private final InteractionBulletConfig interactionBulletConfig = new InteractionBulletConfig();
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 4, y = 1)
     private final ReminderConfig reminderConfig = new ReminderConfig();
 

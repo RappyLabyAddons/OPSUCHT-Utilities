@@ -7,6 +7,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.Exclude;
+import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.CustomTranslation;
@@ -27,21 +28,25 @@ public class ReminderConfig extends Config {
     private final ConfigProperty<Long> lastDailyRewardClaim = new ConfigProperty<>(-1L);
 
     @SettingSection("skull")
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 7)
     @SwitchSetting
     private final ConfigProperty<Boolean> skullReminders = new ConfigProperty<>(true);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 4, y = 1)
     @CustomTranslation("opsucht.settings.reminderConfig.playSound")
     @SettingRequires("skullReminders")
     @SwitchSetting
     private final ConfigProperty<Boolean> playSkullSound = new ConfigProperty<>(true);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 5, y = 1)
     @SettingRequires("playSkullSound")
     @SliderSetting(min = 1, max = 10)
     private final ConfigProperty<Integer> skullSoundVolume = new ConfigProperty<>(4);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 6, y = 1)
     @MethodOrder(after = "skullSoundVolume")
     @ButtonSetting
@@ -49,6 +54,7 @@ public class ReminderConfig extends Config {
         this.lastSkullClaim.reset();
     }
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(y = 1)
     @SettingSection("dailyReward")
     @DropdownSetting
@@ -56,25 +62,29 @@ public class ReminderConfig extends Config {
         new ConfigProperty<>(DailyRewardReminderType.ONLY_CLAIM)
             .visibilitySupplier(() -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(y = 1)
     @SwitchSetting
     private final ConfigProperty<Boolean> dailyRewardReminder = new ConfigProperty<>(true)
         .visibilitySupplier(() -> !SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 4, y = 1)
     @CustomTranslation("opsucht.settings.reminderConfig.playSound")
     @SwitchSetting
     private final ConfigProperty<Boolean> playDailyRewardSound = new ConfigProperty<>(true)
-        .customRequires((value) -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER
+        .customRequires((ignored) -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER
             ? this.dailyRewardReminderType.get().remind
             : this.dailyRewardReminder.get()
         );
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 5, y = 1)
     @SettingRequires("playDailyRewardSound")
     @SliderSetting(min = 1, max = 10)
     private final ConfigProperty<Integer> dailyRewardSoundVolume = new ConfigProperty<>(4);
 
+    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
     @SpriteSlot(x = 6, y = 1)
     @MethodOrder(after = "dailyRewardSoundVolume")
     @ButtonSetting
