@@ -81,7 +81,13 @@ public class InventoryValueHudWidget extends TextHudWidget<GlobalPriceHudWidgetC
         OPSuchtAddon.references().marketManager().calculateInventoryValue(
             player.inventory(),
             this.config.includeStackSize().get(),
-            this::updateLine
+            (data) -> {
+                if(Laby.labyAPI().minecraft().isOnRenderThread()) {
+                    this.updateLine(data);
+                } else {
+                    Laby.labyAPI().minecraft().executeOnRenderThread(() -> this.updateLine(data));
+                }
+            }
         );
     }
 

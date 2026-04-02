@@ -41,7 +41,7 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
             if (this.line == null) {
                 return;
             }
-            Laby.labyAPI().minecraft().executeOnRenderThread(this::updateLine);
+            this.updateLineOnRenderThread();
         }).repeat(1, TimeUnit.HOURS).build();
         this.refetchTask.execute();
 
@@ -56,7 +56,7 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
             Component.translatable("opsucht.hudWidget.player_record.name"),
             this.lastValue
         );
-        this.updateLine();
+        this.updateLineOnRenderThread();
     }
 
     @Override
@@ -77,9 +77,16 @@ public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetCo
         this.refetchTask.run();
     }
 
-    private void updateLine() {
-        this.line.setState(this.lastValue != -1 ? State.VISIBLE : State.HIDDEN);
-        this.line.updateAndFlush(this.lastValue);
+    private void updateLineOnRenderThread() {
+        Runnable runnable = () -> {
+            this.line.setState(this.lastValue != -1 ? State.VISIBLE : State.HIDDEN);
+            this.line.updateAndFlush(this.lastValue);
+        };
+        if(Laby.labyAPI().minecraft().isOnRenderThread()) {
+            runnable.run();
+        } else {
+            Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
+        }
     }
 
     private int fetchPlayerRecord() {

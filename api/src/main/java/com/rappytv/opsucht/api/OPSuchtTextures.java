@@ -9,21 +9,10 @@ public class OPSuchtTextures {
 
         public static final ResourceLocation TEXTURE = ResourceLocation.create("opsucht", "textures/hud.png");
 
-        public static final Icon AUCTIONS = verticalSprite64(0);
-        public static final Icon INVENTORY_VALUE = verticalSprite64(1);
-        public static final Icon ITEM_VALUE = verticalSprite64(2);
-        public static final Icon PLAYER_RECORD = verticalSprite64(3);
-
-        private static Icon verticalSprite64(int x) {
-            return Icon.sprite(
-                TEXTURE,
-                x << 6,
-                0,
-                64,
-                64,
-                256,
-                64
-            );
-        }
+        public static final Icon AUCTIONS = Icon.sprite32(TEXTURE, 0, 0);
+        public static final Icon INVENTORY_VALUE = Icon.sprite32(TEXTURE, 1, 0);
+        public static final Icon ITEM_VALUE = Icon.sprite32(TEXTURE, 2, 0);
+        public static final Icon PLAYER_RECORD = Icon.sprite32(TEXTURE, 3, 0);
+        public static final Icon MERCHANT = Icon.sprite32(TEXTURE, 0, 1);
     }
 }

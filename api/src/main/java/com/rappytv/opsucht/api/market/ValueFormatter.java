@@ -1,4 +1,4 @@
-package com.rappytv.opsucht.api;
+package com.rappytv.opsucht.api.market;
 
 import com.rappytv.opsucht.api.market.MarketManager.DisplayMode;
 import net.labymod.api.client.component.Component;

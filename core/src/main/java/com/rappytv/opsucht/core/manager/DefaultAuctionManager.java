@@ -23,7 +23,7 @@ import net.labymod.api.util.io.web.request.Response;
 public class DefaultAuctionManager implements AuctionManager {
 
     private static final String ENDPOINT = "https://api.opsucht.net/auctions/active";
-    private static final Gson gson = new GsonBuilder()
+    private static final Gson GSON = new GsonBuilder()
         .registerTypeAdapter(Date.class, new DateAdapter())
         .create();
 
@@ -37,7 +37,7 @@ public class DefaultAuctionManager implements AuctionManager {
     @Override
     public void cacheAuctions() {
         this.auctions.clear();
-        Response<Auction[]> response = Request.ofGson(Auction[].class, gson)
+        Response<Auction[]> response = Request.ofGson(Auction[].class, GSON)
             .url(ENDPOINT)
             .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
             .handleErrorStream()

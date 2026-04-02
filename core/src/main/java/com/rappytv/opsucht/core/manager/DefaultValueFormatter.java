@@ -1,6 +1,6 @@
 package com.rappytv.opsucht.core.manager;
 
-import com.rappytv.opsucht.api.ValueFormatter;
+import com.rappytv.opsucht.api.market.ValueFormatter;
 import com.rappytv.opsucht.api.market.MarketManager.DisplayMode;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;

@@ -6,7 +6,7 @@ plugins {
 val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().split(";")
 
 group = "org.example"
-version = providers.environmentVariable("VERSION").getOrElse("1.2.2")
+version = providers.environmentVariable("VERSION").getOrElse("1.2.3")
 
 labyMod {
     defaultPackageName = "com.rappytv.opsucht"
@@ -37,4 +37,9 @@ subprojects {
 
     group = rootProject.group
     version = rootProject.version
+
+    extensions.findByType(JavaPluginExtension::class.java)?.apply {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 }

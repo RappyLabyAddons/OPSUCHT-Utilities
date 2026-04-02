@@ -2,6 +2,9 @@
     "opsucht": {
         "settings": {
             "header": {
+                "general": {
+                    "name": "General"
+                },
                 "chat": {
                     "name": "Chat"
                 },
@@ -11,6 +14,25 @@
             },
             "enabled": {
                 "name": "Enabled"
+            },
+            "github": {
+                "name": "Request a feature / Report a bug",
+                "text": "Open",
+                "description": "I am no longer actively playing on §bopsucht.net §rbut I still want to maintain this addon so if you find any bugs or want to suggest a feature just create an issue on the GitHub issue tracker :)"
+            },
+            "rank": {
+                "name": "Your ingame rank",
+                "description": "Tells the addon which rank you have ingame. This is useful to calculate when to remind you for the §b/skull §freminder for example.",
+                "entries": {
+                    "player": "Spieler",
+                    "premium": "§6Premium",
+                    "diamond": "§bDiamond",
+                    "ultra": "§aUltra",
+                    "legend": "§eLegende",
+                    "supreme": "§dSupreme",
+                    "platin": "§cPlatin",
+                    "op": "§f§lOP"
+                }
             },
             "richPresenceConfig": {
                 "name": "Discord Rich Presence",
@@ -37,6 +59,49 @@
                     "description": "Adds the option to send a friend request to the player."
                 }
             },
+            "reminderConfig": {
+                "header": {
+                    "skull": {
+                        "name": "Skull"
+                    },
+                    "dailyReward": {
+                        "name": "Daily Reward"
+                    }
+                },
+                "name": "Reminders",
+                "playSound": {
+                    "name": "Play notification sound"
+                },
+                "skullReminders": {
+                    "name": "Skull reminders"
+                },
+                "skullSoundVolume": {
+                    "name": "Skull sound volume"
+                },
+                "resetSkullReminder": {
+                    "name": "Reset skull reminder timestamp",
+                    "text": "Reset"
+                },
+                "dailyRewardReminderType": {
+                    "name": "Daily reward reminder type",
+                    "entries": {
+                        "none": "None",
+                        "onlyRemind": "Notification",
+                        "onlyClaim": "Autoclaim",
+                        "both": "Both"
+                    }
+                },
+                "dailyRewardReminder": {
+                    "name": "Daily reward reminders"
+                },
+                "dailyRewardSoundVolume": {
+                    "name": "Daily reward sound volume"
+                },
+                "resetDailyRewardClaimer": {
+                    "name": "Reset daily reward claimer timestamp",
+                    "text": "Reset"
+                }
+            },
             "autoFly": {
                 "name": "AutoFly",
                 "description": "Automatically execute §b/fly §feverytime you join a sub server of §bOPSUCHT.net§f.\nOnly works with §cPLATIN §fand higher ranks."
@@ -55,6 +120,7 @@
         },
         "command": {
             "usage": "Usage: /%s <%s>",
+            "notConnected": "You are not connected to OPSUCHT.NET! Make sure you are connecting through the official domain.",
             "noPlayer": "This shouldn't happen. Please contact the developers!",
             "buyValue": "Buy Value: %s",
             "sellValue": "Sell Value: %s",
@@ -75,6 +141,16 @@
         },
         "chat": {
             "clickableNickname": "Click, to see the real name."
+        },
+        "reminders": {
+            "skull": {
+                "title": "Skull reminder",
+                "description": "You can use %s again!"
+            },
+            "dailyReward": {
+                "title": "Reward reminder",
+                "description": "You can claim your daily reward!"
+            }
         },
         "hudWidget": {
             "config": {
@@ -104,14 +180,14 @@
                 },
                 "sellPriceColor": {
                     "name": "Sell price color"
+                },
+                "maxResults": {
+                    "name": "Max results"
                 }
             },
             "auction_list": {
                 "name": "Auctions",
                 "empty": "No active auctions found.",
-                "maxAuctions": {
-                    "name": "Max results"
-                },
                 "sortType": {
                     "name": "Sort by",
                     "entries": {
@@ -149,6 +225,15 @@
                 },
                 "showItemName": {
                     "name": "Show item name"
+                }
+            },
+            "merchant_rates": {
+                "name": "Merchant Rates",
+                "noRates": "Failed to load rates...",
+                "forceRefetch": {
+                    "name": "Refresh data",
+                    "text": "Fetch",
+                    "description": "Pulls new data from the server"
                 }
             },
             "player_record": {
