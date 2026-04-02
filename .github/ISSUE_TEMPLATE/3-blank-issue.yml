@@ -3,3 +3,7 @@ description: Create a new issue without a template
 type: task
 labels: ["pending"]
 assignees: ["RappyTV"]
+body:
+  - type: textarea
+    label: Content
+    description: "Tell us about your issue"
