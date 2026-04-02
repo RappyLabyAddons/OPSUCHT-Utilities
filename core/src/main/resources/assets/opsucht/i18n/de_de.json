@@ -31,6 +31,9 @@
                 },
                 "sellPriceColor": {
                     "name": "Verkaufspreis-Farbe"
+                },
+                "maxResults": {
+                    "name": "Maximale ergebnisse"
                 }
             },
             "inventory_value": {
@@ -87,6 +90,15 @@
                         "other": "Andere"
                     }
                 }
+            },
+            "merchant_rates": {
+                "forceRefetch": {
+                    "name": "Daten erneuern",
+                    "text": "Erneuern",
+                    "description": "Aktualisiert die Daten vom Server"
+                },
+                "noRates": "Laden der Raten fehlgeschlagen…",
+                "name": "Merchant Rates"
             }
         },
         "hudWidgetCategory": {
@@ -126,6 +138,9 @@
                 },
                 "opmarket": {
                     "name": "OP Markt"
+                },
+                "general": {
+                    "name": "Allgemein"
                 }
             },
             "interactionBulletConfig": {
@@ -156,6 +171,58 @@
             "priceFormat": {
                 "name": "Preisformat",
                 "description": "Wie Preise angezeigt werden sollen. Du kannst §b{price}§r als Platzhalter für den Preis benutzen."
+            },
+            "github": {
+                "name": "Features vorschlagen / Fehler melden",
+                "text": "Öffnen",
+                "description": "Ich spiele nicht mehr aktiv auf §bopsucht.net §raber ich möchte dieses Addon noch weiterhin maintainen, also wenn du Bugs findest oder eine Feature Idee hast, erstell einfach ein Issue auf dem GitHub Issue Tracker :)"
+            },
+            "rank": {
+                "name": "Dein Ingame-Rang",
+                "description": "Sagt dem Addon, welchen Rang du auf dem Server hast. Das wird zum Beispiel benötigt, um zu berechnen, wann du für die §b/skull§r-Erinnerung erinnert werden musst."
+            },
+            "reminderConfig": {
+                "header": {
+                    "skull": {
+                        "name": "Skull"
+                    },
+                    "dailyReward": {
+                        "name": "Tägliche Belohnung"
+                    }
+                },
+                "name": "Erinnerungen",
+                "playSound": {
+                    "name": "Benachrichtigungston abspielen"
+                },
+                "skullReminders": {
+                    "name": "Skull Erinnerungen"
+                },
+                "skullSoundVolume": {
+                    "name": "Skull Erinnerungslautstärke"
+                },
+                "resetSkullReminder": {
+                    "name": "Skull Erinnerungs-Zeitstempel zurücksetzen",
+                    "text": "Reset"
+                },
+                "resetDailyRewardClaimer": {
+                    "text": "Reset",
+                    "name": "Zeitstempel für Tägliche Belohnungs-Erinnerung zurücksetzen"
+                },
+                "dailyRewardReminderType": {
+                    "name": "Erinnerungstyp für Tägliche Belohnungen",
+                    "entries": {
+                        "none": "Keine",
+                        "onlyRemind": "Benachrichtigung",
+                        "onlyClaim": "Autoclaim",
+                        "both": "Beides"
+                    }
+                },
+                "dailyRewardReminder": {
+                    "name": "Erinnerungen für Tägliche Belohnungen"
+                },
+                "dailyRewardSoundVolume": {
+                    "name": "Erinnerungslautstärke für Tägliche Belohnungen"
+                }
             }
         },
         "command": {
@@ -176,6 +243,17 @@
                 "empty": "Du hast keine Items in deinem Inventar, die einen Wert haben!",
                 "invalidData": "Ungültige Inventardaten!",
                 "value": "Du hast %s Items mit einem Wert in deinem Inventar."
+            },
+            "notConnected": "Du bist nicht mit OPSUCHT.NET verbunden! Achte darauf, dich mit der offiziellen Domain zu verbinden."
+        },
+        "reminders": {
+            "skull": {
+                "description": "Du kannst wieder %s benutzen!",
+                "title": "Tägliche Belohnungs-Erinnerung"
+            },
+            "dailyReward": {
+                "description": "Du kannst deine Tägliche belohnung abholen!",
+                "title": "Belohnungserinnerung"
             }
         }
     }
