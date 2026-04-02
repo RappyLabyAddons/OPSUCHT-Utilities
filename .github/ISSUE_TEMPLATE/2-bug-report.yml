@@ -1,5 +1,5 @@
 name: "🐛 Report a bug"
-about: Create a bug report issue
+description: Create a bug report issue
 type: bug
 title: "bug: "
 labels: ["bug", "pending"]

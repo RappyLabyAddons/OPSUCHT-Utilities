@@ -229,7 +229,7 @@
             },
             "merchant_rates": {
                 "name": "Merchant Rates",
-                "noRates": "Failed to load rates...",
+                "noRates": "Failed to load rates…",
                 "forceRefetch": {
                     "name": "Refresh data",
                     "text": "Fetch",

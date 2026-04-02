@@ -1,5 +1,5 @@
 name: "✨ Suggest a new feature"
-about: Create a feature request issue
+description: Create a feature request issue
 type: feature
 title: "feat: "
 labels: ["feature", "pending"]
