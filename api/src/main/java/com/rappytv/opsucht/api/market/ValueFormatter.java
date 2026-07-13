@@ -9,19 +9,19 @@ import org.jetbrains.annotations.NotNull;
 @Referenceable
 public interface ValueFormatter {
 
-    @NotNull
-    Component formatSingleValueComponent(String format, float value, TextColor color);
+  @NotNull
+  Component formatSingleValueComponent(String format, float value, TextColor color);
 
-    @NotNull
-    Component formatValueComponent(
-        float buyValue,
-        float sellValue,
-        String format,
-        TextColor buyPriceColor,
-        TextColor sellPriceColor,
-        DisplayMode mode
-    );
+  @NotNull
+  Component formatValueComponent(
+      float buyValue,
+      float sellValue,
+      String format,
+      TextColor buyPriceColor,
+      TextColor sellPriceColor,
+      DisplayMode mode
+  );
 
-    @NotNull
-    String formatFloat(float number);
+  @NotNull
+  String formatFloat(float number);
 }

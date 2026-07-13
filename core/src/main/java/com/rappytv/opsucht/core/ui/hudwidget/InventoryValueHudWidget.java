@@ -17,103 +17,106 @@ import org.jetbrains.annotations.Nullable;
 
 public class InventoryValueHudWidget extends TextHudWidget<GlobalPriceHudWidgetConfig> {
 
-    private static final InventoryValueData EXAMPLE_VALUE_DATA = new InventoryValueData(23, 12345.67f, 123.45f);
-    private static final Component LOADING_COMPONENT = Component.translatable("opsucht.hudWidget.inventory_value.loading");
-    private static final Component INVALID_DATA_COMPONENT = Component.translatable("opsucht.hudWidget.inventory_value.invalidData");
+  private static final InventoryValueData EXAMPLE_VALUE_DATA = new InventoryValueData(23, 12345.67f,
+      123.45f);
+  private static final Component LOADING_COMPONENT = Component.translatable(
+      "opsucht.hudWidget.inventory_value.loading");
+  private static final Component INVALID_DATA_COMPONENT = Component.translatable(
+      "opsucht.hudWidget.inventory_value.invalidData");
 
-    private final OPSuchtAddon addon;
-    private TextLine line;
-    private long lastUpdate = -1;
+  private final OPSuchtAddon addon;
+  private TextLine line;
+  private long lastUpdate = -1;
 
-    public InventoryValueHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
-        super("inventory_value", GlobalPriceHudWidgetConfig.class);
-        this.addon = addon;
+  public InventoryValueHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
+    super("inventory_value", GlobalPriceHudWidgetConfig.class);
+    this.addon = addon;
 
-        this.setIcon(SpriteHud.INVENTORY_VALUE);
-        this.bindCategory(category);
+    this.setIcon(SpriteHud.INVENTORY_VALUE);
+    this.bindCategory(category);
+  }
+
+  @Override
+  public void load(GlobalPriceHudWidgetConfig config) {
+    super.load(config);
+
+    this.line = this.createLine(
+        Component.translatable("opsucht.hudWidget.inventory_value.name"),
+        LOADING_COMPONENT
+    );
+  }
+
+  @Override
+  public void onTick(boolean isEditorContext) {
+    if (!this.addon.configuration().enabled().get()) {
+      return;
+    }
+    if (isEditorContext && !Laby.labyAPI().minecraft().isIngame()) {
+      this.updateLine(EXAMPLE_VALUE_DATA);
+      return;
     }
 
-    @Override
-    public void load(GlobalPriceHudWidgetConfig config) {
-        super.load(config);
-
-        this.line = this.createLine(
-            Component.translatable("opsucht.hudWidget.inventory_value.name"),
-            LOADING_COMPONENT
-        );
+    if (!this.addon.server().isConnected()) {
+      return;
     }
 
-    @Override
-    public void onTick(boolean isEditorContext) {
-        if(!this.addon.configuration().enabled().get()) {
-            return;
-        }
-        if(isEditorContext && !Laby.labyAPI().minecraft().isIngame()) {
-            this.updateLine(EXAMPLE_VALUE_DATA);
-            return;
-        }
+    long now = System.currentTimeMillis();
+    if (now - this.lastUpdate > 1000) {
+      this.updateLine();
+      this.lastUpdate = now;
+    }
+  }
 
-        if(!this.addon.server().isConnected()) {
-            return;
-        }
+  @Override
+  public boolean isVisibleInGame() {
+    return this.addon.server().isConnected() && super.isVisibleInGame();
+  }
 
-        long now = System.currentTimeMillis();
-        if(now - this.lastUpdate > 1000) {
-            this.updateLine();
-            this.lastUpdate = now;
-        }
+  private void updateLine() {
+    ClientPlayer player = Laby.labyAPI().minecraft().getClientPlayer();
+    if (player == null) {
+      this.updateLine(null);
+      return;
     }
 
-    @Override
-    public boolean isVisibleInGame() {
-        return this.addon.server().isConnected() && super.isVisibleInGame();
-    }
-
-    private void updateLine() {
-        ClientPlayer player = Laby.labyAPI().minecraft().getClientPlayer();
-        if(player == null) {
-            this.updateLine(null);
-            return;
+    this.line.setState(State.HIDDEN);
+    this.line.updateAndFlush(LOADING_COMPONENT);
+    OPSuchtAddon.references().marketManager().calculateInventoryValue(
+        player.inventory(),
+        this.config.includeStackSize().get(),
+        (data) -> {
+          if (Laby.labyAPI().minecraft().isOnRenderThread()) {
+            this.updateLine(data);
+          } else {
+            Laby.labyAPI().minecraft().executeOnRenderThread(() -> this.updateLine(data));
+          }
         }
+    );
+  }
 
-        this.line.setState(State.HIDDEN);
-        this.line.updateAndFlush(LOADING_COMPONENT);
-        OPSuchtAddon.references().marketManager().calculateInventoryValue(
-            player.inventory(),
-            this.config.includeStackSize().get(),
-            (data) -> {
-                if(Laby.labyAPI().minecraft().isOnRenderThread()) {
-                    this.updateLine(data);
-                } else {
-                    Laby.labyAPI().minecraft().executeOnRenderThread(() -> this.updateLine(data));
-                }
-            }
-        );
+  private void updateLine(@Nullable InventoryValueData data) {
+    if (data == null || !data.isValid()) {
+      this.line.setState(State.HIDDEN);
+      this.line.updateAndFlush(INVALID_DATA_COMPONENT);
+      return;
     }
 
-    private void updateLine(@Nullable InventoryValueData data) {
-        if(data == null || !data.isValid()) {
-            this.line.setState(State.HIDDEN);
-            this.line.updateAndFlush(INVALID_DATA_COMPONENT);
-            return;
-        }
+    Component component = Component.empty()
+        .append(Component.translatable(
+            "opsucht.hudWidget.inventory_value.items",
+            Component.text(data.itemAmount())
+        ))
+        .append(Component.text(": ", NamedTextColor.GRAY))
+        .append(OPSuchtAddon.references().valueFormatter().formatValueComponent(
+            data.buyValue(),
+            data.sellValue(),
+            this.addon.configuration().priceFormat().get(),
+            TextColor.color(this.config.buyPriceColor().get().get()),
+            TextColor.color(this.config.sellPriceColor().get().get()),
+            this.config.displayMode().get()
+        ));
 
-        Component component = Component.empty()
-            .append(Component.translatable(
-                "opsucht.hudWidget.inventory_value.items",
-                Component.text(data.itemAmount())
-            ))
-            .append(Component.text(": ", NamedTextColor.GRAY))
-            .append(OPSuchtAddon.references().valueFormatter().formatValueComponent(
-                data.buyValue(),
-                data.sellValue(),
-                this.addon.configuration().priceFormat().get(),
-                TextColor.color(this.config.buyPriceColor().get().get()),
-                TextColor.color(this.config.sellPriceColor().get().get()),
-                this.config.displayMode().get()
-            ));
-
-        this.line.setState(State.VISIBLE);
-        this.line.updateAndFlush(component);
-    }
+    this.line.setState(State.VISIBLE);
+    this.line.updateAndFlush(component);
+  }
 }

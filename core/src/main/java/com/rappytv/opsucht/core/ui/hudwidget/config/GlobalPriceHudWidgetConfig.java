@@ -16,46 +16,48 @@ import net.labymod.api.util.Color;
 
 public class GlobalPriceHudWidgetConfig extends TextHudWidgetConfig {
 
-    @SettingSection(value = "format", translation = "opsucht.hudWidget.config")
-    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
-    @SettingOrder(Order.NORMAL)
-    @CustomTranslation("opsucht.hudWidget.config.includeStackSize")
-    @SwitchSetting
-    private final ConfigProperty<Boolean> includeStackSize = new ConfigProperty<>(true);
+  @SettingSection(value = "format", translation = "opsucht.hudWidget.config")
+  @IntroducedIn(namespace = "opsucht", value = "1.2.1")
+  @SettingOrder(Order.NORMAL)
+  @CustomTranslation("opsucht.hudWidget.config.includeStackSize")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> includeStackSize = new ConfigProperty<>(true);
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
-    @SettingOrder(Order.NORMAL)
-    @CustomTranslation("opsucht.hudWidget.config.displayMode")
-    @DropdownSetting
-    private final ConfigProperty<DisplayMode> displayMode = new ConfigProperty<>(
-        DisplayMode.BOTH);
+  @IntroducedIn(namespace = "opsucht", value = "1.2.1")
+  @SettingOrder(Order.NORMAL)
+  @CustomTranslation("opsucht.hudWidget.config.displayMode")
+  @DropdownSetting
+  private final ConfigProperty<DisplayMode> displayMode = new ConfigProperty<>(
+      DisplayMode.BOTH);
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
-    @SettingOrder(Order.NORMAL)
-    @SettingSection(value = "format", translation = "opsucht.hudWidget.config")
-    @CustomTranslation("opsucht.hudWidget.config.buyPriceColor")
-    @ColorPickerSetting
-    private final ConfigProperty<Color> buyPriceColor = new ConfigProperty<>(NamedTextColor.AQUA.color());
+  @IntroducedIn(namespace = "opsucht", value = "1.2.1")
+  @SettingOrder(Order.NORMAL)
+  @SettingSection(value = "format", translation = "opsucht.hudWidget.config")
+  @CustomTranslation("opsucht.hudWidget.config.buyPriceColor")
+  @ColorPickerSetting
+  private final ConfigProperty<Color> buyPriceColor = new ConfigProperty<>(
+      NamedTextColor.AQUA.color());
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.1")
-    @SettingOrder(Order.NORMAL)
-    @CustomTranslation("opsucht.hudWidget.config.sellPriceColor")
-    @ColorPickerSetting
-    private final ConfigProperty<Color> sellPriceColor = new ConfigProperty<>(NamedTextColor.RED.color());
+  @IntroducedIn(namespace = "opsucht", value = "1.2.1")
+  @SettingOrder(Order.NORMAL)
+  @CustomTranslation("opsucht.hudWidget.config.sellPriceColor")
+  @ColorPickerSetting
+  private final ConfigProperty<Color> sellPriceColor = new ConfigProperty<>(
+      NamedTextColor.RED.color());
 
-    public ConfigProperty<Boolean> includeStackSize() {
-        return this.includeStackSize;
-    }
+  public ConfigProperty<Boolean> includeStackSize() {
+    return this.includeStackSize;
+  }
 
-    public ConfigProperty<DisplayMode> displayMode() {
-        return this.displayMode;
-    }
+  public ConfigProperty<DisplayMode> displayMode() {
+    return this.displayMode;
+  }
 
-    public ConfigProperty<Color> buyPriceColor() {
-        return this.buyPriceColor;
-    }
+  public ConfigProperty<Color> buyPriceColor() {
+    return this.buyPriceColor;
+  }
 
-    public ConfigProperty<Color> sellPriceColor() {
-        return this.sellPriceColor;
-    }
+  public ConfigProperty<Color> sellPriceColor() {
+    return this.sellPriceColor;
+  }
 }

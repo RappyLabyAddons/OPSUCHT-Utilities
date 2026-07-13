@@ -17,137 +17,137 @@ import net.labymod.api.util.MethodOrder;
 
 public class ReminderConfig extends Config {
 
-    private static final String DAILY_REWARD_AUTO_CLAIMER_COMPAT = "1.16.5<1.21.11";
-    public static final boolean SUPPORTS_DAILY_REWARD_AUTO_CLAIMER =
-        OPSuchtAddon.isMinecraftMultiVersionSupported(DAILY_REWARD_AUTO_CLAIMER_COMPAT);
+  private static final String DAILY_REWARD_AUTO_CLAIMER_COMPAT = "1.16.5<1.21.11";
+  public static final boolean SUPPORTS_DAILY_REWARD_AUTO_CLAIMER =
+      OPSuchtAddon.isMinecraftMultiVersionSupported(DAILY_REWARD_AUTO_CLAIMER_COMPAT);
 
-    @Exclude
-    private final ConfigProperty<Long> lastSkullClaim = new ConfigProperty<>(-1L);
+  @Exclude
+  private final ConfigProperty<Long> lastSkullClaim = new ConfigProperty<>(-1L);
 
-    @Exclude
-    private final ConfigProperty<Long> lastDailyRewardClaim = new ConfigProperty<>(-1L);
+  @Exclude
+  private final ConfigProperty<Long> lastDailyRewardClaim = new ConfigProperty<>(-1L);
 
-    @SettingSection("skull")
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 7)
-    @SwitchSetting
-    private final ConfigProperty<Boolean> skullReminders = new ConfigProperty<>(true);
+  @SettingSection("skull")
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 7)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> skullReminders = new ConfigProperty<>(true);
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 4, y = 1)
-    @CustomTranslation("opsucht.settings.reminderConfig.playSound")
-    @SettingRequires("skullReminders")
-    @SwitchSetting
-    private final ConfigProperty<Boolean> playSkullSound = new ConfigProperty<>(true);
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 4, y = 1)
+  @CustomTranslation("opsucht.settings.reminderConfig.playSound")
+  @SettingRequires("skullReminders")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> playSkullSound = new ConfigProperty<>(true);
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 5, y = 1)
-    @SettingRequires("playSkullSound")
-    @SliderSetting(min = 1, max = 10)
-    private final ConfigProperty<Integer> skullSoundVolume = new ConfigProperty<>(4);
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 5, y = 1)
+  @SettingRequires("playSkullSound")
+  @SliderSetting(min = 1, max = 10)
+  private final ConfigProperty<Integer> skullSoundVolume = new ConfigProperty<>(4);
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 6, y = 1)
-    @MethodOrder(after = "skullSoundVolume")
-    @ButtonSetting
-    public void resetSkullReminder() {
-        this.lastSkullClaim.reset();
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 6, y = 1)
+  @MethodOrder(after = "skullSoundVolume")
+  @ButtonSetting
+  public void resetSkullReminder() {
+    this.lastSkullClaim.reset();
+  }
+
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(y = 1)
+  @SettingSection("dailyReward")
+  @DropdownSetting
+  private final ConfigProperty<DailyRewardReminderType> dailyRewardReminderType =
+      new ConfigProperty<>(DailyRewardReminderType.ONLY_CLAIM)
+          .visibilitySupplier(() -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
+
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(y = 1)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> dailyRewardReminder = new ConfigProperty<>(true)
+      .visibilitySupplier(() -> !SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
+
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 4, y = 1)
+  @CustomTranslation("opsucht.settings.reminderConfig.playSound")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> playDailyRewardSound = new ConfigProperty<>(true)
+      .customRequires((ignored) -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER
+          ? this.dailyRewardReminderType.get().remind
+          : this.dailyRewardReminder.get()
+      );
+
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 5, y = 1)
+  @SettingRequires("playDailyRewardSound")
+  @SliderSetting(min = 1, max = 10)
+  private final ConfigProperty<Integer> dailyRewardSoundVolume = new ConfigProperty<>(4);
+
+  @IntroducedIn(namespace = "opsucht", value = "1.2.3")
+  @SpriteSlot(x = 6, y = 1)
+  @MethodOrder(after = "dailyRewardSoundVolume")
+  @ButtonSetting
+  public void resetDailyRewardClaimer() {
+    this.lastDailyRewardClaim.reset();
+  }
+
+  public ConfigProperty<Long> lastSkullClaim() {
+    return this.lastSkullClaim;
+  }
+
+  public ConfigProperty<Boolean> skullReminders() {
+    return this.skullReminders;
+  }
+
+  public ConfigProperty<Boolean> playSkullSound() {
+    return this.playSkullSound;
+  }
+
+  public ConfigProperty<Integer> skullSoundVolume() {
+    return this.skullSoundVolume;
+  }
+
+  public ConfigProperty<Long> lastDailyRewardClaim() {
+    return this.lastDailyRewardClaim;
+  }
+
+  public ConfigProperty<DailyRewardReminderType> dailyRewardReminderType() {
+    return this.dailyRewardReminderType;
+  }
+
+  public ConfigProperty<Boolean> dailyRewardReminder() {
+    return this.dailyRewardReminder;
+  }
+
+  public ConfigProperty<Boolean> playDailyRewardSound() {
+    return this.playDailyRewardSound;
+  }
+
+  public ConfigProperty<Integer> dailyRewardVolume() {
+    return this.dailyRewardSoundVolume;
+  }
+
+  public enum DailyRewardReminderType {
+    NONE(false, false),
+    ONLY_REMIND(true, false),
+    ONLY_CLAIM(false, true),
+    BOTH(true, true);
+
+    private final boolean remind;
+    private final boolean autoClaim;
+
+    DailyRewardReminderType(boolean remind, boolean autoClaim) {
+      this.remind = remind;
+      this.autoClaim = autoClaim;
     }
 
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(y = 1)
-    @SettingSection("dailyReward")
-    @DropdownSetting
-    private final ConfigProperty<DailyRewardReminderType> dailyRewardReminderType =
-        new ConfigProperty<>(DailyRewardReminderType.ONLY_CLAIM)
-            .visibilitySupplier(() -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
-
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(y = 1)
-    @SwitchSetting
-    private final ConfigProperty<Boolean> dailyRewardReminder = new ConfigProperty<>(true)
-        .visibilitySupplier(() -> !SUPPORTS_DAILY_REWARD_AUTO_CLAIMER);
-
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 4, y = 1)
-    @CustomTranslation("opsucht.settings.reminderConfig.playSound")
-    @SwitchSetting
-    private final ConfigProperty<Boolean> playDailyRewardSound = new ConfigProperty<>(true)
-        .customRequires((ignored) -> SUPPORTS_DAILY_REWARD_AUTO_CLAIMER
-            ? this.dailyRewardReminderType.get().remind
-            : this.dailyRewardReminder.get()
-        );
-
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 5, y = 1)
-    @SettingRequires("playDailyRewardSound")
-    @SliderSetting(min = 1, max = 10)
-    private final ConfigProperty<Integer> dailyRewardSoundVolume = new ConfigProperty<>(4);
-
-    @IntroducedIn(namespace = "opsucht", value = "1.2.3")
-    @SpriteSlot(x = 6, y = 1)
-    @MethodOrder(after = "dailyRewardSoundVolume")
-    @ButtonSetting
-    public void resetDailyRewardClaimer() {
-        this.lastDailyRewardClaim.reset();
+    public boolean remind() {
+      return this.remind;
     }
 
-    public ConfigProperty<Long> lastSkullClaim() {
-        return this.lastSkullClaim;
+    public boolean autoClaim() {
+      return this.autoClaim;
     }
-
-    public ConfigProperty<Boolean> skullReminders() {
-        return this.skullReminders;
-    }
-
-    public ConfigProperty<Boolean> playSkullSound() {
-        return this.playSkullSound;
-    }
-
-    public ConfigProperty<Integer> skullSoundVolume() {
-        return this.skullSoundVolume;
-    }
-
-    public ConfigProperty<Long> lastDailyRewardClaim() {
-        return this.lastDailyRewardClaim;
-    }
-
-    public ConfigProperty<DailyRewardReminderType> dailyRewardReminderType() {
-        return this.dailyRewardReminderType;
-    }
-
-    public ConfigProperty<Boolean> dailyRewardReminder() {
-        return this.dailyRewardReminder;
-    }
-
-    public ConfigProperty<Boolean> playDailyRewardSound() {
-        return playDailyRewardSound;
-    }
-
-    public ConfigProperty<Integer> dailyRewardVolume() {
-        return dailyRewardSoundVolume;
-    }
-
-    public enum DailyRewardReminderType {
-        NONE(false, false),
-        ONLY_REMIND(true, false),
-        ONLY_CLAIM(false, true),
-        BOTH(true, true);
-
-        private final boolean remind;
-        private final boolean autoClaim;
-
-        DailyRewardReminderType(boolean remind, boolean autoClaim) {
-            this.remind = remind;
-            this.autoClaim = autoClaim;
-        }
-
-        public boolean remind() {
-            return this.remind;
-        }
-
-        public boolean autoClaim() {
-            return this.autoClaim;
-        }
-    }
+  }
 }

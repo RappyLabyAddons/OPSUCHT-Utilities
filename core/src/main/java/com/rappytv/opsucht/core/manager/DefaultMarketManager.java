@@ -25,81 +25,83 @@ import org.jetbrains.annotations.Nullable;
 @Implements(MarketManager.class)
 public class DefaultMarketManager implements MarketManager {
 
-    private static final String ENDPOINT = "https://api.opsucht.net/market/prices";
+  private static final String ENDPOINT = "https://api.opsucht.net/market/prices";
 
-    private final Map<String, MarketItem> items = new HashMap<>();
+  private final Map<String, MarketItem> items = new HashMap<>();
 
-    @Override
-    public @Nullable MarketItem getItem(String itemId) {
-        return this.items.get(itemId.toLowerCase());
+  @Override
+  public @Nullable MarketItem getItem(String itemId) {
+    return this.items.get(itemId.toLowerCase());
+  }
+
+  public void calculateInventoryValue(
+      @NotNull Inventory inventory,
+      boolean includeStack,
+      @NotNull Consumer<@Nullable InventoryValueData> consumer
+  ) {
+    int items = 0;
+    float totalBuyValue = 0f;
+    float totalSellValue = 0f;
+
+    for (int i = 0; i < 36; i++) {
+      ItemStack itemStack = inventory.itemStackAt(i);
+      if (itemStack == null || itemStack.isAir()) {
+        continue;
+      }
+
+      ResourceLocation identifier = itemStack.getIdentifier();
+      if (identifier == null) {
+        continue;
+      }
+
+      MarketItem item = OPSuchtAddon.references().marketManager().getItem(identifier.getPath());
+      if (item == null || !item.isValid()) {
+        continue;
+      }
+      MarketStack stack = new MarketStack(item, itemStack.getSize());
+      items += includeStack ? stack.getSize() : 1;
+      totalBuyValue += includeStack ? stack.getStackBuyPrice() : stack.getBuyPrice();
+      totalSellValue += includeStack ? stack.getStackSellPrice() : stack.getSellPrice();
     }
 
-    public void calculateInventoryValue(
-        @NotNull Inventory inventory,
-        boolean includeStack,
-        @NotNull Consumer<@Nullable InventoryValueData> consumer
-    ) {
-        int items = 0;
-        float totalBuyValue = 0f;
-        float totalSellValue = 0f;
+    consumer.accept(new InventoryValueData(items, totalBuyValue, totalSellValue));
+  }
 
-        for(int i = 0; i < 36; i++) {
-            ItemStack itemStack = inventory.itemStackAt(i);
-            if(itemStack == null || itemStack.isAir()) {
-                continue;
-            }
+  @Override
+  public void cachePrices() {
+    Response<JsonObject> response = Request.ofGson(JsonObject.class)
+        .url(ENDPOINT)
+        .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+        .handleErrorStream()
+        .executeSync();
 
-            ResourceLocation identifier = itemStack.getIdentifier();
-            if(identifier == null) {
-                continue;
-            }
-
-            MarketItem item = OPSuchtAddon.references().marketManager().getItem(identifier.getPath());
-            if(item == null || !item.isValid()) {
-                continue;
-            }
-            MarketStack stack = new MarketStack(item, itemStack.getSize());
-            items += includeStack ? stack.getSize() : 1;
-            totalBuyValue += includeStack ? stack.getStackBuyPrice() : stack.getBuyPrice();
-            totalSellValue += includeStack ? stack.getStackSellPrice() : stack.getSellPrice();
-        }
-
-        consumer.accept(new InventoryValueData(items, totalBuyValue, totalSellValue));
+    if (response.hasException() || response.getStatusCode() != 200) {
+      return;
     }
 
-    @Override
-    public void cachePrices() {
-        Response<JsonObject> response = Request.ofGson(JsonObject.class)
-            .url(ENDPOINT)
-            .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
-            .handleErrorStream()
-            .executeSync();
+    JsonObject body = response.get();
 
-        if (response.hasException() || response.getStatusCode() != 200) {
-            return;
+    try {
+      for (String categoryName : body.keySet()) {
+        JsonObject category = body.get(categoryName).getAsJsonObject();
+
+        for (Map.Entry<String, JsonElement> entry : category.entrySet()) {
+          String itemId = entry.getKey().toLowerCase();
+          JsonArray prices = entry.getValue().getAsJsonArray();
+
+          if (prices.size() != 2) {
+            continue;
+          }
+
+          this.items.put(itemId, new MarketItem(
+              entry.getKey(),
+              prices.get(0).getAsJsonObject().get("price").getAsFloat(),
+              prices.get(1).getAsJsonObject().get("price").getAsFloat()
+          ));
         }
+      }
+    } catch (Exception ignored) {
 
-        JsonObject body = response.get();
-
-        try {
-            for (String categoryName : body.keySet()) {
-                JsonObject category = body.get(categoryName).getAsJsonObject();
-
-                for (Map.Entry<String, JsonElement> entry : category.entrySet()) {
-                    String itemId = entry.getKey().toLowerCase();
-                    JsonArray prices = entry.getValue().getAsJsonArray();
-
-                    if(prices.size() != 2) continue;
-
-                    this.items.put(itemId, new MarketItem(
-                        entry.getKey(),
-                        prices.get(0).getAsJsonObject().get("price").getAsFloat(),
-                        prices.get(1).getAsJsonObject().get("price").getAsFloat()
-                    ));
-                }
-            }
-        } catch (Exception ignored) {
-
-        }
     }
+  }
 }

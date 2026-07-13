@@ -23,36 +23,36 @@ import net.labymod.api.util.io.web.request.Response;
 @Implements(MerchantManager.class)
 public class DefaultMerchantManager implements MerchantManager {
 
-    private static final String ENDPOINT = "https://api.opsucht.net/merchant/rates";
+  private static final String ENDPOINT = "https://api.opsucht.net/merchant/rates";
 
-    private final List<MerchantRate> merchantRates = new ArrayList<>();
-    private final Gson gson;
+  private final List<MerchantRate> merchantRates = new ArrayList<>();
+  private final Gson gson;
 
-    public DefaultMerchantManager(NbtComponentSerializer serializer) {
-        this.gson = new GsonBuilder()
-            .registerTypeAdapter(Component.class, new MerchantComponentAdapter(serializer))
-            .create();
+  public DefaultMerchantManager(NbtComponentSerializer serializer) {
+    this.gson = new GsonBuilder()
+        .registerTypeAdapter(Component.class, new MerchantComponentAdapter(serializer))
+        .create();
+  }
+
+  @Override
+  public List<MerchantRate> getRates() {
+    return Collections.unmodifiableList(this.merchantRates);
+  }
+
+  public void cacheRates() {
+    this.merchantRates.clear();
+    Response<MerchantRate[]> response = Request.ofGson(MerchantRate[].class, this.gson)
+        .url(ENDPOINT)
+        .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+        .handleErrorStream()
+        .executeSync();
+
+    if (response.hasException() || response.getStatusCode() != 200) {
+      return;
     }
 
-    @Override
-    public List<MerchantRate> getRates() {
-        return Collections.unmodifiableList(this.merchantRates);
-    }
-
-    public void cacheRates() {
-        this.merchantRates.clear();
-        Response<MerchantRate[]> response = Request.ofGson(MerchantRate[].class, this.gson)
-            .url(ENDPOINT)
-            .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
-            .handleErrorStream()
-            .executeSync();
-
-        if (response.hasException() || response.getStatusCode() != 200) {
-            return;
-        }
-
-        this.merchantRates.addAll(Arrays.asList(response.get()));
-        Laby.fireEvent(new MerchantDataRefreshEvent());
-    }
+    this.merchantRates.addAll(Arrays.asList(response.get()));
+    Laby.fireEvent(new MerchantDataRefreshEvent());
+  }
 
 }

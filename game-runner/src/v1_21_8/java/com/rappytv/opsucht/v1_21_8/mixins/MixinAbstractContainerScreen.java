@@ -14,21 +14,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AbstractContainerScreen.class)
 public abstract class MixinAbstractContainerScreen extends Screen {
 
-    protected MixinAbstractContainerScreen(Component title) {
-        super(title);
-    }
+  protected MixinAbstractContainerScreen(Component title) {
+    super(title);
+  }
 
-    @Inject(method = "init", at = @At("HEAD"))
-    public void onInit(CallbackInfo ci) {
-        AbstractContainerScreen<?> abstractScreen = (AbstractContainerScreen<?>) (Object) this;
-        if(!(abstractScreen instanceof ContainerScreen)) {
-            return;
-        }
-        Laby.fireEvent(new ContainerOpenEvent(
-            Laby.references()
-                .componentMapper()
-                .fromMinecraftComponent(this.getTitle())
-        ));
+  @Inject(method = "init", at = @At("HEAD"))
+  public void onInit(CallbackInfo ci) {
+    AbstractContainerScreen<?> abstractScreen = (AbstractContainerScreen<?>) (Object) this;
+    if (!(abstractScreen instanceof ContainerScreen)) {
+      return;
     }
+    Laby.fireEvent(new ContainerOpenEvent(
+        Laby.references()
+            .componentMapper()
+            .fromMinecraftComponent(this.getTitle())
+    ));
+  }
 
 }

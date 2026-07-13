@@ -6,7 +6,7 @@ import java.util.List;
 @Referenceable
 public interface AuctionManager {
 
-    List<Auction> getActiveAuctions();
+  List<Auction> getActiveAuctions();
 
-    void cacheAuctions();
+  void cacheAuctions();
 }

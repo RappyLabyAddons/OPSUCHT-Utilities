@@ -1,30 +1,30 @@
 package com.rappytv.opsucht.api;
 
 public enum OPSuchtRank {
-    PLAYER,
-    PREMIUM,
-    DIAMOND,
-    ULTRA(30),
-    LEGEND(14),
-    SUPREME(3),
-    PLATIN(3),
-    OP(1);
+  PLAYER,
+  PREMIUM,
+  DIAMOND,
+  ULTRA(30),
+  LEGEND(14),
+  SUPREME(3),
+  PLATIN(3),
+  OP(1);
 
-    private final Integer skullCooldownDays;
+  private final Integer skullCooldownDays;
 
-    OPSuchtRank() {
-        this(null);
-    }
+  OPSuchtRank() {
+    this(null);
+  }
 
-    OPSuchtRank(Integer skullCooldownDays) {
-        this.skullCooldownDays = skullCooldownDays;
-    }
+  OPSuchtRank(Integer skullCooldownDays) {
+    this.skullCooldownDays = skullCooldownDays;
+  }
 
-    public Integer getSkullCooldownDays() {
-        return skullCooldownDays;
-    }
+  public Integer getSkullCooldownDays() {
+    return this.skullCooldownDays;
+  }
 
-    public boolean hasSkullPermission() {
-        return this.skullCooldownDays != null;
-    }
+  public boolean hasSkullPermission() {
+    return this.skullCooldownDays != null;
+  }
 }

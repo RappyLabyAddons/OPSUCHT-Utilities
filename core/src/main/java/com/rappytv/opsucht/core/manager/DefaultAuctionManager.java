@@ -22,32 +22,32 @@ import net.labymod.api.util.io.web.request.Response;
 @Implements(AuctionManager.class)
 public class DefaultAuctionManager implements AuctionManager {
 
-    private static final String ENDPOINT = "https://api.opsucht.net/auctions/active";
-    private static final Gson GSON = new GsonBuilder()
-        .registerTypeAdapter(Date.class, new DateAdapter())
-        .create();
+  private static final String ENDPOINT = "https://api.opsucht.net/auctions/active";
+  private static final Gson GSON = new GsonBuilder()
+      .registerTypeAdapter(Date.class, new DateAdapter())
+      .create();
 
-    private final List<Auction> auctions = new ArrayList<>();
+  private final List<Auction> auctions = new ArrayList<>();
 
-    @Override
-    public List<Auction> getActiveAuctions() {
-        return Collections.unmodifiableList(this.auctions);
+  @Override
+  public List<Auction> getActiveAuctions() {
+    return Collections.unmodifiableList(this.auctions);
+  }
+
+  @Override
+  public void cacheAuctions() {
+    this.auctions.clear();
+    Response<Auction[]> response = Request.ofGson(Auction[].class, GSON)
+        .url(ENDPOINT)
+        .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+        .handleErrorStream()
+        .executeSync();
+
+    if (response.hasException() || response.getStatusCode() != 200) {
+      return;
     }
 
-    @Override
-    public void cacheAuctions() {
-        this.auctions.clear();
-        Response<Auction[]> response = Request.ofGson(Auction[].class, GSON)
-            .url(ENDPOINT)
-            .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
-            .handleErrorStream()
-            .executeSync();
-
-        if (response.hasException() || response.getStatusCode() != 200) {
-            return;
-        }
-
-        this.auctions.addAll(Arrays.asList(response.get()));
-        Laby.fireEvent(new AuctionDataRefreshEvent());
-    }
+    this.auctions.addAll(Arrays.asList(response.get()));
+    Laby.fireEvent(new AuctionDataRefreshEvent());
+  }
 }

@@ -37,192 +37,192 @@ import org.jetbrains.annotations.Nullable;
 
 public class AuctionListHudWidget extends TextHudWidget<AuctionListWidgetConfig> {
 
-    private final OPSuchtAddon addon;
-    private TextLine line;
+  private final OPSuchtAddon addon;
+  private TextLine line;
 
-    public AuctionListHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
-        super("auction_list", AuctionListWidgetConfig.class);
-        this.addon = addon;
+  public AuctionListHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
+    super("auction_list", AuctionListWidgetConfig.class);
+    this.addon = addon;
 
-        this.setIcon(SpriteHud.AUCTIONS);
-        this.bindCategory(category);
+    this.setIcon(SpriteHud.AUCTIONS);
+    this.bindCategory(category);
+  }
+
+  @Override
+  public void load(AuctionListWidgetConfig config) {
+    super.load(config);
+    this.line = this.createLine(
+        Component.translatable("opsucht.hudWidget.auction_list.name"),
+        this.getAuctionList()
+    );
+    Task.builder(this::updateAuctionListOnRenderThread)
+        .repeat(30, TimeUnit.SECONDS)
+        .build()
+        .execute();
+  }
+
+  @Override
+  public boolean isVisibleInGame() {
+    return this.addon.server().isConnected() && super.isVisibleInGame();
+  }
+
+  @Subscribe
+  public void onAuctionDataRefresh(AuctionDataRefreshEvent event) {
+    this.updateAuctionListOnRenderThread();
+  }
+
+  private void updateAuctionListOnRenderThread() {
+    Runnable runnable = () -> this.line.updateAndFlush(this.getAuctionList());
+    if (Laby.labyAPI().minecraft().isOnRenderThread()) {
+      runnable.run();
+    } else {
+      Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
+    }
+  }
+
+  private Component getAuctionList() {
+    List<Auction> auctions = new ArrayList<>(OPSuchtAddon.references()
+        .auctionManager()
+        .getActiveAuctions());
+    auctions.removeIf(auction -> {
+      if (!auction.isActive()) {
+        return true;
+      }
+      AuctionCategory category = this.config.getCategory();
+      if (category == null) {
+        return false;
+      }
+      return !category.matches(auction);
+    });
+
+    if (auctions.isEmpty()) {
+      return Component.empty().append(Component.translatable(
+          "opsucht.hudWidget.auction_list.empty",
+          NamedTextColor.RED
+      ));
+    }
+    auctions.sort(this.config.sortType().get().comparator());
+
+    if (auctions.size() > this.config.maxAuctions().get()) {
+      auctions = auctions.subList(0, this.config.maxAuctions().get());
     }
 
-    @Override
-    public void load(AuctionListWidgetConfig config) {
-        super.load(config);
-        this.line = this.createLine(
-            Component.translatable("opsucht.hudWidget.auction_list.name"),
-            this.getAuctionList()
-        );
-        Task.builder(this::updateAuctionListOnRenderThread)
-            .repeat(30, TimeUnit.SECONDS)
-            .build()
-            .execute();
+    Component auctionList = Component.empty();
+
+    for (Auction auction : auctions) {
+      auctionList.append(Component.newline())
+          .append(Component.space())
+          .append(this.formatAuction(auction));
     }
 
-    @Override
-    public boolean isVisibleInGame() {
-        return this.addon.server().isConnected() && super.isVisibleInGame();
+    return auctionList;
+  }
+
+  private Component formatAuction(Auction auction) {
+    Component component = Component.empty();
+    Auction.Item item = auction.item();
+
+    component.append(Component.text(auction.item().getName().trim(), NamedTextColor.AQUA));
+
+    if (item.amount() > 1) {
+      component.append(Component.text(" (" + item.amount() + "x)", NamedTextColor.YELLOW));
     }
 
-    @Subscribe
-    public void onAuctionDataRefresh(AuctionDataRefreshEvent event) {
-        this.updateAuctionListOnRenderThread();
-    }
+    component.append(Component.text(": ", NamedTextColor.GRAY))
+        .append(OPSuchtAddon.references().valueFormatter().formatSingleValueComponent(
+            this.addon.configuration().priceFormat().get(),
+            auction.currentBid(),
+            NamedTextColor.GREEN
+        ))
+        .append(Component.text(" | ", NamedTextColor.GRAY))
+        .append(Component.text(
+            "⌚ " + auction.formatRelativeExpiration(),
+            NamedTextColor.YELLOW
+        ));
 
-    private void updateAuctionListOnRenderThread() {
-        Runnable runnable = () -> this.line.updateAndFlush(this.getAuctionList());
-        if(Laby.labyAPI().minecraft().isOnRenderThread()) {
-            runnable.run();
-        } else {
-            Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
-        }
-    }
+    return component;
+  }
 
-    private Component getAuctionList() {
-        List<Auction> auctions = new ArrayList<>(OPSuchtAddon.references()
-            .auctionManager()
-            .getActiveAuctions());
-        auctions.removeIf(auction -> {
-            if(!auction.isActive()) {
-                return true;
-            }
-            AuctionCategory category = this.config.getCategory();
-            if(category == null) {
-                return false;
-            }
-            return !category.matches(auction);
-        });
+  public static class AuctionListWidgetConfig extends TextHudWidgetConfig {
 
-        if(auctions.isEmpty()) {
-            return Component.empty().append(Component.translatable(
-                "opsucht.hudWidget.auction_list.empty",
-                NamedTextColor.RED
-            ));
-        }
-        auctions.sort(this.config.sortType().get().comparator());
+    private static final String ENDPOINT = "https://api.opsucht.net/auctions/categories";
+    private static final Map<String, AuctionCategory> CATEGORIES = new HashMap<>();
 
-        if(auctions.size() > this.config.maxAuctions().get()) {
-            auctions = auctions.subList(0, this.config.maxAuctions().get());
-        }
+    @IntroducedIn(namespace = "opsucht", value = "1.2.2")
+    @CustomTranslation("opsucht.hudWidget.config.maxResults")
+    @SliderSetting(min = 1, max = 50)
+    private final ConfigProperty<Integer> maxAuctions = new ConfigProperty<>(5);
 
-        Component auctionList = Component.empty();
+    @IntroducedIn(namespace = "opsucht", value = "1.2.2")
+    @CustomTranslation("opsucht.hudWidget.auction_list.sortType")
+    @DropdownSetting
+    private final ConfigProperty<SortType> sortType = new ConfigProperty<>(SortType.ENDING_SOON);
 
-        for (Auction auction : auctions) {
-            auctionList.append(Component.newline())
-                .append(Component.space())
-                .append(this.formatAuction(auction));
-        }
+    @IntroducedIn(namespace = "opsucht", value = "1.2.2")
+    @CustomTranslation("opsucht.hudWidget.auction_list.category")
+    @DropdownSetting
+    private final ConfigProperty<String> category = new ConfigProperty<>("all");
 
-        return auctionList;
-    }
-
-    private Component formatAuction(Auction auction) {
-        Component component = Component.empty();
-        Auction.Item item = auction.item();
-
-        component.append(Component.text(auction.item().getName().trim(), NamedTextColor.AQUA));
-
-        if(item.amount() > 1) {
-            component.append(Component.text(" (" + item.amount() + "x)", NamedTextColor.YELLOW));
-        }
-
-        component.append(Component.text(": ", NamedTextColor.GRAY))
-            .append(OPSuchtAddon.references().valueFormatter().formatSingleValueComponent(
-                this.addon.configuration().priceFormat().get(),
-                auction.currentBid(),
-                NamedTextColor.GREEN
-            ))
-            .append(Component.text(" | ", NamedTextColor.GRAY))
-            .append(Component.text(
-                "⌚ " + auction.formatRelativeExpiration(),
-                NamedTextColor.YELLOW
-            ));
-
-        return component;
-    }
-
-    public static class AuctionListWidgetConfig extends TextHudWidgetConfig {
-
-        private static final String ENDPOINT = "https://api.opsucht.net/auctions/categories";
-        private static final Map<String, AuctionCategory> CATEGORIES = new HashMap<>();
-
-        @IntroducedIn(namespace = "opsucht", value = "1.2.2")
-        @CustomTranslation("opsucht.hudWidget.config.maxResults")
-        @SliderSetting(min = 1, max = 50)
-        private final ConfigProperty<Integer> maxAuctions = new ConfigProperty<>(5);
-
-        @IntroducedIn(namespace = "opsucht", value = "1.2.2")
-        @CustomTranslation("opsucht.hudWidget.auction_list.sortType")
-        @DropdownSetting
-        private final ConfigProperty<SortType> sortType = new ConfigProperty<>(SortType.ENDING_SOON);
-
-        @IntroducedIn(namespace = "opsucht", value = "1.2.2")
-        @CustomTranslation("opsucht.hudWidget.auction_list.category")
-        @DropdownSetting
-        private final ConfigProperty<String> category = new ConfigProperty<>("all");
-
-        @SuppressWarnings("unchecked")
-        @SettingListener(target = "category", type = EventType.INITIALIZE)
-        public void initialize(SettingElement setting) {
-            DropdownWidget<String> widget = (DropdownWidget<String>) setting.asElement().getWidgets()[0];
-            widget.add("all");
-            Request.ofGson(AuctionCategory[].class)
-                .url(ENDPOINT)
-                .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
-                .handleErrorStream()
-                .async()
-                .execute(response -> {
-                    if(response.hasException() || response.getStatusCode() != 200) {
-                        this.category.set("all");
-                    } else {
-                        for (AuctionCategory category : response.get()) {
-                            CATEGORIES.put(category.name(), category);
-                            widget.add(category.name());
-                        }
-                    }
-
-                    setting.setWidgets(Collections.singletonList(widget).toArray(new Widget[0]));
-                });
-        }
-
-        public ConfigProperty<Integer> maxAuctions() {
-            return this.maxAuctions;
-        }
-
-        public ConfigProperty<SortType> sortType() {
-            return this.sortType;
-        }
-
-        public ConfigProperty<String> category() {
-            return this.category;
-        }
-
-        @Nullable
-        public AuctionCategory getCategory() {
-            String category = this.category().get();
-            if(category.equals("all")) {
-                return null;
-            }
-            return CATEGORIES.get(this.category.get());
-        }
-
-        public enum SortType {
-            ENDING_SOON(Comparator.comparing(Auction::endTime)),
-            HIGHEST_BIDS(Comparator.comparing(Auction::currentBid).reversed()),
-            LOWEST_BIDS(Comparator.comparing(Auction::currentBid));
-
-            private final Comparator<Auction> comparator;
-
-            SortType(Comparator<Auction> comparator) {
-                this.comparator = comparator;
+    @SuppressWarnings("unchecked")
+    @SettingListener(target = "category", type = EventType.INITIALIZE)
+    public void initialize(SettingElement setting) {
+      DropdownWidget<String> widget = (DropdownWidget<String>) setting.asElement().getWidgets()[0];
+      widget.add("all");
+      Request.ofGson(AuctionCategory[].class)
+          .url(ENDPOINT)
+          .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+          .handleErrorStream()
+          .async()
+          .execute(response -> {
+            if (response.hasException() || response.getStatusCode() != 200) {
+              this.category.set("all");
+            } else {
+              for (AuctionCategory category : response.get()) {
+                CATEGORIES.put(category.name(), category);
+                widget.add(category.name());
+              }
             }
 
-            public Comparator<Auction> comparator() {
-                return this.comparator;
-            }
-        }
+            setting.setWidgets(Collections.singletonList(widget).toArray(new Widget[0]));
+          });
     }
+
+    public ConfigProperty<Integer> maxAuctions() {
+      return this.maxAuctions;
+    }
+
+    public ConfigProperty<SortType> sortType() {
+      return this.sortType;
+    }
+
+    public ConfigProperty<String> category() {
+      return this.category;
+    }
+
+    @Nullable
+    public AuctionCategory getCategory() {
+      String category = this.category().get();
+      if (category.equals("all")) {
+        return null;
+      }
+      return CATEGORIES.get(this.category.get());
+    }
+
+    public enum SortType {
+      ENDING_SOON(Comparator.comparing(Auction::endTime)),
+      HIGHEST_BIDS(Comparator.comparing(Auction::currentBid).reversed()),
+      LOWEST_BIDS(Comparator.comparing(Auction::currentBid));
+
+      private final Comparator<Auction> comparator;
+
+      SortType(Comparator<Auction> comparator) {
+        this.comparator = comparator;
+      }
+
+      public Comparator<Auction> comparator() {
+        return this.comparator;
+      }
+    }
+  }
 
 }

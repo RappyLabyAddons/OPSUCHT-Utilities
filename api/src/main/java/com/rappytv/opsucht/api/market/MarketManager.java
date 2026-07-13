@@ -9,16 +9,17 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public interface MarketManager {
 
-    @Nullable
-    MarketItem getItem(String itemId);
+  @Nullable
+  MarketItem getItem(String itemId);
 
-    void calculateInventoryValue(@NotNull Inventory inventory, boolean includeStack, @NotNull Consumer<@Nullable InventoryValueData> consumer);
+  void calculateInventoryValue(@NotNull Inventory inventory, boolean includeStack,
+      @NotNull Consumer<@Nullable InventoryValueData> consumer);
 
-    void cachePrices();
+  void cachePrices();
 
-    enum DisplayMode {
-        BOTH,
-        ONLY_BUY,
-        ONLY_SELL
-    }
+  enum DisplayMode {
+    BOTH,
+    ONLY_BUY,
+    ONLY_SELL
+  }
 }

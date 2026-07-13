@@ -16,39 +16,40 @@ import java.util.Locale;
 @Implements(ValueFormatter.class)
 public class DefaultValueFormatter implements ValueFormatter {
 
-    private final DecimalFormat format = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMANY));
+  private final DecimalFormat format = new DecimalFormat("#,##0.00",
+      new DecimalFormatSymbols(Locale.GERMANY));
 
-    @Override
-    @NotNull
-    public Component formatSingleValueComponent(String format, float value, TextColor color) {
-        return Component.text(format.replace("{price}", this.formatFloat(value)), color);
-    }
+  @Override
+  @NotNull
+  public Component formatSingleValueComponent(String format, float value, TextColor color) {
+    return Component.text(format.replace("{price}", this.formatFloat(value)), color);
+  }
 
-    @Override
-    @NotNull
-    public Component formatValueComponent(
-        float buyValue,
-        float sellValue,
-        String format,
-        TextColor buyPriceColor,
-        TextColor sellPriceColor,
-        DisplayMode mode
-    ) {
-        Component buyComponent = this.formatSingleValueComponent(format, buyValue, buyPriceColor);
-        Component sellComponent = this.formatSingleValueComponent(format, sellValue, sellPriceColor);
+  @Override
+  @NotNull
+  public Component formatValueComponent(
+      float buyValue,
+      float sellValue,
+      String format,
+      TextColor buyPriceColor,
+      TextColor sellPriceColor,
+      DisplayMode mode
+  ) {
+    Component buyComponent = this.formatSingleValueComponent(format, buyValue, buyPriceColor);
+    Component sellComponent = this.formatSingleValueComponent(format, sellValue, sellPriceColor);
 
-        return switch (mode) {
-            case BOTH -> Component.empty()
-                .append(buyComponent)
-                .append(Component.text(" | ", NamedTextColor.GRAY))
-                .append(sellComponent);
-            case ONLY_BUY -> buyComponent;
-            case ONLY_SELL -> sellComponent;
-        };
-    }
+    return switch (mode) {
+      case BOTH -> Component.empty()
+          .append(buyComponent)
+          .append(Component.text(" | ", NamedTextColor.GRAY))
+          .append(sellComponent);
+      case ONLY_BUY -> buyComponent;
+      case ONLY_SELL -> sellComponent;
+    };
+  }
 
-    @Override
-    public @NotNull String formatFloat(float number) {
-        return this.format.format(number);
-    }
+  @Override
+  public @NotNull String formatFloat(float number) {
+    return this.format.format(number);
+  }
 }

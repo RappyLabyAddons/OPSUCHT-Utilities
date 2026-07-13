@@ -24,113 +24,113 @@ import net.labymod.api.util.io.web.request.Response;
 
 public class PlayerRecordHudWidget extends TextHudWidget<PlayerRecordHudWidgetConfig> {
 
-    private static final String ENDPOINT = "https://prapi.rappytv.com/opsucht";
-    private static final Component ERROR_COMPONENT = Component.empty()
-        .append(Component.translatable("opsucht.hudWidget.player_record.apiError"));
+  private static final String ENDPOINT = "https://prapi.rappytv.com/opsucht";
+  private static final Component ERROR_COMPONENT = Component.empty()
+      .append(Component.translatable("opsucht.hudWidget.player_record.apiError"));
 
-    private final OPSuchtAddon addon;
-    private final Task refetchTask;
-    private TextLine line = null;
-    private Integer lastValue = -1;
+  private final OPSuchtAddon addon;
+  private final Task refetchTask;
+  private TextLine line = null;
+  private Integer lastValue = -1;
 
-    public PlayerRecordHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
-        super("player_record", PlayerRecordHudWidgetConfig.class);
-        this.addon = addon;
-        this.refetchTask = Task.builder(() -> {
-            this.lastValue = this.fetchPlayerRecord();
-            if (this.line == null) {
-                return;
-            }
-            this.updateLineOnRenderThread();
-        }).repeat(1, TimeUnit.HOURS).build();
-        this.refetchTask.execute();
+  public PlayerRecordHudWidget(OPSuchtAddon addon, HudWidgetCategory category) {
+    super("player_record", PlayerRecordHudWidgetConfig.class);
+    this.addon = addon;
+    this.refetchTask = Task.builder(() -> {
+      this.lastValue = this.fetchPlayerRecord();
+      if (this.line == null) {
+        return;
+      }
+      this.updateLineOnRenderThread();
+    }).repeat(1, TimeUnit.HOURS).build();
+    this.refetchTask.execute();
 
-        this.setIcon(SpriteHud.PLAYER_RECORD);
-        this.bindCategory(category);
+    this.setIcon(SpriteHud.PLAYER_RECORD);
+    this.bindCategory(category);
+  }
+
+  @Override
+  public void load(PlayerRecordHudWidgetConfig config) {
+    super.load(config);
+    this.line = this.createLine(
+        Component.translatable("opsucht.hudWidget.player_record.name"),
+        this.lastValue
+    );
+    this.updateLineOnRenderThread();
+  }
+
+  @Override
+  public void onTick(boolean isEditorContext) {
+    if (isEditorContext) {
+      this.line.updateAndFlush(this.lastValue != -1 ? this.lastValue : ERROR_COMPONENT);
+    }
+  }
+
+  @Override
+  public boolean isVisibleInGame() {
+    return (!this.config.onlyShowWhenConnected.get() || this.addon.server().isConnected())
+        && super.isVisibleInGame();
+  }
+
+  @Subscribe
+  public void onForceRefetch(PlayerRecordForceRefetchEvent event) {
+    this.refetchTask.run();
+  }
+
+  private void updateLineOnRenderThread() {
+    Runnable runnable = () -> {
+      this.line.setState(this.lastValue != -1 ? State.VISIBLE : State.HIDDEN);
+      this.line.updateAndFlush(this.lastValue);
+    };
+    if (Laby.labyAPI().minecraft().isOnRenderThread()) {
+      runnable.run();
+    } else {
+      Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
+    }
+  }
+
+  private int fetchPlayerRecord() {
+    Response<JsonObject> response = Request.ofGson(JsonObject.class)
+        .url(ENDPOINT)
+        .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
+        .handleErrorStream()
+        .executeSync();
+
+    if (response.hasException()) {
+      this.addon.logger().error("Failed to fetch player record", response.exception());
+      return -1;
     }
 
-    @Override
-    public void load(PlayerRecordHudWidgetConfig config) {
-        super.load(config);
-        this.line = this.createLine(
-            Component.translatable("opsucht.hudWidget.player_record.name"),
-            this.lastValue
-        );
-        this.updateLineOnRenderThread();
+    JsonObject body = response.get();
+
+    if (response.getStatusCode() != 200) {
+      String error = body.get("error").getAsString();
+      this.addon.logger().error(String.format(
+          "Failed to fetch player record with HTTP status code %s: %s",
+          response.getStatusCode(),
+          error
+      ));
+      return -1;
     }
 
-    @Override
-    public void onTick(boolean isEditorContext) {
-        if(isEditorContext) {
-            this.line.updateAndFlush(this.lastValue != -1 ? this.lastValue : ERROR_COMPONENT);
-        }
+    try {
+      return body.get("player_record").getAsInt();
+    } catch (Exception e) {
+      this.addon.logger().error("Failed to parse player record", e);
+      return -1;
     }
+  }
 
-    @Override
-    public boolean isVisibleInGame() {
-        return (!this.config.onlyShowWhenConnected.get() || this.addon.server().isConnected())
-            && super.isVisibleInGame();
+  public static class PlayerRecordHudWidgetConfig extends TextHudWidgetConfig {
+
+    @SwitchSetting
+    private final ConfigProperty<Boolean> onlyShowWhenConnected = new ConfigProperty<>(true);
+
+    @SuppressWarnings("deprecation")
+    @MethodOrder(after = "onlyShowWhenConnected")
+    @ButtonSetting(translation = "opsucht.hudWidget.player_record.forceRefetch.text")
+    public void forceRefetch() {
+      Laby.fireEvent(new PlayerRecordForceRefetchEvent());
     }
-
-    @Subscribe
-    public void onForceRefetch(PlayerRecordForceRefetchEvent event) {
-        this.refetchTask.run();
-    }
-
-    private void updateLineOnRenderThread() {
-        Runnable runnable = () -> {
-            this.line.setState(this.lastValue != -1 ? State.VISIBLE : State.HIDDEN);
-            this.line.updateAndFlush(this.lastValue);
-        };
-        if(Laby.labyAPI().minecraft().isOnRenderThread()) {
-            runnable.run();
-        } else {
-            Laby.labyAPI().minecraft().executeOnRenderThread(runnable);
-        }
-    }
-
-    private int fetchPlayerRecord() {
-        Response<JsonObject> response = Request.ofGson(JsonObject.class)
-            .url(ENDPOINT)
-            .addHeader("User-Agent", OPSuchtAddon.getUserAgent())
-            .handleErrorStream()
-            .executeSync();
-
-        if(response.hasException()) {
-            this.addon.logger().error("Failed to fetch player record", response.exception());
-            return -1;
-        }
-
-        JsonObject body = response.get();
-
-        if(response.getStatusCode() != 200) {
-            String error = body.get("error").getAsString();
-            this.addon.logger().error(String.format(
-                "Failed to fetch player record with HTTP status code %s: %s",
-                response.getStatusCode(),
-                error
-            ));
-            return -1;
-        }
-
-        try {
-            return body.get("player_record").getAsInt();
-        } catch (Exception e) {
-            this.addon.logger().error("Failed to parse player record", e);
-            return -1;
-        }
-    }
-
-    public static class PlayerRecordHudWidgetConfig extends TextHudWidgetConfig {
-
-        @SwitchSetting
-        private final ConfigProperty<Boolean> onlyShowWhenConnected = new ConfigProperty<>(true);
-
-        @SuppressWarnings("deprecation")
-        @MethodOrder(after = "onlyShowWhenConnected")
-        @ButtonSetting(translation = "opsucht.hudWidget.player_record.forceRefetch.text")
-        public void forceRefetch() {
-            Laby.fireEvent(new PlayerRecordForceRefetchEvent());
-        }
-    }
+  }
 }

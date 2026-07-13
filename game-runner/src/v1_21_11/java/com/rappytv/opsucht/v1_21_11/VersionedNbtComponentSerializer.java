@@ -15,19 +15,19 @@ import net.minecraft.network.chat.ComponentSerialization;
 @Implements(NbtComponentSerializer.class)
 public class VersionedNbtComponentSerializer implements NbtComponentSerializer {
 
-    @Override
-    public Component deserializeComponent(String data) throws RuntimeException {
-        try {
-            CompoundTag tag = TagParser.parseCompoundFully(data);
+  @Override
+  public Component deserializeComponent(String data) throws RuntimeException {
+    try {
+      CompoundTag tag = TagParser.parseCompoundFully(data);
 
-            return Laby.references()
-                .componentMapper()
-                .fromMinecraftComponent(ComponentSerialization.CODEC
-                    .decode(NbtOps.INSTANCE, tag)
-                    .getOrThrow()
-                    .getFirst());
-        } catch (CommandSyntaxException e) {
-            throw new RuntimeException(e);
-        }
+      return Laby.references()
+          .componentMapper()
+          .fromMinecraftComponent(ComponentSerialization.CODEC
+              .decode(NbtOps.INSTANCE, tag)
+              .getOrThrow()
+              .getFirst());
+    } catch (CommandSyntaxException e) {
+      throw new RuntimeException(e);
     }
+  }
 }

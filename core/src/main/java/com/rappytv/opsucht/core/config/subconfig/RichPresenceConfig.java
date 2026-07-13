@@ -12,37 +12,37 @@ import net.labymod.api.util.function.ChangeListener;
 
 public class RichPresenceConfig extends Config implements IRichPresenceConfig {
 
-    public RichPresenceConfig() {
-        ChangeListener<Property<Boolean>, Boolean> listener =
-                (property, oldValue, newValue) ->
-                        OPSuchtAddon.references()
-                                .richPresenceManager()
-                                .updateCustomRPC(this);
-        this.enabled.addChangeListener(listener);
-        this.showSubServer.addChangeListener(listener);
-        this.showPlayerCount.addChangeListener(listener);
-    }
+  public RichPresenceConfig() {
+    ChangeListener<Property<Boolean>, Boolean> listener =
+        (property, oldValue, newValue) ->
+            OPSuchtAddon.references()
+                .richPresenceManager()
+                .updateCustomRPC(this);
+    this.enabled.addChangeListener(listener);
+    this.showSubServer.addChangeListener(listener);
+    this.showPlayerCount.addChangeListener(listener);
+  }
 
-    @ShowSettingInParent
-    private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
+  @ShowSettingInParent
+  private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
-    @SwitchSetting
-    @SpriteSlot(x = 3)
-    private final ConfigProperty<Boolean> showSubServer = new ConfigProperty<>(true);
+  @SwitchSetting
+  @SpriteSlot(x = 3)
+  private final ConfigProperty<Boolean> showSubServer = new ConfigProperty<>(true);
 
-    @SwitchSetting
-    @SpriteSlot(x = 4)
-    private final ConfigProperty<Boolean> showPlayerCount = new ConfigProperty<>(true);
+  @SwitchSetting
+  @SpriteSlot(x = 4)
+  private final ConfigProperty<Boolean> showPlayerCount = new ConfigProperty<>(true);
 
-    public ConfigProperty<Boolean> enabled() {
-        return this.enabled;
-    }
+  public ConfigProperty<Boolean> enabled() {
+    return this.enabled;
+  }
 
-    public ConfigProperty<Boolean> showSubServer() {
-        return this.showSubServer;
-    }
+  public ConfigProperty<Boolean> showSubServer() {
+    return this.showSubServer;
+  }
 
-    public ConfigProperty<Boolean> showPlayerCount() {
-        return this.showPlayerCount;
-    }
+  public ConfigProperty<Boolean> showPlayerCount() {
+    return this.showPlayerCount;
+  }
 }

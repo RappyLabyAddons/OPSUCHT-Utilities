@@ -2,12 +2,12 @@ name: "✨ Suggest a new feature"
 description: Create a feature request issue
 type: feature
 title: "feat: "
-labels: ["feature", "pending"]
-assignees: ["RappyTV"]
+labels: [ "feature", "pending" ]
+assignees: [ "RappyTV" ]
 body:
-    -   type: textarea
-        attributes:
-            label: Your idea
-            description: Tell us about your vision and maybe also provide examples how we should implement it to your liking
-        validations:
-            required: true
+  - type: textarea
+    attributes:
+      label: Your idea
+      description: Tell us about your vision and maybe also provide examples how we should implement it to your liking
+    validations:
+      required: true

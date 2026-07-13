@@ -11,11 +11,11 @@ public record AuctionCategory(
     @NotNull List<String> matchTypes
 ) {
 
-    public boolean matches(@NotNull Auction auction) {
-        return this.matches(auction.category());
-    }
+  public boolean matches(@NotNull Auction auction) {
+    return this.matches(auction.category());
+  }
 
-    public boolean matches(@NotNull String category) {
-        return this.matchTypes.contains(category.toUpperCase());
-    }
+  public boolean matches(@NotNull String category) {
+    return this.matchTypes.contains(category.toUpperCase());
+  }
 }

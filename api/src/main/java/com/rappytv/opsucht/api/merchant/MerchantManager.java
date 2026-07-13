@@ -6,7 +6,7 @@ import java.util.List;
 @Referenceable
 public interface MerchantManager {
 
-    List<MerchantRate> getRates();
+  List<MerchantRate> getRates();
 
-    void cacheRates();
+  void cacheRates();
 }
