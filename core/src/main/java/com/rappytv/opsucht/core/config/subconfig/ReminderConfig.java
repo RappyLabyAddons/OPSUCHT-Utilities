@@ -17,7 +17,7 @@ import net.labymod.api.util.MethodOrder;
 
 public class ReminderConfig extends Config {
 
-  private static final String DAILY_REWARD_AUTO_CLAIMER_COMPAT = "1.16.5<1.21.11";
+  private static final String DAILY_REWARD_AUTO_CLAIMER_COMPAT = "1.16.5<26.1.2";
   public static final boolean SUPPORTS_DAILY_REWARD_AUTO_CLAIMER =
       OPSuchtAddon.isMinecraftMultiVersionSupported(DAILY_REWARD_AUTO_CLAIMER_COMPAT);
 
