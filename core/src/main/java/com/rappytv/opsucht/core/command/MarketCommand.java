@@ -15,15 +15,17 @@ import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 public class MarketCommand extends Command {
 
   public MarketCommand(OPSuchtAddon addon) {
     super("opmarket", "opmarkt");
 
+    this.messagePrefix(OPSuchtAddon.prefix());
     this.translationKey("opsucht.command");
-    this.withSubCommand(new InventoryValueCommand(addon));
-    this.withSubCommand(new ItemValueCommand(addon));
+    this.withSubCommand(new InventoryValueCommand(addon, this));
+    this.withSubCommand(new ItemValueCommand(addon, this));
   }
 
   @Override
@@ -33,12 +35,12 @@ public class MarketCommand extends Command {
       subCommands.add(subCommand.getPrefix());
     }
 
-    this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-        this.getTranslationKey("usage"),
+    this.displayTranslatable(
+        "usage",
         NamedTextColor.RED,
         Component.text(prefix),
         Component.text(String.join("/", subCommands))
-    )));
+    );
     return true;
   }
 
@@ -48,30 +50,25 @@ public class MarketCommand extends Command {
     private final MarketManager manager;
     private final ValueFormatter formatter;
 
-    public InventoryValueCommand(OPSuchtAddon addon) {
+    public InventoryValueCommand(OPSuchtAddon addon, MarketCommand command) {
       super("inventory", "inventar");
       this.addon = addon;
       this.manager = OPSuchtAddon.references().marketManager();
       this.formatter = OPSuchtAddon.references().valueFormatter();
 
+      this.messagePrefix(command.messagePrefix);
       this.translationKey("opsucht.command");
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
       if (!this.addon.server().isConnected()) {
-        this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-            this.getTranslationKey("notConnected"),
-            NamedTextColor.RED
-        )));
+        this.displayTranslatable("notConnected", NamedTextColor.RED);
         return true;
       }
       ClientPlayer player = Laby.labyAPI().minecraft().getClientPlayer();
       if (player == null) {
-        this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-            this.getTranslationKey("noPlayer"),
-            NamedTextColor.RED
-        )));
+        this.displayTranslatable("noPlayer", NamedTextColor.RED);
         return true;
       }
 
@@ -81,17 +78,11 @@ public class MarketCommand extends Command {
           true,
           (data) -> {
             if (data == null || !data.isValid()) {
-              this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-                  this.getTranslationKey("inventory.invalidData"),
-                  NamedTextColor.RED
-              )));
+              this.displayTranslatable("inventory.invalidData", NamedTextColor.RED);
               return;
             }
             if (data.isEmpty()) {
-              this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-                  this.getTranslationKey("inventory.empty"),
-                  NamedTextColor.RED
-              )));
+              this.displayTranslatable("inventory.empty", NamedTextColor.RED);
               return;
             }
             Component component = Component.empty()
@@ -140,30 +131,25 @@ public class MarketCommand extends Command {
     private final MarketManager manager;
     private final ValueFormatter formatter;
 
-    public ItemValueCommand(OPSuchtAddon addon) {
+    public ItemValueCommand(OPSuchtAddon addon, MarketCommand command) {
       super("item");
       this.addon = addon;
       this.manager = OPSuchtAddon.references().marketManager();
       this.formatter = OPSuchtAddon.references().valueFormatter();
 
+      this.messagePrefix(command.messagePrefix);
       this.translationKey("opsucht.command");
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
       if (!this.addon.server().isConnected()) {
-        this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-            this.getTranslationKey("notConnected"),
-            NamedTextColor.RED
-        )));
+        this.displayTranslatable("notConnected", NamedTextColor.RED);
         return true;
       }
       ClientPlayer player = Laby.labyAPI().minecraft().getClientPlayer();
       if (player == null) {
-        this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-            this.getTranslationKey("noPlayer"),
-            NamedTextColor.RED
-        )));
+        this.displayTranslatable("noPlayer", NamedTextColor.RED);
         return true;
       }
 
@@ -172,19 +158,13 @@ public class MarketCommand extends Command {
 
       if (arguments.length == 0) {
         if (currentItem == null || currentItem.isAir()) {
-          this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-              this.getTranslationKey("item.emptySlot"),
-              NamedTextColor.RED
-          )));
+          this.displayTranslatable("item.emptySlot", NamedTextColor.RED);
           return true;
         }
 
         MarketItem item = this.manager.getItem(currentItem.getIdentifier().getPath());
         if (item == null) {
-          this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-              this.getTranslationKey("item.holdingItemNoPrice"),
-              NamedTextColor.RED
-          )));
+          this.displayTranslatable("item.holdingItemNoPrice", NamedTextColor.RED);
           return true;
         }
 
@@ -194,28 +174,22 @@ public class MarketCommand extends Command {
 
         if (amount != null) {
           if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
-            this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-                this.getTranslationKey("item.invalidAmount"),
+            this.displayTranslatable(
+                "item.invalidAmount",
                 NamedTextColor.RED,
                 Component.text(MIN_AMOUNT, NamedTextColor.AQUA),
                 Component.text(MAX_AMOUNT, NamedTextColor.AQUA)
-            )));
+            );
             return true;
           }
           if (currentItem == null || currentItem.isAir()) {
-            this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-                this.getTranslationKey("item.emptySlot"),
-                NamedTextColor.RED
-            )));
+            this.displayTranslatable("item.emptySlot", NamedTextColor.RED);
             return true;
           }
 
           MarketItem item = this.manager.getItem(currentItem.getIdentifier().getPath());
           if (item == null) {
-            this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-                this.getTranslationKey("item.holdingItemNoPrice"),
-                NamedTextColor.RED
-            )));
+            this.displayTranslatable("item.holdingItemNoPrice", NamedTextColor.RED);
             return true;
           }
 
@@ -223,10 +197,7 @@ public class MarketCommand extends Command {
         } else {
           MarketItem item = this.manager.getItem(arguments[0].toLowerCase());
           if (item == null) {
-            this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-                this.getTranslationKey("item.itemNoPrice"),
-                NamedTextColor.RED
-            )));
+            this.displayTranslatable("item.itemNoPrice", NamedTextColor.RED);
             return true;
           }
 
@@ -235,33 +206,25 @@ public class MarketCommand extends Command {
       } else {
         MarketItem item = this.manager.getItem(arguments[0].toLowerCase());
         if (item == null) {
-          this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-              this.getTranslationKey("item.itemNoPrice"),
-              NamedTextColor.RED
-          )));
+          this.displayTranslatable("item.itemNoPrice", NamedTextColor.RED);
           return true;
         }
 
-        Integer amount = this.tryAmount(arguments[1]);
-        if (amount == null) {
-          amount = 1;
-        } else if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
-          this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-              this.getTranslationKey("item.invalidAmount"),
+        int amount = this.tryAmountSafe(arguments[1]);
+        if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
+          this.displayTranslatable("item.invalidAmount",
               NamedTextColor.RED,
               Component.text(MIN_AMOUNT, NamedTextColor.AQUA),
               Component.text(MAX_AMOUNT, NamedTextColor.AQUA)
-          )));
+          );
           return true;
         }
+
         stack = new MarketStack(item, amount);
       }
 
       if (!stack.isValid()) {
-        this.displayMessage(OPSuchtAddon.prefix().append(Component.translatable(
-            this.getTranslationKey("item.invalidData"),
-            NamedTextColor.RED
-        )));
+        this.displayTranslatable("item.invalidData", NamedTextColor.RED);
         return true;
       }
 
@@ -331,6 +294,12 @@ public class MarketCommand extends Command {
       return components;
     }
 
+    private int tryAmountSafe(String amount) {
+      Integer number = this.tryAmount(amount);
+      return number != null ? number : 1;
+    }
+
+    @Nullable
     private Integer tryAmount(String amount) {
       try {
         return Integer.parseInt(amount);
