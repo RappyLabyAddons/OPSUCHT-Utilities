@@ -2,6 +2,7 @@ package com.rappytv.opsucht.v1_20_6.mixins;
 
 import com.rappytv.opsucht.api.inventory.ContainerOpenEvent;
 import net.labymod.api.Laby;
+import net.labymod.api.util.CastUtil;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
@@ -20,7 +21,7 @@ public abstract class MixinAbstractContainerScreen extends Screen {
 
   @Inject(method = "init", at = @At("HEAD"))
   public void onInit(CallbackInfo ci) {
-    AbstractContainerScreen<?> abstractScreen = (AbstractContainerScreen<?>) (Object) this;
+    AbstractContainerScreen<?> abstractScreen = CastUtil.cast(this);
     if (!(abstractScreen instanceof ContainerScreen)) {
       return;
     }

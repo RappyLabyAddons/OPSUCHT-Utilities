@@ -20,7 +20,7 @@ public abstract class MixinAbstractContainerScreen extends Screen {
 
   @Inject(method = "init", at = @At("HEAD"))
   public void onInit(CallbackInfo ci) {
-    AbstractContainerScreen<?> abstractScreen = (AbstractContainerScreen<?>) (Object) this;
+    AbstractContainerScreen<?> abstractScreen = CastUtil.cast(this);
     if (!(abstractScreen instanceof ContainerScreen)) {
       return;
     }
